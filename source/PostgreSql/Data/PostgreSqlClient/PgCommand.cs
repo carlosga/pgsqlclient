@@ -25,186 +25,186 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public sealed class PgCommand
+    public sealed class PgCommand
         : DbCommand, ICloneable
-	{				
-		#region · Fields ·
-		
-		private PgConnection			connection;
-		private PgTransaction			transaction;				
-		private PgParameterCollection	parameters;
-		private UpdateRowSource			updatedRowSource;
+    {				
+        #region · Fields ·
+        
+        private PgConnection			connection;
+        private PgTransaction			transaction;				
+        private PgParameterCollection	parameters;
+        private UpdateRowSource			updatedRowSource;
         private PgStatement             statement;
         private PgDataReader            activeDataReader;
         private CommandBehavior         commandBehavior;
         private CommandType             commandType;
         private List<string>            namedParameters;
         private bool                    disposed;
-		private string					commandText;
-		private int                     commandTimeout;
-		private bool					designTimeVisible;
-		
-		#endregion
+        private string					commandText;
+        private int                     commandTimeout;
+        private bool					designTimeVisible;
+        
+        #endregion
 
-		#region · DbCommand Properties ·
+        #region · DbCommand Properties ·
 
-		protected override DbConnection DbConnection
-		{
-			get { return this.Connection; }
-			set { this.Connection = (PgConnection)value; }
-		}
+        protected override DbConnection DbConnection
+        {
+            get { return this.Connection; }
+            set { this.Connection = (PgConnection)value; }
+        }
 
-		protected override DbParameterCollection DbParameterCollection
-		{
-			get { return this.Parameters; }
-		}
+        protected override DbParameterCollection DbParameterCollection
+        {
+            get { return this.Parameters; }
+        }
 
-		protected override DbTransaction DbTransaction
-		{
-			get { return this.Transaction; }
-			set { this.Transaction = (PgTransaction)value; }
-		}
+        protected override DbTransaction DbTransaction
+        {
+            get { return this.Transaction; }
+            set { this.Transaction = (PgTransaction)value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public override string CommandText
-		{
-			get { return this.commandText; }
-			set 
-			{
-				if (this.statement != null && this.commandText != value && 
+        public override string CommandText
+        {
+            get { return this.commandText; }
+            set 
+            {
+                if (this.statement != null && this.commandText != value && 
                     !String.IsNullOrEmpty(this.CommandText))
-				{
-					this.InternalClose();
-				}
+                {
+                    this.InternalClose();
+                }
 
-				this.commandText = value;
-			}
-		}
+                this.commandText = value;
+            }
+        }
 
-		public override CommandType CommandType
-		{
-			get { return this.commandType; }
-			set { this.commandType = value; }
-		}
-		
-		public override int CommandTimeout
-		{
-			get { return this.commandTimeout; }			
-			set
-			{
-				if (value < 0) 
-				{
-					throw new ArgumentException("The property value assigned is less than 0.");
-				}
+        public override CommandType CommandType
+        {
+            get { return this.commandType; }
+            set { this.commandType = value; }
+        }
+        
+        public override int CommandTimeout
+        {
+            get { return this.commandTimeout; }			
+            set
+            {
+                if (value < 0) 
+                {
+                    throw new ArgumentException("The property value assigned is less than 0.");
+                }
 
                 this.commandTimeout = value;
-			}
-		}
+            }
+        }
 
-		public new PgConnection Connection
-		{
-			get { return this.connection; }
-			set
-			{
-				if (this.connection != null && this.ActiveDataReader != null)
-				{
-					throw new InvalidOperationException("There is already an open DataReader associated with this Connection which must be closed first.");
-				}
+        public new PgConnection Connection
+        {
+            get { return this.connection; }
+            set
+            {
+                if (this.connection != null && this.ActiveDataReader != null)
+                {
+                    throw new InvalidOperationException("There is already an open DataReader associated with this Connection which must be closed first.");
+                }
 
-				if (this.connection != value)
-				{										
-					if (this.transaction != null)
-					{
-						this.transaction = null;
-					}
+                if (this.connection != value)
+                {										
+                    if (this.transaction != null)
+                    {
+                        this.transaction = null;
+                    }
 
-					this.InternalClose();
-				}
+                    this.InternalClose();
+                }
 
-				this.connection = value;
-			}
-		}
+                this.connection = value;
+            }
+        }
 
-		public override bool DesignTimeVisible
-		{
-			get { return this.designTimeVisible; }
-			set { this.designTimeVisible = value; }
-		}
+        public override bool DesignTimeVisible
+        {
+            get { return this.designTimeVisible; }
+            set { this.designTimeVisible = value; }
+        }
 
-		public new PgParameterCollection Parameters
-		{
-			get 
-			{ 
-				if (this.parameters == null)
-				{
-					this.parameters = new PgParameterCollection();
-				}
+        public new PgParameterCollection Parameters
+        {
+            get 
+            { 
+                if (this.parameters == null)
+                {
+                    this.parameters = new PgParameterCollection();
+                }
 
-				return this.parameters; 
-			}
-		}
+                return this.parameters; 
+            }
+        }
 
-		public new PgTransaction Transaction
-		{
-			get { return this.transaction; }
-			set
-			{
-				if (this.connection != null && this.ActiveDataReader != null)
-				{
-					throw new InvalidOperationException("There is already an open DataReader associated with this Connection which must be closed first.");
-				}
+        public new PgTransaction Transaction
+        {
+            get { return this.transaction; }
+            set
+            {
+                if (this.connection != null && this.ActiveDataReader != null)
+                {
+                    throw new InvalidOperationException("There is already an open DataReader associated with this Connection which must be closed first.");
+                }
 
-				this.transaction = value; 
-			}
-		}
-		
-		public override UpdateRowSource UpdatedRowSource
-		{
-			get { return this.updatedRowSource; }
-			set { this.updatedRowSource = value; }
-		}
+                this.transaction = value; 
+            }
+        }
+        
+        public override UpdateRowSource UpdatedRowSource
+        {
+            get { return this.updatedRowSource; }
+            set { this.updatedRowSource = value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Internal Properties ·
+        #region · Internal Properties ·
 
-		internal PgDataReader ActiveDataReader
-		{
-			get { return this.activeDataReader; }
-			set { this.activeDataReader = value; }
-		}
+        internal PgDataReader ActiveDataReader
+        {
+            get { return this.activeDataReader; }
+            set { this.activeDataReader = value; }
+        }
 
-		internal CommandBehavior CommandBehavior
-		{
-			get { return this.commandBehavior; }
-		}
+        internal CommandBehavior CommandBehavior
+        {
+            get { return this.commandBehavior; }
+        }
 
-		internal PgStatement Statement
-		{
-			get { return this.statement; }
-		}
+        internal PgStatement Statement
+        {
+            get { return this.statement; }
+        }
 
-		internal int RecordsAffected
-		{
-			get 
-			{ 
-				if (this.statement != null)
-				{
-					return this.statement.RecordsAffected; 
-				}
-				return -1;
-			}
-		}
+        internal int RecordsAffected
+        {
+            get 
+            { 
+                if (this.statement != null)
+                {
+                    return this.statement.RecordsAffected; 
+                }
+                return -1;
+            }
+        }
 
-		internal bool IsDisposed
-		{
-			get { return this.disposed; }
-		}
-		
-		#endregion
+        internal bool IsDisposed
+        {
+            get { return this.disposed; }
+        }
+        
+        #endregion
 
         #region · Private Properties ·
 
@@ -226,210 +226,210 @@ namespace PostgreSql.Data.PostgreSqlClient
         #region · Constructors ·
 
         public PgCommand() 
-			: base()
-		{
-			this.commandText		= String.Empty;
-			this.commandType		= CommandType.Text;
-			this.commandTimeout		= 30;
-			this.updatedRowSource	= UpdateRowSource.Both;
-			this.commandBehavior	= CommandBehavior.Default;
-			this.designTimeVisible	= true;
-		}
+            : base()
+        {
+            this.commandText		= String.Empty;
+            this.commandType		= CommandType.Text;
+            this.commandTimeout		= 30;
+            this.updatedRowSource	= UpdateRowSource.Both;
+            this.commandBehavior	= CommandBehavior.Default;
+            this.designTimeVisible	= true;
+        }
 
-		public PgCommand(string cmdText) 
-			: this(cmdText, null, null)
-		{
-		}
-		
-		public PgCommand(string cmdText, PgConnection connection) 
-			: this(cmdText, connection, null)
-		{
-		}
-		
-		public PgCommand(string cmdText, PgConnection connection, PgTransaction transaction) 
-			: this()
-		{
-			this.CommandText = cmdText;
-			this.Connection  = connection;
-			this.Transaction = transaction;
-		}				 
+        public PgCommand(string cmdText) 
+            : this(cmdText, null, null)
+        {
+        }
+        
+        public PgCommand(string cmdText, PgConnection connection) 
+            : this(cmdText, connection, null)
+        {
+        }
+        
+        public PgCommand(string cmdText, PgConnection connection, PgTransaction transaction) 
+            : this()
+        {
+            this.CommandText = cmdText;
+            this.Connection  = connection;
+            this.Transaction = transaction;
+        }				 
 
-		#endregion
+        #endregion
 
-		#region · IDisposable Methods ·
-		
-		protected override void Dispose(bool disposing)
-		{
-			if (!this.disposed)
-			{
-				try
-				{
-					if (disposing)
-					{
-						// release any managed resources
+        #region · IDisposable Methods ·
+        
+        protected override void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                try
+                {
+                    if (disposing)
+                    {
+                        // release any managed resources
 
-						if (this.connection != null &&
-							this.connection.InternalConnection != null)
-						{
-							this.connection.InternalConnection.RemovePreparedCommand(this);
-						}
-						
-						this.InternalClose();
+                        if (this.connection != null &&
+                            this.connection.InternalConnection != null)
+                        {
+                            this.connection.InternalConnection.RemovePreparedCommand(this);
+                        }
+                        
+                        this.InternalClose();
 
-						this.commandText = null;
+                        this.commandText = null;
 
                         if (this.namedParameters != null)
                         {
                             this.namedParameters.Clear();
                             this.namedParameters = null;
                         }
-					}
-					
-					// release any unmanaged resources
-					this.disposed = true;
-				}
-				finally 
-				{
-					base.Dispose(disposing);
-				}
-			}
-		}
+                    }
+                    
+                    // release any unmanaged resources
+                    this.disposed = true;
+                }
+                finally 
+                {
+                    base.Dispose(disposing);
+                }
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · ICloneable Methods ·
+        #region · ICloneable Methods ·
 
-		object ICloneable.Clone()
-		{
-			PgCommand command = new PgCommand();
-			
-			command.CommandText			= this.commandText;
-			command.Connection			= this.connection;
-			command.Transaction			= this.transaction;
-			command.CommandType			= this.CommandType;
-			command.UpdatedRowSource	= this.UpdatedRowSource;
-			
-			for (int i = 0; i < this.Parameters.Count; i++)
-			{
-				command.Parameters.Add(((ICloneable)this.Parameters[i]).Clone());
-			}
+        object ICloneable.Clone()
+        {
+            PgCommand command = new PgCommand();
+            
+            command.CommandText			= this.commandText;
+            command.Connection			= this.connection;
+            command.Transaction			= this.transaction;
+            command.CommandType			= this.CommandType;
+            command.UpdatedRowSource	= this.UpdatedRowSource;
+            
+            for (int i = 0; i < this.Parameters.Count; i++)
+            {
+                command.Parameters.Add(((ICloneable)this.Parameters[i]).Clone());
+            }
 
-			return command;
-		}
+            return command;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected override DbParameter CreateDbParameter()
-		{
-			return this.CreateParameter();
-		}
+        protected override DbParameter CreateDbParameter()
+        {
+            return this.CreateParameter();
+        }
 
-		protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
-		{
-			return this.ExecuteReader(behavior);
-		}
+        protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
+        {
+            return this.ExecuteReader(behavior);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public override void Cancel()
-		{			
-			throw new NotSupportedException();
-		}
-		
-		public new PgParameter CreateParameter()
-		{
-			return new PgParameter();
-		}
+        public override void Cancel()
+        {			
+            throw new NotSupportedException();
+        }
+        
+        public new PgParameter CreateParameter()
+        {
+            return new PgParameter();
+        }
 
-		public override int ExecuteNonQuery()
-		{
-			this.CheckCommand();
+        public override int ExecuteNonQuery()
+        {
+            this.CheckCommand();
 
-			this.InternalPrepare();
-			this.InternalExecute();
+            this.InternalPrepare();
+            this.InternalExecute();
 
-			this.InternalSetOutputParameters();
-			
-			return this.statement.RecordsAffected;
-		}
-				
-		public new PgDataReader ExecuteReader()
-		{	
-			return this.ExecuteReader(CommandBehavior.Default);			
-		}
-		
-		public new PgDataReader ExecuteReader(CommandBehavior behavior)
-		{
-			this.CheckCommand();
+            this.InternalSetOutputParameters();
+            
+            return this.statement.RecordsAffected;
+        }
+                
+        public new PgDataReader ExecuteReader()
+        {	
+            return this.ExecuteReader(CommandBehavior.Default);			
+        }
+        
+        public new PgDataReader ExecuteReader(CommandBehavior behavior)
+        {
+            this.CheckCommand();
 
-			this.commandBehavior = behavior;
+            this.commandBehavior = behavior;
 
-			this.InternalPrepare();
+            this.InternalPrepare();
 
-			if ((commandBehavior & System.Data.CommandBehavior.SequentialAccess) == System.Data.CommandBehavior.SequentialAccess ||
-				(commandBehavior & System.Data.CommandBehavior.SingleResult) == System.Data.CommandBehavior.SingleResult ||
-				(commandBehavior & System.Data.CommandBehavior.SingleRow) == System.Data.CommandBehavior.SingleRow ||
-				(commandBehavior & System.Data.CommandBehavior.CloseConnection) == System.Data.CommandBehavior.CloseConnection ||
-				commandBehavior == System.Data.CommandBehavior.Default)				
-			{
-				this.InternalExecute();
-			}
+            if ((commandBehavior & System.Data.CommandBehavior.SequentialAccess) == System.Data.CommandBehavior.SequentialAccess ||
+                (commandBehavior & System.Data.CommandBehavior.SingleResult) == System.Data.CommandBehavior.SingleResult ||
+                (commandBehavior & System.Data.CommandBehavior.SingleRow) == System.Data.CommandBehavior.SingleRow ||
+                (commandBehavior & System.Data.CommandBehavior.CloseConnection) == System.Data.CommandBehavior.CloseConnection ||
+                commandBehavior == System.Data.CommandBehavior.Default)				
+            {
+                this.InternalExecute();
+            }
 
-			this.activeDataReader = new PgDataReader(this.connection, this);
+            this.activeDataReader = new PgDataReader(this.connection, this);
 
-			return this.activeDataReader;
-		}
+            return this.activeDataReader;
+        }
 
-		public override object ExecuteScalar()
-		{
-			this.CheckCommand();
+        public override object ExecuteScalar()
+        {
+            this.CheckCommand();
 
-			object returnValue = null;
+            object returnValue = null;
 
-			this.InternalPrepare();
-			this.InternalExecute();
+            this.InternalPrepare();
+            this.InternalExecute();
 
-			if (this.statement != null && this.statement.HasRows)
-			{
-				returnValue = ((object[])this.statement.Rows[0])[0];
-			}
+            if (this.statement != null && this.statement.HasRows)
+            {
+                returnValue = ((object[])this.statement.Rows[0])[0];
+            }
 
-			return returnValue;
-		}
+            return returnValue;
+        }
 
-		public override void Prepare()
-		{
-			this.CheckCommand();
+        public override void Prepare()
+        {
+            this.CheckCommand();
 
-			this.InternalPrepare();
-		}
+            this.InternalPrepare();
+        }
 
-		#endregion
+        #endregion
 
-		#region · Internal Methods ·
+        #region · Internal Methods ·
 
-		internal void InternalPrepare()
-		{
-			PgConnectionInternal conn = this.connection.InternalConnection;
+        internal void InternalPrepare()
+        {
+            PgConnectionInternal conn = this.connection.InternalConnection;
 
-			conn.AddPreparedCommand(this);			
+            conn.AddPreparedCommand(this);			
 
-			try
-			{
-				string sql = this.commandText;
+            try
+            {
+                string sql = this.commandText;
 
-				if (this.statement == null || 
-					this.statement.Status == PgStatementStatus.Initial || 
-					this.statement.Status == PgStatementStatus.Error)
-				{
-					if (this.commandType == CommandType.StoredProcedure)
-					{
-						sql = this.BuildStoredProcedureSql(sql);
-					}
+                if (this.statement == null || 
+                    this.statement.Status == PgStatementStatus.Initial || 
+                    this.statement.Status == PgStatementStatus.Error)
+                {
+                    if (this.commandType == CommandType.StoredProcedure)
+                    {
+                        sql = this.BuildStoredProcedureSql(sql);
+                    }
 
                     string statementName    = this.GetStmtName();
                     string prepareName      = String.Format("PS{0}", statementName);
@@ -437,70 +437,70 @@ namespace PostgreSql.Data.PostgreSqlClient
 
                     this.statement = conn.Database.CreateStatement(prepareName, portalName, this.ParseNamedParameters(sql));
 
-					// Parse statement
-					this.statement.Parse();
+                    // Parse statement
+                    this.statement.Parse();
 
-					// Describe statement
-					this.statement.Describe();
-				}
-				else
-				{
-					// Close existent portal
-					this.statement.ClosePortal();
-				}
-			}
-			catch (PgClientException ex)
-			{
-				throw new PgException(ex.Message, ex);
-			}
-		}
+                    // Describe statement
+                    this.statement.Describe();
+                }
+                else
+                {
+                    // Close existent portal
+                    this.statement.ClosePortal();
+                }
+            }
+            catch (PgClientException ex)
+            {
+                throw new PgException(ex.Message, ex);
+            }
+        }
 
-		internal void InternalExecute()
-		{
-			try
-			{
-				if (this.Parameters.Count != 0)
-				{
-					// Set parameter values
-					this.SetParameterValues();
-				}
+        internal void InternalExecute()
+        {
+            try
+            {
+                if (this.Parameters.Count != 0)
+                {
+                    // Set parameter values
+                    this.SetParameterValues();
+                }
 
-				// Bind Statement
-				this.statement.Bind();
+                // Bind Statement
+                this.statement.Bind();
 
-				// Execute Statement
-				this.statement.Execute();
-			}
-			catch (PgClientException ex)
-			{
-				throw new PgException(ex.Message, ex);
-			}
-		}
+                // Execute Statement
+                this.statement.Execute();
+            }
+            catch (PgClientException ex)
+            {
+                throw new PgException(ex.Message, ex);
+            }
+        }
 
-		internal void InternalClose()
-		{
-			if (this.statement != null)
-			{
-				try
-				{
-					// Closing the prepared statement closes all his portals too.
-					this.statement.Close();
-					this.statement = null;
-				}
-				catch (PgClientException ex)
-				{
-					throw new PgException(ex.Message, ex);
-				}
-			}
-		}
-		
-		internal void InternalSetOutputParameters()
-		{
-			if (this.CommandType == CommandType.StoredProcedure && 
-				this.Parameters.Count > 0)
-			{
-				IEnumerator paramEnumerator = this.Parameters.GetEnumerator();
-				int i = 0;
+        internal void InternalClose()
+        {
+            if (this.statement != null)
+            {
+                try
+                {
+                    // Closing the prepared statement closes all his portals too.
+                    this.statement.Close();
+                    this.statement = null;
+                }
+                catch (PgClientException ex)
+                {
+                    throw new PgException(ex.Message, ex);
+                }
+            }
+        }
+        
+        internal void InternalSetOutputParameters()
+        {
+            if (this.CommandType == CommandType.StoredProcedure && 
+                this.Parameters.Count > 0)
+            {
+                IEnumerator paramEnumerator = this.Parameters.GetEnumerator();
+                int i = 0;
 
                 if (this.statement.Rows != null && this.statement.Rows.Length > 0)
                 {
@@ -522,84 +522,84 @@ namespace PostgreSql.Data.PostgreSqlClient
                     }
                 }
             }			
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
-		private void CheckCommand()
-		{
-			if (this.transaction != null && this.transaction.IsUpdated)
-			{
-				this.transaction = null;
-			}
+        private void CheckCommand()
+        {
+            if (this.transaction != null && this.transaction.IsUpdated)
+            {
+                this.transaction = null;
+            }
 
-			if (this.connection == null || this.connection.State != ConnectionState.Open)
-			{
-				throw new InvalidOperationException("Connection must valid and open");
+            if (this.connection == null || this.connection.State != ConnectionState.Open)
+            {
+                throw new InvalidOperationException("Connection must valid and open");
 
-			}
-			if (this.ActiveDataReader != null)
-			{
-				throw new InvalidOperationException("There is already an open DataReader associated with this Command which must be closed first.");
-			}
+            }
+            if (this.ActiveDataReader != null)
+            {
+                throw new InvalidOperationException("There is already an open DataReader associated with this Command which must be closed first.");
+            }
 
-			if (this.connection.InternalConnection.HasActiveTransaction &&
-				this.Transaction == null)
-			{
-				throw new InvalidOperationException("Execute requires the Command object to have a Transaction object when the Connection object assigned to the command is in a pending local transaction.  The Transaction property of the Command has not been initialized.");
-			}
+            if (this.connection.InternalConnection.HasActiveTransaction &&
+                this.Transaction == null)
+            {
+                throw new InvalidOperationException("Execute requires the Command object to have a Transaction object when the Connection object assigned to the command is in a pending local transaction.  The Transaction property of the Command has not been initialized.");
+            }
 
-			if (this.transaction != null && !this.connection.Equals(Transaction.Connection))
-			{
-				throw new InvalidOperationException("Command Connection is not equal to Transaction Connection");
-			}
+            if (this.transaction != null && !this.connection.Equals(Transaction.Connection))
+            {
+                throw new InvalidOperationException("Command Connection is not equal to Transaction Connection");
+            }
 
-			if (this.commandText == null || this.commandText.Length == 0)
-			{
-				throw new InvalidOperationException ("The command text for this Command has not been set.");
-			}
-		}
+            if (this.commandText == null || this.commandText.Length == 0)
+            {
+                throw new InvalidOperationException ("The command text for this Command has not been set.");
+            }
+        }
 
-		private string BuildStoredProcedureSql(string commandText)
-		{
-			if (!commandText.Trim().ToLower().StartsWith("select "))
-			{
-				StringBuilder paramsText = new StringBuilder();
+        private string BuildStoredProcedureSql(string commandText)
+        {
+            if (!commandText.Trim().ToLower().StartsWith("select "))
+            {
+                StringBuilder paramsText = new StringBuilder();
 
-				// Append the stored proc parameter name
-				paramsText.Append(commandText);
-				paramsText.Append("(");
+                // Append the stored proc parameter name
+                paramsText.Append(commandText);
+                paramsText.Append("(");
 
-				for (int i = 0; i < this.Parameters.Count; i++)
-				{
-					if (this.Parameters[i].Direction == ParameterDirection.Input ||
-						this.Parameters[i].Direction == ParameterDirection.InputOutput)
-					{
-						// Append parameter name to parameter list
-						paramsText.Append(this.Parameters[i].ParameterName);
+                for (int i = 0; i < this.Parameters.Count; i++)
+                {
+                    if (this.Parameters[i].Direction == ParameterDirection.Input ||
+                        this.Parameters[i].Direction == ParameterDirection.InputOutput)
+                    {
+                        // Append parameter name to parameter list
+                        paramsText.Append(this.Parameters[i].ParameterName);
 
-						if (i != this.Parameters.Count - 1)
-						{
-							paramsText = paramsText.Append(",");
-						}
-					}
-				}
+                        if (i != this.Parameters.Count - 1)
+                        {
+                            paramsText = paramsText.Append(",");
+                        }
+                    }
+                }
 
-				paramsText.Append(")");
-				paramsText.Replace(",)", ")");
-				
-				commandText = String.Format("select * from {0}", paramsText.ToString());
-			}
+                paramsText.Append(")");
+                paramsText.Replace(",)", ")");
+                
+                commandText = String.Format("select * from {0}", paramsText.ToString());
+            }
 
-			return commandText;
-		}
+            return commandText;
+        }
 
-		private string GetStmtName()
-		{
-			return Guid.NewGuid().GetHashCode().ToString();
-		}
+        private string GetStmtName()
+        {
+            return Guid.NewGuid().GetHashCode().ToString();
+        }
 
         private string ParseNamedParameters(string sql)
         {
@@ -661,35 +661,35 @@ namespace PostgreSql.Data.PostgreSqlClient
             return builder.ToString();
         }
 
-		private void SetParameterValues()
-		{
-			if (this.Parameters.Count != 0)
-			{
-				for (int i = 0; i < this.statement.Parameters.Length; i++)
-				{
-					int index = i;
+        private void SetParameterValues()
+        {
+            if (this.Parameters.Count != 0)
+            {
+                for (int i = 0; i < this.statement.Parameters.Length; i++)
+                {
+                    int index = i;
 
-					if (this.NamedParameters.Count > 0)
-					{
-						index = this.Parameters.IndexOf(this.NamedParameters[i]);
-					}
+                    if (this.NamedParameters.Count > 0)
+                    {
+                        index = this.Parameters.IndexOf(this.NamedParameters[i]);
+                    }
 
-					if (this.Parameters[index].Direction == ParameterDirection.Input ||
-						this.Parameters[index].Direction == ParameterDirection.InputOutput)
-					{
-						if (this.Parameters[index].Value == System.DBNull.Value)
-						{
-							this.statement.Parameters[i].Value = null;
-						}
-						else
-						{
-							this.statement.Parameters[i].Value = this.Parameters[index].Value;
-						}
-					}
-				}
-			}
-		}
+                    if (this.Parameters[index].Direction == ParameterDirection.Input ||
+                        this.Parameters[index].Direction == ParameterDirection.InputOutput)
+                    {
+                        if (this.Parameters[index].Value == System.DBNull.Value)
+                        {
+                            this.statement.Parameters[i].Value = null;
+                        }
+                        else
+                        {
+                            this.statement.Parameters[i].Value = this.Parameters[index].Value;
+                        }
+                    }
+                }
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

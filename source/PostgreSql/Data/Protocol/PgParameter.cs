@@ -19,53 +19,53 @@
 namespace PostgreSql.Data.Protocol
 {
     internal sealed class PgParameter
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private PgType	dataType;
+        private PgType	dataType;
         private int     dataTypeOid;
-		private object	data;
+        private object	data;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgType DataType
-		{
-			get { return this.dataType; }
-			set { this.dataType = value; }
-		}
+        public PgType DataType
+        {
+            get { return this.dataType; }
+            set { this.dataType = value; }
+        }
 
-		public object Value
-		{
-			get { return this.data; }
-			set { this.data = value; }
-		}
+        public object Value
+        {
+            get { return this.data; }
+            set { this.data = value; }
+        }
 
         public int DataTypeOid
         {
             get { return this.dataTypeOid; }
         }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgParameter()
-		{
-		}
+        public PgParameter()
+        {
+        }
 
         public PgParameter(int dataTypeOid)
             : this(dataTypeOid, null)
-		{
-		}
+        {
+        }
 
         public PgParameter(int dataTypeOid, object data)
-		{
+        {
             this.dataTypeOid    = dataTypeOid;
-			this.data           = data;
-		}
+            this.data           = data;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

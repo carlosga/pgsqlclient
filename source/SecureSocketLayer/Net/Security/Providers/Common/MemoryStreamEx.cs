@@ -30,188 +30,188 @@ using System.Net;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {
-	internal sealed class MemoryStreamEx
-	{
-		#region · Fields ·
+    internal sealed class MemoryStreamEx
+    {
+        #region · Fields ·
 
-		private MemoryStream buffer;
+        private MemoryStream buffer;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public long Position
-		{
-			get { return this.buffer.Position; }
-			set { this.buffer.Position = value; }
-		}
+        public long Position
+        {
+            get { return this.buffer.Position; }
+            set { this.buffer.Position = value; }
+        }
 
-		public int Length
-		{
-			get { return(int)this.buffer.Length; }
-		}
+        public int Length
+        {
+            get { return(int)this.buffer.Length; }
+        }
 
-		public bool EOF
-		{
-			get
-			{
-				if (this.Position < this.Length) 
+        public bool EOF
+        {
+            get
+            {
+                if (this.Position < this.Length) 
                 {
-					return false;
-				}
-				else 
+                    return false;
+                }
+                else 
                 {
-					return true;
-				}
-			}
-		}
+                    return true;
+                }
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public MemoryStreamEx() : base()
-		{
-			this.buffer	= new MemoryStream();
-		}
+        public MemoryStreamEx() : base()
+        {
+            this.buffer	= new MemoryStream();
+        }
 
-		public MemoryStreamEx(byte[] buffer)
-		{
-			this.buffer	= new MemoryStream(buffer);
-		}
+        public MemoryStreamEx(byte[] buffer)
+        {
+            this.buffer	= new MemoryStream(buffer);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Specific Read Methods ·
+        #region · Specific Read Methods ·
 
-		public byte ReadByte()
-		{
-			return(byte)this.buffer.ReadByte();
-		}
+        public byte ReadByte()
+        {
+            return(byte)this.buffer.ReadByte();
+        }
 
-		public short ReadInt16()
-		{
-			byte[] bytes = this.ReadBytes(2);
+        public short ReadInt16()
+        {
+            byte[] bytes = this.ReadBytes(2);
 
-			return IPAddress.HostToNetworkOrder(BitConverter.ToInt16(bytes, 0));
-		}
+            return IPAddress.HostToNetworkOrder(BitConverter.ToInt16(bytes, 0));
+        }
 
-		public int ReadInt24()
-		{
-			return Helper.DecodeInt24(this.ReadBytes(3));
-		}
+        public int ReadInt24()
+        {
+            return Helper.DecodeInt24(this.ReadBytes(3));
+        }
 
-		public int ReadInt32()
-		{
-			byte[] bytes = this.ReadBytes(4);
+        public int ReadInt32()
+        {
+            byte[] bytes = this.ReadBytes(4);
 
-			return IPAddress.HostToNetworkOrder(BitConverter.ToInt32(bytes, 0));
-		}
+            return IPAddress.HostToNetworkOrder(BitConverter.ToInt32(bytes, 0));
+        }
 
-		public long ReadInt64()
-		{
-			byte[] bytes = this.ReadBytes(8);
+        public long ReadInt64()
+        {
+            byte[] bytes = this.ReadBytes(8);
 
-			return IPAddress.HostToNetworkOrder(BitConverter.ToInt64(bytes, 0));
-		}
+            return IPAddress.HostToNetworkOrder(BitConverter.ToInt64(bytes, 0));
+        }
 
-		public byte[] ReadBytes(int count)
-		{
-			byte[] bytes = new byte[count];
-			this.buffer.Read(bytes, 0, count);
+        public byte[] ReadBytes(int count)
+        {
+            byte[] bytes = new byte[count];
+            this.buffer.Read(bytes, 0, count);
 
-			return bytes;
-		}
+            return bytes;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Specific Write Methods ·
+        #region · Specific Write Methods ·
 
-		public void Write(byte value)
-		{
-			this.buffer.WriteByte(value);
-		}
+        public void Write(byte value)
+        {
+            this.buffer.WriteByte(value);
+        }
 
-		public void Write(short value)
-		{
-			byte[] bytes = BitConverter.GetBytes((short)IPAddress.HostToNetworkOrder(value));
-			this.Write(bytes);
-		}
+        public void Write(short value)
+        {
+            byte[] bytes = BitConverter.GetBytes((short)IPAddress.HostToNetworkOrder(value));
+            this.Write(bytes);
+        }
 
-		public void WriteInt24(int value)
-		{
-			this.Write(Helper.EncodeInt24(value));
-		}
+        public void WriteInt24(int value)
+        {
+            this.Write(Helper.EncodeInt24(value));
+        }
 
-		public void Write(int value)
-		{
-			byte[] bytes = BitConverter.GetBytes((int)IPAddress.HostToNetworkOrder(value));
-			this.Write(bytes);
-		}
+        public void Write(int value)
+        {
+            byte[] bytes = BitConverter.GetBytes((int)IPAddress.HostToNetworkOrder(value));
+            this.Write(bytes);
+        }
 
-		public void Write(long value)
-		{
-			byte[] bytes = BitConverter.GetBytes((long)IPAddress.HostToNetworkOrder(value));
-			this.Write(bytes);
-		}
+        public void Write(long value)
+        {
+            byte[] bytes = BitConverter.GetBytes((long)IPAddress.HostToNetworkOrder(value));
+            this.Write(bytes);
+        }
 
-		public void Write(byte[] buffer)
-		{
-			this.buffer.Write(buffer, 0, buffer.Length);
-		}
+        public void Write(byte[] buffer)
+        {
+            this.buffer.Write(buffer, 0, buffer.Length);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public void Flush()
-		{
-			this.buffer.Flush();
-		}
+        public void Flush()
+        {
+            this.buffer.Flush();
+        }
 
-		public void SetLength(long length)
-		{
-			this.buffer.SetLength(length);
-		}
+        public void SetLength(long length)
+        {
+            this.buffer.SetLength(length);
+        }
 
-		public int Read(byte[] buffer, int offset, int count)
-		{
+        public int Read(byte[] buffer, int offset, int count)
+        {
             if (!this.buffer.CanRead)
             {
                 throw new InvalidOperationException("Read operations are not allowed by this stream");
             }
-			
-			return this.buffer.Read(buffer, offset, count);			
-		}
+            
+            return this.buffer.Read(buffer, offset, count);			
+        }
 
-		public void Write(byte[] buffer, int offset, int count)
-		{
+        public void Write(byte[] buffer, int offset, int count)
+        {
             if (!this.buffer.CanWrite)
             {
                 throw new InvalidOperationException("Write operations are not allowed by this stream");
             }
 
-			this.buffer.Write(buffer, offset, count);
-		}
+            this.buffer.Write(buffer, offset, count);
+        }
 
-		public void Close()
-		{
-			this.buffer.Close();
-		}
+        public void Close()
+        {
+            this.buffer.Close();
+        }
 
-		public void Reset()
-		{
-			this.buffer.SetLength(0);
-			this.buffer.Position = 0;
-		}
+        public void Reset()
+        {
+            this.buffer.SetLength(0);
+            this.buffer.Position = 0;
+        }
 
-		public byte[] ToArray()
-		{
-			return this.buffer.ToArray();
-		}
+        public byte[] ToArray()
+        {
+            return this.buffer.ToArray();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

@@ -22,152 +22,152 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public sealed class PgTransaction
+    public sealed class PgTransaction
         : DbTransaction
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private PgConnection		connection;
-		private IsolationLevel		isolationLevel;
-		private bool				disposed;
-		private bool				isUpdated;
+        private PgConnection		connection;
+        private IsolationLevel		isolationLevel;
+        private bool				disposed;
+        private bool				isUpdated;
 
-		#endregion
+        #endregion
 
-		#region · Protected Properties ·
+        #region · Protected Properties ·
 
-		protected override DbConnection DbConnection
-		{
-			get { return this.connection; }
-		}
+        protected override DbConnection DbConnection
+        {
+            get { return this.connection; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Internal Properties ·
+        #region · Internal Properties ·
 
-		internal bool IsUpdated
-		{
-			get { return this.isUpdated; }
-			set 
-			{ 
-				if (this.connection != null && value)
-				{
-					this.connection.InternalConnection.ActiveTransaction = null;
-					this.connection	= null;
-				}
-				this.isUpdated = value; 
-			}
-		}
+        internal bool IsUpdated
+        {
+            get { return this.isUpdated; }
+            set 
+            { 
+                if (this.connection != null && value)
+                {
+                    this.connection.InternalConnection.ActiveTransaction = null;
+                    this.connection	= null;
+                }
+                this.isUpdated = value; 
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public new PgConnection Connection
-		{
-			get { return this.connection; }
-		}
+        public new PgConnection Connection
+        {
+            get { return this.connection; }
+        }
 
-		public override IsolationLevel IsolationLevel 
-		{
-			get { return this.isolationLevel; }
-		}
+        public override IsolationLevel IsolationLevel 
+        {
+            get { return this.isolationLevel; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		private PgTransaction() 
-			: this(null)
-		{
-		}
-		
-		internal PgTransaction(PgConnection connection) 
-			: this(connection, IsolationLevel.ReadCommitted)
-		{
-		}
+        private PgTransaction() 
+            : this(null)
+        {
+        }
+        
+        internal PgTransaction(PgConnection connection) 
+            : this(connection, IsolationLevel.ReadCommitted)
+        {
+        }
 
-		internal PgTransaction(PgConnection connection, IsolationLevel isolation)
-		{
-			this.connection		= connection;
-			this.isolationLevel = isolation;
-		}				
+        internal PgTransaction(PgConnection connection, IsolationLevel isolation)
+        {
+            this.connection		= connection;
+            this.isolationLevel = isolation;
+        }				
 
-		#endregion
+        #endregion
 
-		#region · Finalizer ·
+        #region · Finalizer ·
 
-		~PgTransaction()
-		{
-			this.Dispose(false);
-		}
+        ~PgTransaction()
+        {
+            this.Dispose(false);
+        }
 
-		#endregion
+        #endregion
 
-		#region · IDisposable Methods ·
+        #region · IDisposable Methods ·
 
-		protected override void Dispose(bool disposing)
-		{
-			if (!this.disposed)
-			{
-				if (disposing)
-				{
-					try
-					{
-						if (this.connection != null && !this.isUpdated)
-						{
-							// Implicitly roll back if the transaction still valid.
-							this.Rollback();
-						}
-					}
-					finally
-					{
-						if (this.connection != null)
-						{
-							this.connection.InternalConnection.ActiveTransaction = null;
-							this.connection	= null;
-						}
-						this.disposed	= true;
-						this.isUpdated	= true;
-					}
-				}
-			}			
-		}
-		
-		#endregion
+        protected override void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    try
+                    {
+                        if (this.connection != null && !this.isUpdated)
+                        {
+                            // Implicitly roll back if the transaction still valid.
+                            this.Rollback();
+                        }
+                    }
+                    finally
+                    {
+                        if (this.connection != null)
+                        {
+                            this.connection.InternalConnection.ActiveTransaction = null;
+                            this.connection	= null;
+                        }
+                        this.disposed	= true;
+                        this.isUpdated	= true;
+                    }
+                }
+            }			
+        }
+        
+        #endregion
 
-		#region · DbTransaction Overriden Methods ·
+        #region · DbTransaction Overriden Methods ·
 
-		public override void Commit()
-		{
-			this.CheckTransaction();
+        public override void Commit()
+        {
+            this.CheckTransaction();
 
-			try
-			{
-				this.connection.InternalConnection.Database.CommitTransaction();
-				
-				this.IsUpdated = true;
-			}
-			catch (PgClientException ex)
-			{
-				throw new PgException(ex.Message, ex);
-			}
-		}
+            try
+            {
+                this.connection.InternalConnection.Database.CommitTransaction();
+                
+                this.IsUpdated = true;
+            }
+            catch (PgClientException ex)
+            {
+                throw new PgException(ex.Message, ex);
+            }
+        }
 
-		public override void Rollback()
-		{
-			this.CheckTransaction();
+        public override void Rollback()
+        {
+            this.CheckTransaction();
 
-			try
-			{
-				this.connection.InternalConnection.Database.RollbackTransction();
-				
-				this.IsUpdated = true;
-			}
-			catch (PgClientException ex)
-			{
-				throw new PgException(ex.Message, ex);
-			}
+            try
+            {
+                this.connection.InternalConnection.Database.RollbackTransction();
+                
+                this.IsUpdated = true;
+            }
+            catch (PgClientException ex)
+            {
+                throw new PgException(ex.Message, ex);
+            }
         }
 
         #endregion
@@ -305,16 +305,16 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
-		private void CheckTransaction()
-		{
-			if (this.isUpdated)
-			{
-				throw new InvalidOperationException("This Transaction has completed; it is no longer usable.");
-			}
-		}
+        private void CheckTransaction()
+        {
+            if (this.isUpdated)
+            {
+                throw new InvalidOperationException("This Transaction has completed; it is no longer usable.");
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

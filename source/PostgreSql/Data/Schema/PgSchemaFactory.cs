@@ -24,31 +24,31 @@ using PostgreSql.Data.PostgreSqlClient;
 
 namespace PostgreSql.Data.Schema
 {
-	internal sealed class PgSchemaFactory
-	{
+    internal sealed class PgSchemaFactory
+    {
         #region · Static Members ·
 
         private static readonly string ResName = "PostgreSql.Data.Schema.MetaData.xml";
 
         #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		private PgSchemaFactory()
-		{
-		}
+        private PgSchemaFactory()
+        {
+        }
 
-		#endregion
+        #endregion
 
-		#region · Static Methods ·
+        #region · Static Methods ·
 
-		public static DataTable GetSchema(PgConnection connection, string collectionName, string[] restrictions)
-		{
+        public static DataTable GetSchema(PgConnection connection, string collectionName, string[] restrictions)
+        {
             string  filter      = String.Format("CollectionName = '{0}'", collectionName);
             Stream  xmlStream   = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResName);            	
             DataSet ds          = new DataSet();
 
-		    ds.ReadXml(xmlStream);            
+            ds.ReadXml(xmlStream);            
 
             DataRow[] collection = ds.Tables[DbMetaDataCollectionNames.MetaDataCollections].Select(filter);
 
@@ -81,25 +81,25 @@ namespace PostgreSql.Data.Schema
                 default:
                     throw new NotSupportedException("Unsupported population mechanism");
             }
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Schema Population Methods ·
+        #region · Schema Population Methods ·
 
-		private static DataTable PrepareCollection(PgConnection connection, string collectionName, string[] restrictions)
-		{
-			PgSchema schema = null;
+        private static DataTable PrepareCollection(PgConnection connection, string collectionName, string[] restrictions)
+        {
+            PgSchema schema = null;
 
-			switch (collectionName.Trim().ToLower())
-			{
+            switch (collectionName.Trim().ToLower())
+            {
                 case "checkconstraints":
                     schema = new PgCheckConstraints(connection);
                     break;
                 
                 case "columns":
                     schema = new PgColumns(connection);
-					break;
+                    break;
 
                 case "indexes":
                     schema = new PgIndexes(connection);
@@ -127,15 +127,15 @@ namespace PostgreSql.Data.Schema
 
                 case "primarykeys":
                     schema = new PgPrimaryKeys(connection);
-					break;
+                    break;
 
                 case "sequences":
                     schema = new PgSequences(connection);
                     break;
 
-				case "tables":
+                case "tables":
                     schema = new PgTables(connection);
-					break;
+                    break;
 
                 case "triggers":
                     schema = new PgTriggers(connection);
@@ -154,44 +154,44 @@ namespace PostgreSql.Data.Schema
                     break;
             }
 
-			return schema.GetSchema(collectionName, restrictions);
-		}
+            return schema.GetSchema(collectionName, restrictions);
+        }
 
-		private static DataTable SqlCommandCollection(PgConnection connection, string collectionName, string sql, string[] restrictions)
-		{
-			if (restrictions == null)
-			{
-				restrictions = new string[0];
-			}
+        private static DataTable SqlCommandCollection(PgConnection connection, string collectionName, string sql, string[] restrictions)
+        {
+            if (restrictions == null)
+            {
+                restrictions = new string[0];
+            }
 
-			DataTable		dataTable	= null;
-			PgDataAdapter	adapter		= null;
-			PgCommand		command = new PgCommand(String.Format(sql, restrictions), connection);
-			
-			try
-			{
-				adapter = new PgDataAdapter(command);
-				dataTable = new DataTable(collectionName);
+            DataTable		dataTable	= null;
+            PgDataAdapter	adapter		= null;
+            PgCommand		command = new PgCommand(String.Format(sql, restrictions), connection);
+            
+            try
+            {
+                adapter = new PgDataAdapter(command);
+                dataTable = new DataTable(collectionName);
 
-				adapter.Fill(dataTable);
-			}
-			catch (PgException)
-			{
-				throw;
-			}
-			catch (Exception ex)
-			{
-				throw new PgException(ex.Message);
-			}
-			finally
-			{
-				command.Dispose();
-				adapter.Dispose();
-			}
+                adapter.Fill(dataTable);
+            }
+            catch (PgException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PgException(ex.Message);
+            }
+            finally
+            {
+                command.Dispose();
+                adapter.Dispose();
+            }
 
-			return dataTable;			
-		}
+            return dataTable;			
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

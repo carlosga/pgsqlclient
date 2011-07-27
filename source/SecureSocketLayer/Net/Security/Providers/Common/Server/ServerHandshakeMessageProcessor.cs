@@ -31,70 +31,70 @@ using Mono.Security;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common.Server
 {
-	internal abstract class ServerHandshakeMessageProcessor : IHandshakeMessageProcessor
-	{
-		#region · Fields ·
+    internal abstract class ServerHandshakeMessageProcessor : IHandshakeMessageProcessor
+    {
+        #region · Fields ·
 
-		private ISecureAuthenticator authenticator;
+        private ISecureAuthenticator authenticator;
 
-		#endregion
+        #endregion
 
-		#region · Protected Properties ·
+        #region · Protected Properties ·
 
-		protected ISecureAuthenticator Authenticator
-		{
-			get { return this.authenticator; }
-		}
+        protected ISecureAuthenticator Authenticator
+        {
+            get { return this.authenticator; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Protected Constructors ·
+        #region · Protected Constructors ·
 
         protected ServerHandshakeMessageProcessor(ISecureAuthenticator authenticator)
-		{
-			this.authenticator = authenticator;
-		}
+        {
+            this.authenticator = authenticator;
+        }
 
-		#endregion
+        #endregion
 
-		#region · IHandshakeMessageProcessor Members ·
+        #region · IHandshakeMessageProcessor Members ·
 
-		public virtual void ClientHello(byte[] buffer)
-		{
-		}
+        public virtual void ClientHello(byte[] buffer)
+        {
+        }
 
-		public virtual void ServerHello(byte[] buffer)
-		{
-		}
+        public virtual void ServerHello(byte[] buffer)
+        {
+        }
 
         public virtual void Certificate(byte[] buffer)
         {
         }
 
-		public virtual void ServerKeyExchange(byte[] buffer)
-		{
-		}
+        public virtual void ServerKeyExchange(byte[] buffer)
+        {
+        }
 
-		public virtual void CertificateRequest(byte[] buffer)
-		{
-		}
+        public virtual void CertificateRequest(byte[] buffer)
+        {
+        }
 
-		public virtual void ServerHelloDone(byte[] buffer)
-		{
-		}
+        public virtual void ServerHelloDone(byte[] buffer)
+        {
+        }
 
-		public virtual void CertificateVerify(byte[] buffer)
-		{
-		}
+        public virtual void CertificateVerify(byte[] buffer)
+        {
+        }
 
-		public virtual void ClientKeyExchange(byte[] buffer)
-		{
-		}
+        public virtual void ClientKeyExchange(byte[] buffer)
+        {
+        }
 
-		public virtual void Finished(byte[] buffer)
-		{
-		}
+        public virtual void Finished(byte[] buffer)
+        {
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

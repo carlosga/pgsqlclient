@@ -19,10 +19,10 @@ using System;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal enum PgTypeFormat 
+    internal enum PgTypeFormat 
         : short
-	{
-		Text	= 0,
-		Binary	= 1
-	}
+    {
+        Text	= 0,
+        Binary	= 1
+    }
 }

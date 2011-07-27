@@ -22,80 +22,80 @@ using System.Globalization;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	[Serializable]
-	public sealed class PgErrorCollection 
+    [Serializable]
+    public sealed class PgErrorCollection 
         : ICollection, IEnumerable
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private ArrayList errors;
+        private ArrayList errors;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgError this[string errorMessage] 
-		{
-			get { return (PgError)this.errors[errors.IndexOf(errorMessage)]; }
-			set { this.errors[errors.IndexOf(errorMessage)] = (PgError)value; }
-		}
+        public PgError this[string errorMessage] 
+        {
+            get { return (PgError)this.errors[errors.IndexOf(errorMessage)]; }
+            set { this.errors[errors.IndexOf(errorMessage)] = (PgError)value; }
+        }
 
-		public PgError this[int errorIndex] 
-		{
-			get { return (PgError)this.errors[errorIndex]; }
-			set { this.errors[errorIndex] = (PgError)value; }
-		}
+        public PgError this[int errorIndex] 
+        {
+            get { return (PgError)this.errors[errorIndex]; }
+            set { this.errors[errorIndex] = (PgError)value; }
+        }
 
-		public int Count
-		{
-			get { return this.errors.Count; }
-		}
+        public int Count
+        {
+            get { return this.errors.Count; }
+        }
 
-		public bool IsSynchronized
-		{
-			get { return this.errors.IsSynchronized; }
-		}
+        public bool IsSynchronized
+        {
+            get { return this.errors.IsSynchronized; }
+        }
 
-		public object SyncRoot
-		{
-			get { return this.errors.SyncRoot; }
-		}
+        public object SyncRoot
+        {
+            get { return this.errors.SyncRoot; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		internal PgErrorCollection()
-		{
-			this.errors = new ArrayList();
-		}
+        internal PgErrorCollection()
+        {
+            this.errors = new ArrayList();
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public IEnumerator GetEnumerator()
-		{
-			return errors.GetEnumerator();
-		}
+        public IEnumerator GetEnumerator()
+        {
+            return errors.GetEnumerator();
+        }
 
-		public void CopyTo(Array array, int index)
-		{
-			this.errors.CopyTo(array, index);
-		}
-			
-		internal PgError Add(PgError error)
-		{
-			this.errors.Add(error);
+        public void CopyTo(Array array, int index)
+        {
+            this.errors.CopyTo(array, index);
+        }
+            
+        internal PgError Add(PgError error)
+        {
+            this.errors.Add(error);
 
-			return error;
-		}
+            return error;
+        }
 
-		internal PgError Add(string severity, string message, string code)
-		{
-			PgError error = new PgError(severity, code, message);
+        internal PgError Add(string severity, string message, string code)
+        {
+            PgError error = new PgError(severity, code, message);
 
-			return this.Add(error);
+            return this.Add(error);
         }
 
         #endregion
@@ -103,14 +103,14 @@ namespace PostgreSql.Data.PostgreSqlClient
         #region · Private Methods ·
 
         private bool cultureAwareCompare(string strA, string strB)
-		{
-			return CultureInfo.CurrentCulture.CompareInfo.Compare(
-				strA, 
-				strB, 
-				CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-				CompareOptions.IgnoreCase) == 0 ? true : false;
-		}
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.Compare(
+                strA, 
+                strB, 
+                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
+                CompareOptions.IgnoreCase) == 0 ? true : false;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

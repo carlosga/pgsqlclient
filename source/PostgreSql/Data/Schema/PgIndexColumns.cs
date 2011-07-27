@@ -20,9 +20,9 @@ using PostgreSql.Data.PostgreSqlClient;
 
 namespace PostgreSql.Data.Schema
 {
-	internal sealed class PgIndexColumns 
+    internal sealed class PgIndexColumns 
         : PgSchema
-	{
+    {
         #region · Constructors ·
 
         public PgIndexColumns(PgConnection connection)
@@ -32,10 +32,10 @@ namespace PostgreSql.Data.Schema
 
         #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected override string BuildSql(string[] restrictions)
-		{
+        protected override string BuildSql(string[] restrictions)
+        {
             string sql =
                 "SELECT " +
                     "current_database() AS TABLE_CATALOG, " +
@@ -90,6 +90,6 @@ namespace PostgreSql.Data.Schema
             return sql;
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

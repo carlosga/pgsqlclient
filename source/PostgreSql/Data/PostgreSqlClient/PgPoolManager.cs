@@ -29,20 +29,20 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #endregion
 
-		#region · Static Properties ·
+        #region · Static Properties ·
 
-		public static PgPoolManager Instance
-		{
-			get { return PgPoolManager.instance; }
-		}
+        public static PgPoolManager Instance
+        {
+            get { return PgPoolManager.instance; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Fields ·
+        #region · Fields ·
 
-		private Hashtable	pools;
+        private Hashtable	pools;
         private Hashtable	handlers;
-		private object		syncObject;
+        private object		syncObject;
 
         #endregion
 
@@ -227,9 +227,9 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #endregion
 
-		#region · Event Handlers ·
+        #region · Event Handlers ·
 
-		private void OnEmptyPool(object sender, EventArgs e)
+        private void OnEmptyPool(object sender, EventArgs e)
         {
             lock (this.Pools.SyncRoot)
             {

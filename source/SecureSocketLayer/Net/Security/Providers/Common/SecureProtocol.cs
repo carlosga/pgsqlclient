@@ -27,361 +27,361 @@ using System.IO;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {
-	internal abstract class SecureProtocol : ISecureProtocol
-	{
-		#region · Callbacks Fields ·
+    internal abstract class SecureProtocol : ISecureProtocol
+    {
+        #region · Callbacks Fields ·
 
-		private RecordReceivedCallback recordReceived;
-		private RecordSentCallback recordSent;
+        private RecordReceivedCallback recordReceived;
+        private RecordSentCallback recordSent;
 
-		#endregion
+        #endregion
 
-		#region · Callbacks Properties ·
+        #region · Callbacks Properties ·
 
-		public RecordReceivedCallback RecordReceived 
-		{ 
-			get { return this.recordReceived; }
-			set { this.recordReceived = value; } 
-		}
+        public RecordReceivedCallback RecordReceived 
+        { 
+            get { return this.recordReceived; }
+            set { this.recordReceived = value; } 
+        }
 
-		public RecordSentCallback RecordSent 
-		{ 
-			get { return this.recordSent; }
-			set { this.recordSent = value; } 
-		}
+        public RecordSentCallback RecordSent 
+        { 
+            get { return this.recordSent; }
+            set { this.recordSent = value; } 
+        }
 
-		#endregion
+        #endregion
 
-		#region · Fields ·
+        #region · Fields ·
 
-		private SecureSession	session;
-		private	Stream			inputStream;
-		private	Stream			outputStream;
-		private int				maxRecordLength;
-		private long			writeSequenceNumber;
-		private long			readSequenceNumber;
+        private SecureSession	session;
+        private	Stream			inputStream;
+        private	Stream			outputStream;
+        private int				maxRecordLength;
+        private long			writeSequenceNumber;
+        private long			readSequenceNumber;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public int MaxRecordLength 
-		{ 
-			get { return this.maxRecordLength; }
-			set { this.maxRecordLength = value; }
-		}
+        public int MaxRecordLength 
+        { 
+            get { return this.maxRecordLength; }
+            set { this.maxRecordLength = value; }
+        }
 
-		public long WriteSequenceNumber
-		{
-			get { return this.writeSequenceNumber; }
-		}
+        public long WriteSequenceNumber
+        {
+            get { return this.writeSequenceNumber; }
+        }
 
-		public long ReadSequenceNumber
-		{
-			get { return this.readSequenceNumber; }
-		}
+        public long ReadSequenceNumber
+        {
+            get { return this.readSequenceNumber; }
+        }
 
-		public Stream InputStream 
-		{ 
-			get { return this.inputStream; }
-			set { this.inputStream = value; } 
-		}
+        public Stream InputStream 
+        { 
+            get { return this.inputStream; }
+            set { this.inputStream = value; } 
+        }
 
-		public Stream OutputStream 
-		{ 
-			get { return this.outputStream; }
-			set { this.outputStream = value; } 
-		}
+        public Stream OutputStream 
+        { 
+            get { return this.outputStream; }
+            set { this.outputStream = value; } 
+        }
 
 
-		#endregion
+        #endregion
 
-		#region · Protected Properties ·
+        #region · Protected Properties ·
 
-		protected SecureSession Session
-		{
-			get { return this.session; }
-		}
+        protected SecureSession Session
+        {
+            get { return this.session; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		protected SecureProtocol(SecureSession session)
-		{
-			this.session			= session;
-			this.maxRecordLength	= 16384;
-		}
+        protected SecureProtocol(SecureSession session)
+        {
+            this.session			= session;
+            this.maxRecordLength	= 16384;
+        }
 
-		#endregion
+        #endregion
 
         #region · ISecureProtocol Members ·
 
         public SecureRecord Read()
-		{
-			// Try to read the Record Content Type
-			int type = this.inputStream.ReadByte();
-			if (type == -1)
-			{
-				return null;
-			}
+        {
+            // Try to read the Record Content Type
+            int type = this.inputStream.ReadByte();
+            if (type == -1)
+            {
+                return null;
+            }
 
-			ContentType	contentType	= (ContentType)type;
-			SecureRecord record = this.ReadRecord(type);
-			if (record == null)
-			{
-				// record incomplete(at the moment)
-				return null;
-			}
+            ContentType	contentType	= (ContentType)type;
+            SecureRecord record = this.ReadRecord(type);
+            if (record == null)
+            {
+                // record incomplete(at the moment)
+                return null;
+            }
 
-			// Set content type of the record
-			record.ContentType = contentType;
+            // Set content type of the record
+            record.ContentType = contentType;
 
-			// Decrypt message contents if needed
-			if (contentType == ContentType.Alert && record.Fragment.Length == 2)
-			{
-			}
-			else
-			{
+            // Decrypt message contents if needed
+            if (contentType == ContentType.Alert && record.Fragment.Length == 2)
+            {
+            }
+            else
+            {
 #warning FIXME !!! Handle Record Compression
 
-				if (this.Session.IsEncrypted && contentType != ContentType.ChangeCipherSpec)
-				{
-					record.Fragment = this.Decrypt(record);
-				}
-			}
+                if (this.Session.IsEncrypted && contentType != ContentType.ChangeCipherSpec)
+                {
+                    record.Fragment = this.Decrypt(record);
+                }
+            }
 
-			if (this.RecordReceived != null && !this.Session.IsEncrypted)
-			{
-				this.RecordReceived(record);
-			}
+            if (this.RecordReceived != null && !this.Session.IsEncrypted)
+            {
+                this.RecordReceived(record);
+            }
 
-			// Process record
-			switch (contentType)
-			{
-				case ContentType.Alert:
+            // Process record
+            switch (contentType)
+            {
+                case ContentType.Alert:
 #warning FIXME !!! Alert processing
-					break;
+                    break;
 
-				case ContentType.ApplicationData:
-				case ContentType.ChangeCipherSpec:
-				case ContentType.Handshake:
-					return record;
+                case ContentType.ApplicationData:
+                case ContentType.ChangeCipherSpec:
+                case ContentType.Handshake:
+                    return record;
 
-				default:
-					if (contentType != (ContentType)0x80)
-					{
-						throw new Exception("Unknown record received from server.");
-					}
-					break;
-			}
+                default:
+                    if (contentType != (ContentType)0x80)
+                    {
+                        throw new Exception("Unknown record received from server.");
+                    }
+                    break;
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		public void Write(byte[] buffer)
-		{
-			if (!this.session.IsAuthenticated)
-			{
-				this.Write(ContentType.Handshake, buffer);
-			}
-			else
-			{
-				this.Write(ContentType.ApplicationData, buffer);
-			}
-		}
+        public void Write(byte[] buffer)
+        {
+            if (!this.session.IsAuthenticated)
+            {
+                this.Write(ContentType.Handshake, buffer);
+            }
+            else
+            {
+                this.Write(ContentType.ApplicationData, buffer);
+            }
+        }
 
-		public void Write(ContentType contentType, byte[] buffer)
-		{
-			SecureRecordCollection records = this.EncodeFragment(contentType, buffer);
+        public void Write(ContentType contentType, byte[] buffer)
+        {
+            SecureRecordCollection records = this.EncodeFragment(contentType, buffer);
 
-			foreach (SecureRecord r in records)
-			{
-				this.outputStream.WriteByte((byte)r.ContentType);
-				this.outputStream.Write(Helper.EncodeInt16(r.Protocol), 0, 2);
-				this.outputStream.Write(Helper.EncodeInt16((short)r.Fragment.Length), 0, 2);
-				this.outputStream.Write(r.Fragment, 0, r.Fragment.Length);
-				this.outputStream.Flush();
-			}
-		}
+            foreach (SecureRecord r in records)
+            {
+                this.outputStream.WriteByte((byte)r.ContentType);
+                this.outputStream.Write(Helper.EncodeInt16(r.Protocol), 0, 2);
+                this.outputStream.Write(Helper.EncodeInt16((short)r.Fragment.Length), 0, 2);
+                this.outputStream.Write(r.Fragment, 0, r.Fragment.Length);
+                this.outputStream.Flush();
+            }
+        }
 
-		public IAsyncResult BeginRead(
-			byte[]			buffer,
-			int				offset,
-			int				count,
-			AsyncCallback	callback,
-			object			state)
-		{
-			throw new NotImplementedException();
-		}
+        public IAsyncResult BeginRead(
+            byte[]			buffer,
+            int				offset,
+            int				count,
+            AsyncCallback	callback,
+            object			state)
+        {
+            throw new NotImplementedException();
+        }
 
-		public int EndRead(IAsyncResult asyncResult)
-		{
-			throw new NotImplementedException();
-		}
+        public int EndRead(IAsyncResult asyncResult)
+        {
+            throw new NotImplementedException();
+        }
 
-		public IAsyncResult BeginWrite(
-			byte[]			buffer,
-			int				offset,
-			int				count,
-			AsyncCallback	callback,
-			object			state)
-		{
-			MemoryStream data = new MemoryStream();
+        public IAsyncResult BeginWrite(
+            byte[]			buffer,
+            int				offset,
+            int				count,
+            AsyncCallback	callback,
+            object			state)
+        {
+            MemoryStream data = new MemoryStream();
 
-			SecureRecordCollection records = this.EncodeFragment(ContentType.ApplicationData, buffer, offset, count);
-			foreach (SecureRecord r in records)
-			{
-				data.WriteByte((byte)r.ContentType);
-				data.Write(Helper.EncodeInt16(r.Protocol), 0, 2);
-				data.Write(Helper.EncodeInt16((short)r.Fragment.Length), 0, 2);
-				data.Write(r.Fragment, 0, r.Fragment.Length);
-				data.Flush();
-			}
+            SecureRecordCollection records = this.EncodeFragment(ContentType.ApplicationData, buffer, offset, count);
+            foreach (SecureRecord r in records)
+            {
+                data.WriteByte((byte)r.ContentType);
+                data.Write(Helper.EncodeInt16(r.Protocol), 0, 2);
+                data.Write(Helper.EncodeInt16((short)r.Fragment.Length), 0, 2);
+                data.Write(r.Fragment, 0, r.Fragment.Length);
+                data.Flush();
+            }
 
-			return this.outputStream.BeginWrite(data.ToArray(), 0, (int)data.ToArray().Length, callback, state);
-		}
-		
-		public void EndWrite(IAsyncResult asyncResult)
-		{
-			this.outputStream.EndWrite(asyncResult);
-		}
+            return this.outputStream.BeginWrite(data.ToArray(), 0, (int)data.ToArray().Length, callback, state);
+        }
+        
+        public void EndWrite(IAsyncResult asyncResult)
+        {
+            this.outputStream.EndWrite(asyncResult);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Cryptography Methods ·
+        #region · Cryptography Methods ·
 
-		protected virtual SecureRecord ReadRecord(int contentType)
-		{
-			switch (contentType)
-			{
-				case 0x80:
+        protected virtual SecureRecord ReadRecord(int contentType)
+        {
+            switch (contentType)
+            {
+                case 0x80:
 #warning FIXME !!! Handle Client Hello V2
-					throw new NotSupportedException();
+                    throw new NotSupportedException();
 
-				default:
-					if (!Enum.IsDefined(typeof(ContentType),(ContentType)contentType))
-					{
-						throw new SecureException("Decode error");
-					}
-					return this.ReadRecord();
-			}
-		}
+                default:
+                    if (!Enum.IsDefined(typeof(ContentType),(ContentType)contentType))
+                    {
+                        throw new SecureException("Decode error");
+                    }
+                    return this.ReadRecord();
+            }
+        }
 
-		private SecureRecord ReadRecord()
-		{
-			SecureRecord record = new SecureRecord();
-			record.Protocol = this.ReadShort();
+        private SecureRecord ReadRecord()
+        {
+            SecureRecord record = new SecureRecord();
+            record.Protocol = this.ReadShort();
 
-			short length = this.ReadShort();
+            short length = this.ReadShort();
 
-			// process further only if the whole record is available
-			// note: the first 5 bytes aren't part of the length
-			if (this.inputStream.CanSeek && 
-				(length + 5 > this.inputStream.Length)) 
-			{
-				return null;
-			}
-			
-			// Read Record data
-			int		received	= 0;
-			byte[]	buffer		= new byte[length];
-			while (received != length)
-			{
-				received += this.inputStream.Read(buffer, received, buffer.Length - received);
-			}
+            // process further only if the whole record is available
+            // note: the first 5 bytes aren't part of the length
+            if (this.inputStream.CanSeek && 
+                (length + 5 > this.inputStream.Length)) 
+            {
+                return null;
+            }
+            
+            // Read Record data
+            int		received	= 0;
+            byte[]	buffer		= new byte[length];
+            while (received != length)
+            {
+                received += this.inputStream.Read(buffer, received, buffer.Length - received);
+            }
 
-			record.Fragment = buffer;
+            record.Fragment = buffer;
 
-			return record;
-		}
+            return record;
+        }
 
-		protected virtual SecureRecordCollection EncodeFragment(
-			ContentType	contentType, 
-			byte[]		buffer)
-		{
-			return this.EncodeFragment(contentType, buffer, 0, buffer.Length);
-		}
+        protected virtual SecureRecordCollection EncodeFragment(
+            ContentType	contentType, 
+            byte[]		buffer)
+        {
+            return this.EncodeFragment(contentType, buffer, 0, buffer.Length);
+        }
 
-		protected virtual SecureRecordCollection EncodeFragment(
-			ContentType	contentType, 
-			byte[]		buffer,
-			int			offset,
-			int			count)
-		{
-			SecureRecordCollection	records		= new SecureRecordCollection();
-			int						position	= offset;
+        protected virtual SecureRecordCollection EncodeFragment(
+            ContentType	contentType, 
+            byte[]		buffer,
+            int			offset,
+            int			count)
+        {
+            SecureRecordCollection	records		= new SecureRecordCollection();
+            int						position	= offset;
 
-			while (position < (offset + count))
-			{
-				int	fragmentLength = 0;
+            while (position < (offset + count))
+            {
+                int	fragmentLength = 0;
 
-				if ((count - position) > this.MaxRecordLength)
-				{
-					fragmentLength = this.MaxRecordLength;
-				}
-				else
-				{
-					fragmentLength = count - position;
-				}
+                if ((count - position) > this.MaxRecordLength)
+                {
+                    fragmentLength = this.MaxRecordLength;
+                }
+                else
+                {
+                    fragmentLength = count - position;
+                }
 
-				SecureRecord record = new SecureRecord();
-				record.ContentType	= contentType;
-				record.Protocol		= Helper.GetProtocolCode(this.session.CurrentProtocolType);
-				record.Fragment		= new byte[fragmentLength];
+                SecureRecord record = new SecureRecord();
+                record.ContentType	= contentType;
+                record.Protocol		= Helper.GetProtocolCode(this.session.CurrentProtocolType);
+                record.Fragment		= new byte[fragmentLength];
 
-				Buffer.BlockCopy(buffer, position, record.Fragment, 0, record.Fragment.Length);
+                Buffer.BlockCopy(buffer, position, record.Fragment, 0, record.Fragment.Length);
 
-				if (this.RecordSent != null)
-				{
-					// For the Handshake Message Hash we need the
-					// original record (not encrypted)
-					this.RecordSent(record);
-				}
+                if (this.RecordSent != null)
+                {
+                    // For the Handshake Message Hash we need the
+                    // original record (not encrypted)
+                    this.RecordSent(record);
+                }
 
-				if (this.session.IsEncrypted)
-				{
-					record.Fragment = this.Encrypt(record);
-				}
+                if (this.session.IsEncrypted)
+                {
+                    record.Fragment = this.Encrypt(record);
+                }
 
-				// Add the new record to the collection
-				records.Add(record);
+                // Add the new record to the collection
+                records.Add(record);
 
-				// Update buffer position
-				position += fragmentLength;
-			}
+                // Update buffer position
+                position += fragmentLength;
+            }
 
-			return records;
-		}
+            return records;
+        }
 
-		protected virtual byte[] Encrypt(SecureRecord record)
-		{
-			this.writeSequenceNumber++;
+        protected virtual byte[] Encrypt(SecureRecord record)
+        {
+            this.writeSequenceNumber++;
 
-			return null;
-		}
+            return null;
+        }
 
-		protected virtual byte[] Decrypt(SecureRecord record)
-		{
-			this.readSequenceNumber++;
+        protected virtual byte[] Decrypt(SecureRecord record)
+        {
+            this.readSequenceNumber++;
 
-			return null;
-		}
+            return null;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
-		private short ReadShort()
-		{
-			byte[] b = new byte[2];
-			this.inputStream.Read(b, 0, b.Length);
+        private short ReadShort()
+        {
+            byte[] b = new byte[2];
+            this.inputStream.Read(b, 0, b.Length);
 
-			short val = BitConverter.ToInt16(b, 0);
+            short val = BitConverter.ToInt16(b, 0);
 
-			return System.Net.IPAddress.HostToNetworkOrder(val);
-		}
+            return System.Net.IPAddress.HostToNetworkOrder(val);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

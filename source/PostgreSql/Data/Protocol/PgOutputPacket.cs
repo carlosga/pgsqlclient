@@ -25,338 +25,338 @@ using PostgreSql.Data.PgTypes;
 namespace PostgreSql.Data.Protocol
 {
     internal sealed class PgOutputPacket
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private MemoryStream	    stream;
-		private BinaryWriter	    packet;
-		private Encoding		    encoding;
+        private MemoryStream	    stream;
+        private BinaryWriter	    packet;
+        private Encoding		    encoding;
         private PgTypeCollection    dataTypes;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public int Position
-		{
-			get { return (int)this.stream.Position; }
-		}
+        public int Position
+        {
+            get { return (int)this.stream.Position; }
+        }
 
-		public int Length
-		{
-			get { return (int)this.stream.Length; }
-		}
+        public int Length
+        {
+            get { return (int)this.stream.Length; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgOutputPacket(PgTypeCollection dataTypes) 
-			: this(dataTypes, Encoding.Default)
-		{
-		}
+        public PgOutputPacket(PgTypeCollection dataTypes) 
+            : this(dataTypes, Encoding.Default)
+        {
+        }
 
-		public PgOutputPacket(PgTypeCollection dataTypes, Encoding encoding) 
-		{
-			this.stream		= new MemoryStream();
-			this.packet		= new BinaryWriter(this.stream);
-			this.encoding	= encoding;
+        public PgOutputPacket(PgTypeCollection dataTypes, Encoding encoding) 
+        {
+            this.stream		= new MemoryStream();
+            this.packet		= new BinaryWriter(this.stream);
+            this.encoding	= encoding;
             this.dataTypes = dataTypes;
 
-			this.Write(new byte[0]);
-		}
+            this.Write(new byte[0]);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Stream Methods ·
+        #region · Stream Methods ·
 
-		public byte[] ToArray()
-		{
-			return this.stream.ToArray();
-		}
+        public byte[] ToArray()
+        {
+            return this.stream.ToArray();
+        }
 
-		public void Reset()
-		{
-			this.stream.SetLength(0);
-			this.stream.Position = 0;
-		}
+        public void Reset()
+        {
+            this.stream.SetLength(0);
+            this.stream.Position = 0;
+        }
 
-		#endregion
+        #endregion
 
-		#region · String Types ·
+        #region · String Types ·
 
-		public void Write(char ch)
-		{
-			this.packet.Write(ch);
-		}
+        public void Write(char ch)
+        {
+            this.packet.Write(ch);
+        }
 
-		public void Write(char[] chars)
-		{
-			this.packet.Write(chars);
-		}
+        public void Write(char[] chars)
+        {
+            this.packet.Write(chars);
+        }
 
-		public void WriteNullString(string value)
-		{
-			if (!value.EndsWith(PgCodes.NULL_TERMINATOR.ToString()))
-			{
-				value += PgCodes.NULL_TERMINATOR;
-			}
+        public void WriteNullString(string value)
+        {
+            if (!value.EndsWith(PgCodes.NULL_TERMINATOR.ToString()))
+            {
+                value += PgCodes.NULL_TERMINATOR;
+            }
 
-			this.Write(this.encoding.GetBytes(value));
-		}
+            this.Write(this.encoding.GetBytes(value));
+        }
 
         public void WriteString(string value)
         {
-			byte[] buffer = this.encoding.GetBytes(value);
+            byte[] buffer = this.encoding.GetBytes(value);
 
             this.Write(buffer.Length);
             this.Write(buffer);
         }
 
-		#endregion
+        #endregion
 
-		#region · Numeric Types ·
+        #region · Numeric Types ·
 
-		public void Write(byte value)
-		{
-			this.packet.Write(value);
-		}
+        public void Write(byte value)
+        {
+            this.packet.Write(value);
+        }
 
-		public void Write(short value)
-		{
-			this.packet.Write((short)IPAddress.HostToNetworkOrder(value));
-		}
+        public void Write(short value)
+        {
+            this.packet.Write((short)IPAddress.HostToNetworkOrder(value));
+        }
 
-		public void Write(int value)
-		{
-			this.packet.Write((int)IPAddress.HostToNetworkOrder(value));
-		}
+        public void Write(int value)
+        {
+            this.packet.Write((int)IPAddress.HostToNetworkOrder(value));
+        }
 
-		public void Write(long value)
-		{
-			this.packet.Write((long)IPAddress.HostToNetworkOrder(value));
-		}
+        public void Write(long value)
+        {
+            this.packet.Write((long)IPAddress.HostToNetworkOrder(value));
+        }
 
-		public void Write(float value)
-		{
-			this.packet.Write(BitConverter.ToInt32(BitConverter.GetBytes(value), 0));
-		}
+        public void Write(float value)
+        {
+            this.packet.Write(BitConverter.ToInt32(BitConverter.GetBytes(value), 0));
+        }
 
-		public void Write(double value)
-		{
-			this.Write(BitConverter.ToInt64(BitConverter.GetBytes(value), 0));
-		}
+        public void Write(double value)
+        {
+            this.Write(BitConverter.ToInt64(BitConverter.GetBytes(value), 0));
+        }
 
-		#endregion
+        #endregion
 
-		#region · Boolean Types ·
+        #region · Boolean Types ·
 
-		public void Write(bool value)
-		{
-			this.packet.Write(value);
-		}
+        public void Write(bool value)
+        {
+            this.packet.Write(value);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Date & Time Types ·
+        #region · Date & Time Types ·
 
-		public void WriteDate(DateTime date)
-		{
-			this.Write(date.Subtract(PgCodes.BASE_DATE).Days);
-		}
+        public void WriteDate(DateTime date)
+        {
+            this.Write(date.Subtract(PgCodes.BASE_DATE).Days);
+        }
 
-		public void WriteInterval(TimeSpan interval)
-		{
-			int months	= (interval.Days / 30);
-			int days	= (interval.Days % 30);
+        public void WriteInterval(TimeSpan interval)
+        {
+            int months	= (interval.Days / 30);
+            int days	= (interval.Days % 30);
 
-			this.Write(interval.Subtract(TimeSpan.FromDays(months * 30)).TotalSeconds);
-			this.Write(months);
-		}
+            this.Write(interval.Subtract(TimeSpan.FromDays(months * 30)).TotalSeconds);
+            this.Write(months);
+        }
 
-		public void WriteTime(DateTime time)
-		{
+        public void WriteTime(DateTime time)
+        {
             this.WriteString(time.ToString("HH:mm:ss.fff"));
         }
 
-		public void WriteTimeWithTZ(DateTime time)
-		{
+        public void WriteTimeWithTZ(DateTime time)
+        {
             this.WriteString(time.ToString("HH:mm:ss.fff zz"));
         }
 
-		public void WriteTimestamp(DateTime timestamp)
-		{
+        public void WriteTimestamp(DateTime timestamp)
+        {
             this.WriteString(timestamp.ToString("yyyy/MM/dd HH:mm:ss.fff"));
         }
 
-		public void WriteTimestampWithTZ(DateTime timestamp)
-		{
+        public void WriteTimestampWithTZ(DateTime timestamp)
+        {
             this.WriteString(timestamp.ToString("yyyy/MM/dd HH:mm:ss.fff zz"));
         }
 
-		#endregion
+        #endregion
 
-		#region · Geometric Types ·
+        #region · Geometric Types ·
 
-		public void Write(PgPoint point)
-		{
-			this.Write(point.X);
-			this.Write(point.Y);
-		}
+        public void Write(PgPoint point)
+        {
+            this.Write(point.X);
+            this.Write(point.Y);
+        }
 
-		public void Write(PgCircle circle)
-		{
-			this.Write(circle.Center);
-			this.Write(circle.Radius);
-		}
+        public void Write(PgCircle circle)
+        {
+            this.Write(circle.Center);
+            this.Write(circle.Radius);
+        }
 
-		public void Write(PgLine line)
-		{
-			this.Write(line.StartPoint);
-			this.Write(line.EndPoint);
-		}
+        public void Write(PgLine line)
+        {
+            this.Write(line.StartPoint);
+            this.Write(line.EndPoint);
+        }
 
-		public void Write(PgLSeg lseg)
-		{
-			this.Write(lseg.StartPoint);
-			this.Write(lseg.EndPoint);
-		}
+        public void Write(PgLSeg lseg)
+        {
+            this.Write(lseg.StartPoint);
+            this.Write(lseg.EndPoint);
+        }
 
-		public void Write(PgBox box)
-		{
-			this.Write(box.UpperRight);
-			this.Write(box.LowerLeft);
-		}
+        public void Write(PgBox box)
+        {
+            this.Write(box.UpperRight);
+            this.Write(box.LowerLeft);
+        }
 
-		public void Write(PgPolygon polygon)
-		{
-			this.Write(polygon.Points.Length);
+        public void Write(PgPolygon polygon)
+        {
+            this.Write(polygon.Points.Length);
 
-			for (int i = 0; i < polygon.Points.Length; i++)
-			{
-				this.Write(polygon.Points[i]);
-			}
-		}
+            for (int i = 0; i < polygon.Points.Length; i++)
+            {
+                this.Write(polygon.Points[i]);
+            }
+        }
 
-		public void Write(PgPath path)
-		{
-			this.Write(path.IsClosedPath);
-			this.Write(path.Points.Length);
+        public void Write(PgPath path)
+        {
+            this.Write(path.IsClosedPath);
+            this.Write(path.Points.Length);
 
-			for (int i = 0; i < path.Points.Length; i++)
-			{
-				this.Write(path.Points[i]);
-			}
-		}
+            for (int i = 0; i < path.Points.Length; i++)
+            {
+                this.Write(path.Points[i]);
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Parameters ·
+        #region · Parameters ·
 
-		public void Write(PgParameter parameter)
-		{
-			int size = parameter.DataType.Size;
+        public void Write(PgParameter parameter)
+        {
+            int size = parameter.DataType.Size;
 
-			if (parameter.Value == System.DBNull.Value || parameter.Value == null)
-			{
-				// -1 indicates a NULL argument value
-				this.Write((int)-1);
-			}
-			else
-			{
-				if (parameter.DataType.DataType == PgDataType.Array	||
-					parameter.DataType.DataType == PgDataType.Vector)
-				{
-					// Handle this type as Array values
-					System.Array array = (System.Array)parameter.Value;
-					
-					// Get array elements type info
+            if (parameter.Value == System.DBNull.Value || parameter.Value == null)
+            {
+                // -1 indicates a NULL argument value
+                this.Write((int)-1);
+            }
+            else
+            {
+                if (parameter.DataType.DataType == PgDataType.Array	||
+                    parameter.DataType.DataType == PgDataType.Vector)
+                {
+                    // Handle this type as Array values
+                    System.Array array = (System.Array)parameter.Value;
+                    
+                    // Get array elements type info
                     PgType elementType = this.dataTypes[parameter.DataType.ElementType];
-					size = elementType.Size;
+                    size = elementType.Size;
 
-					// Create a new packet for write array parameter information
+                    // Create a new packet for write array parameter information
                     PgOutputPacket packet = new PgOutputPacket(this.dataTypes);
 
-					// Write the number of dimensions
-					packet.Write(array.Rank);
+                    // Write the number of dimensions
+                    packet.Write(array.Rank);
 
-					// Write flags (always 0)
-					packet.Write((int)0);
+                    // Write flags (always 0)
+                    packet.Write((int)0);
 
-					// Write base type of the array elements
-					packet.Write(parameter.DataType.ElementType);
+                    // Write base type of the array elements
+                    packet.Write(parameter.DataType.ElementType);
 
-					// Write lengths and lower bounds 
-					for (int i = 0; i < array.Rank; i ++)
-					{
-						packet.Write(array.GetLength(i));
-						packet.Write(array.GetLowerBound(i) + 1);
-					}
+                    // Write lengths and lower bounds 
+                    for (int i = 0; i < array.Rank; i ++)
+                    {
+                        packet.Write(array.GetLength(i));
+                        packet.Write(array.GetLowerBound(i) + 1);
+                    }
 
-					// Write array values
-					foreach (object element in array)
-					{
-						this.WriteParameter(packet, elementType.DataType, size, element);
-					}
+                    // Write array values
+                    foreach (object element in array)
+                    {
+                        this.WriteParameter(packet, elementType.DataType, size, element);
+                    }
 
-					// Write parameter size
-					this.Write(packet.Length);
+                    // Write parameter size
+                    this.Write(packet.Length);
 
-					// Write parameter data
-					this.Write(packet.ToArray());
-				}
-				else
-				{
-					this.WriteParameter(this, parameter.DataType.DataType, size, parameter.Value);
-				}
-			}
-		}
+                    // Write parameter data
+                    this.Write(packet.ToArray());
+                }
+                else
+                {
+                    this.WriteParameter(this, parameter.DataType.DataType, size, parameter.Value);
+                }
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Packet Methods ·
+        #region · Packet Methods ·
 
-		public byte[] GetSimplePacketBytes()
-		{
+        public byte[] GetSimplePacketBytes()
+        {
             PgOutputPacket packet = new PgOutputPacket(this.dataTypes);
 
-			// Write packet contents
-			packet.Write((int)(this.Length + 4));
-			packet.Write(this.ToArray());
+            // Write packet contents
+            packet.Write((int)(this.Length + 4));
+            packet.Write(this.ToArray());
 
-			return packet.ToArray();
-		}
+            return packet.ToArray();
+        }
 
-		public byte[] GetPacketBytes(char format)
-		{
+        public byte[] GetPacketBytes(char format)
+        {
             PgOutputPacket packet = new PgOutputPacket(this.dataTypes);
 
-			packet.Write((byte)format);
-			packet.Write((int)(this.Length + 4));
-			packet.Write(this.ToArray());
+            packet.Write((byte)format);
+            packet.Write((int)(this.Length + 4));
+            packet.Write(this.ToArray());
 
-			return packet.ToArray();
-		}
+            return packet.ToArray();
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public void Write(byte[] buffer)
-		{
-			this.Write(buffer, 0, buffer.Length);
-		}
+        public void Write(byte[] buffer)
+        {
+            this.Write(buffer, 0, buffer.Length);
+        }
 
-		public void Write(byte[]buffer, int index, int count)
-		{
-			this.packet.Write(buffer, index, count);
-		}
+        public void Write(byte[]buffer, int index, int count)
+        {
+            this.packet.Write(buffer, index, count);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
-		private void WriteParameter(PgOutputPacket packet, PgDataType dataType, int size, object value)
+        private void WriteParameter(PgOutputPacket packet, PgDataType dataType, int size, object value)
         {
             switch (dataType)
             {
@@ -366,11 +366,11 @@ namespace PostgreSql.Data.Protocol
                     break;
 
                 case PgDataType.Byte:
-					packet.Write(size);
-					packet.Write((byte)value);
-					break;
+                    packet.Write(size);
+                    packet.Write((byte)value);
+                    break;
 
-				case PgDataType.Boolean:
+                case PgDataType.Boolean:
                     packet.Write(size);
                     packet.Write(Convert.ToByte((bool)value));
                     break;
@@ -381,7 +381,7 @@ namespace PostgreSql.Data.Protocol
                     packet.WriteString(value.ToString());
                     break;
 
-				case PgDataType.Int2:
+                case PgDataType.Int2:
                     packet.Write(size);
                     packet.Write(Convert.ToInt16(value));
                     break;

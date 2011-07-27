@@ -20,59 +20,59 @@ using System.Globalization;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal sealed class PgCharactersetCollection : 
+    internal sealed class PgCharactersetCollection : 
         List<PgCharacterSet>
-	{
-		#region · Properties ·
+    {
+        #region · Properties ·
 
-		public PgCharacterSet this[string name] 
-		{
-			get { return (PgCharacterSet)this[this.IndexOf(name)]; }
-			set { this[this.IndexOf(name)] = (PgCharacterSet)value; }
-		}
+        public PgCharacterSet this[string name] 
+        {
+            get { return (PgCharacterSet)this[this.IndexOf(name)]; }
+            set { this[this.IndexOf(name)] = (PgCharacterSet)value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
-	
-		public bool Contains(string characterset)
-		{
-			return (this.IndexOf(characterset) != -1);
-		}
-		
-		public int IndexOf(string characterset)
-		{
-			int index = 0;
-			
-			foreach (PgCharacterSet item in this)
-			{
-				if (this.CultureAwareCompare(item.Name, characterset))
-				{
-					return index;
-				}
+        #region · Methods ·
+    
+        public bool Contains(string characterset)
+        {
+            return (this.IndexOf(characterset) != -1);
+        }
+        
+        public int IndexOf(string characterset)
+        {
+            int index = 0;
+            
+            foreach (PgCharacterSet item in this)
+            {
+                if (this.CultureAwareCompare(item.Name, characterset))
+                {
+                    return index;
+                }
 
-				index++;
-			}
+                index++;
+            }
 
-			return -1;
-		}
+            return -1;
+        }
 
-		public void RemoveAt(string charset)
-		{
-			this.RemoveAt(this.IndexOf(charset));
-		}
+        public void RemoveAt(string charset)
+        {
+            this.RemoveAt(this.IndexOf(charset));
+        }
 
-		public PgCharacterSet Add(string charset, string systemCharset)
-		{
+        public PgCharacterSet Add(string charset, string systemCharset)
+        {
             PgCharacterSet cs = new PgCharacterSet(charset, systemCharset);
 
             this.Add(cs);
 
             return cs;
-		}
+        }
 
-		public PgCharacterSet Add(string charset, int cp)
-		{
+        public PgCharacterSet Add(string charset, int cp)
+        {
             PgCharacterSet cs = new PgCharacterSet(charset, cp);
 
             this.Add(cs);
@@ -85,16 +85,16 @@ namespace PostgreSql.Data.Protocol
         #region · Private Methods ·
         
         private bool CultureAwareCompare(string strA, string strB)
-		{
-			return CultureInfo.CurrentCulture.CompareInfo.Compare
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.Compare
             (
-				strA, 
-				strB, 
-				CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-				CompareOptions.IgnoreCase
+                strA, 
+                strB, 
+                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
+                CompareOptions.IgnoreCase
             ) == 0 ? true : false;
-		}
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

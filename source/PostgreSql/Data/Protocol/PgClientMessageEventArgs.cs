@@ -20,31 +20,31 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal sealed class PgClientMessageEventArgs 
+    internal sealed class PgClientMessageEventArgs 
         : EventArgs
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private PgClientException exception;
+        private PgClientException exception;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgClientException Exception
-		{
-			get { return this.exception; }
-		}
+        public PgClientException Exception
+        {
+            get { return this.exception; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgClientMessageEventArgs(PgClientException exception)
-		{
-			this.exception = exception;
-		}
+        public PgClientMessageEventArgs(PgClientException exception)
+        {
+            this.exception = exception;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

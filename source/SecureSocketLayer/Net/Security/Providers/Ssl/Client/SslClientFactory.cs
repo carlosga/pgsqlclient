@@ -32,102 +32,102 @@ using SecureSocketLayer.Net.Security.Providers.Common.Client;
 
 namespace SecureSocketLayer.Net.Security.Providers.Ssl.Client
 {
-	internal sealed class SslClientFactory : ISecureFactory
-	{
-		#region · Static Properties ·
+    internal sealed class SslClientFactory : ISecureFactory
+    {
+        #region · Static Properties ·
 
-		public static readonly ISecureFactory Instance = new SslClientFactory();
+        public static readonly ISecureFactory Instance = new SslClientFactory();
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
 #warning FIXME !!! Both properties needs to be properly implemented
 
-		public CipherSuiteCollection SupportedCipherSuites
-		{
-			get {  return CipherSuiteFactory.GetSupportedCiphers(SslProtocols.Ssl3); }
-		}
+        public CipherSuiteCollection SupportedCipherSuites
+        {
+            get {  return CipherSuiteFactory.GetSupportedCiphers(SslProtocols.Ssl3); }
+        }
 
-		public CompressionMethodCollection SupportedCompressionMethods
-		{
-			get 
-			{
-				CompressionMethodCollection c = new CompressionMethodCollection();
-				c.Add(new NullCompressionMethod());
+        public CompressionMethodCollection SupportedCompressionMethods
+        {
+            get 
+            {
+                CompressionMethodCollection c = new CompressionMethodCollection();
+                c.Add(new NullCompressionMethod());
 
-				return c;
-			} 
-		}
+                return c;
+            } 
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Constructors ·
+        #region · Private Constructors ·
 
-		private SslClientFactory()
-		{
-		}
+        private SslClientFactory()
+        {
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public ISecureAuthenticator CreateSecureAuthenticator(SecureSession session)
-		{
-			ISecureAuthenticator auth = new ClientSecureAuthenticator(session);
-			auth.MessageGenerator = CreateHandshakeMessageGenerator(auth);
-			auth.MessageProcessor = CreateHandshakeMessageProcessor(auth);
+        public ISecureAuthenticator CreateSecureAuthenticator(SecureSession session)
+        {
+            ISecureAuthenticator auth = new ClientSecureAuthenticator(session);
+            auth.MessageGenerator = CreateHandshakeMessageGenerator(auth);
+            auth.MessageProcessor = CreateHandshakeMessageProcessor(auth);
 
-			return auth;
-		}
+            return auth;
+        }
 
-		public IHandshakeMessageGenerator CreateHandshakeMessageGenerator(ISecureAuthenticator authenticator)
-		{
-			return new SslHandshakeMessageGenerator(authenticator);
-		}
-		
-		public IHandshakeMessageProcessor CreateHandshakeMessageProcessor(ISecureAuthenticator authenticator)
-		{
-			return new SslHandshakeMessageProcessor(authenticator);
-		}
+        public IHandshakeMessageGenerator CreateHandshakeMessageGenerator(ISecureAuthenticator authenticator)
+        {
+            return new SslHandshakeMessageGenerator(authenticator);
+        }
+        
+        public IHandshakeMessageProcessor CreateHandshakeMessageProcessor(ISecureAuthenticator authenticator)
+        {
+            return new SslHandshakeMessageProcessor(authenticator);
+        }
 
-		public ISecureProtocol CreateSecureProtocol(SecureSession session)
-		{
-			return new SecureClientProtocol(session);
-		}
+        public ISecureProtocol CreateSecureProtocol(SecureSession session)
+        {
+            return new SecureClientProtocol(session);
+        }
 
-		public ISecureKeyGenerator CreateKeyGenerator(SecureSession session)
-		{
-			return new SslSecureKeyGenerator(session);
-		}
+        public ISecureKeyGenerator CreateKeyGenerator(SecureSession session)
+        {
+            return new SslSecureKeyGenerator(session);
+        }
 
-		public ISecureKeyInfo CreateKeyInfo()
-		{
-			return new SecureKeyInfo();
-		}
+        public ISecureKeyInfo CreateKeyInfo()
+        {
+            return new SecureKeyInfo();
+        }
 
-		public IRecordEncryptor	CreateRecordEncryptor(SecureSession session)
-		{
-			return new ClientRecordEncryptor(session.CipherSuite, session.SecureKeyInfo);
-		}
+        public IRecordEncryptor	CreateRecordEncryptor(SecureSession session)
+        {
+            return new ClientRecordEncryptor(session.CipherSuite, session.SecureKeyInfo);
+        }
 
-		public IRecordDecryptor	CreateRecordDecryptor(SecureSession session)
-		{
-			return new ClientRecordDecryptor(session.CipherSuite, session.SecureKeyInfo);
-		}
+        public IRecordDecryptor	CreateRecordDecryptor(SecureSession session)
+        {
+            return new ClientRecordDecryptor(session.CipherSuite, session.SecureKeyInfo);
+        }
 
-		public IRecordMACManager CreateMACManager(SecureSession session)
-		{
-			return new SslClientRecordMACManager(session);
-		}
+        public IRecordMACManager CreateMACManager(SecureSession session)
+        {
+            return new SslClientRecordMACManager(session);
+        }
 
-		public IX509ChainValidator CreateX509ChainValidator(X509Chain cerficateChain, ExchangeAlgorithmType exchangeAlgorithmType)
-		{
+        public IX509ChainValidator CreateX509ChainValidator(X509Chain cerficateChain, ExchangeAlgorithmType exchangeAlgorithmType)
+        {
             return new X509ChainValidator(cerficateChain, exchangeAlgorithmType);
-		}
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

@@ -35,7 +35,7 @@ namespace PostgreSql.Data.Schema
         #region · Protected Methods ·
 
         protected override string BuildSql(string[] restrictions)
-		{
+        {
             string sql =
                 "SELECT " +
                     "current_database() AS VIEW_CATALOG, " + 
@@ -52,30 +52,30 @@ namespace PostgreSql.Data.Schema
                     "pg_class.relkind = 'v' ";
 
             if (restrictions != null && restrictions.Length > 0)
-			{
-				// VIEW_CATALOG
-				if (restrictions.Length > 0 && restrictions[0] != null)
-				{
-				}
+            {
+                // VIEW_CATALOG
+                if (restrictions.Length > 0 && restrictions[0] != null)
+                {
+                }
 
-				// VIEW_SCHEMA
-				if (restrictions.Length > 1 && restrictions[1] != null)
-				{
-					sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
-				}
+                // VIEW_SCHEMA
+                if (restrictions.Length > 1 && restrictions[1] != null)
+                {
+                    sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
+                }
 
-				// VIEW_NAME
-				if (restrictions.Length > 2 && restrictions[2] != null)
-				{
+                // VIEW_NAME
+                if (restrictions.Length > 2 && restrictions[2] != null)
+                {
                     sql += String.Format(" and pg_class.relname = '{0}'", restrictions[2]);
-				}
-			}
+                }
+            }
 
             sql += " ORDER BY pg_namespace.nspname, pg_class.relname";
 
-			return sql;
-		}
+            return sql;
+        }
 
         #endregion
-	}
+    }
 }

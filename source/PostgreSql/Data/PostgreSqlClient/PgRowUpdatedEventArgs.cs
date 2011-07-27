@@ -21,13 +21,13 @@ using System.Data.Common;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public sealed class PgRowUpdatedEventArgs 
+    public sealed class PgRowUpdatedEventArgs 
         : RowUpdatedEventArgs
     {
         #region · Constructors ·
 
         public PgRowUpdatedEventArgs(DataRow row, IDbCommand command, StatementType statementType, DataTableMapping tableMapping) : base(row, command, statementType, tableMapping) 
-		{
+        {
         }
 
         #endregion
@@ -35,8 +35,8 @@ namespace PostgreSql.Data.PostgreSqlClient
         #region · Properties ·
 
         public new PgCommand Command
-		{
-			get  { return (PgCommand)base.Command; }
+        {
+            get  { return (PgCommand)base.Command; }
         }
 
         #endregion

@@ -21,9 +21,9 @@ using PostgreSql.Data.PostgreSqlClient;
 
 namespace PostgreSql.Data.Schema
 {
-	internal sealed class PgPrimaryKeys 
+    internal sealed class PgPrimaryKeys 
         : PgSchema
-	{
+    {
         #region · Constructors ·
 
         public PgPrimaryKeys(PgConnection connection)
@@ -33,50 +33,50 @@ namespace PostgreSql.Data.Schema
 
         #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected override string BuildSql(string[] restrictions)
-		{
-			string sql = 
-				"SELECT " +
+        protected override string BuildSql(string[] restrictions)
+        {
+            string sql = 
+                "SELECT " +
                     "current_database() AS TABLE_CATALOG, " +
-					"pg_namespace.nspname AS TABLE_SCHEMA, " +
-					"pg_class.relname AS TABLE_NAME, " +
+                    "pg_namespace.nspname AS TABLE_SCHEMA, " +
+                    "pg_class.relname AS TABLE_NAME, " +
                     "null AS COLUMN_NAME, " +
-					"pg_constraint.conname AS PK_NAME, " +
-					"pg_constraint.conkey AS PK_COLUMNS, " + 
-					"pg_description.description AS DESCRIPTION " + 
-				"FROM pg_constraint " + 
-					"left join pg_class ON pg_constraint.conrelid = pg_class.oid " + 
-					"left join pg_namespace ON pg_constraint.connamespace = pg_namespace.oid " + 
-					"left join pg_description ON pg_constraint.oid = pg_description.objoid " + 
-				"WHERE " + 
-					"pg_constraint.contype = 'p' ";
+                    "pg_constraint.conname AS PK_NAME, " +
+                    "pg_constraint.conkey AS PK_COLUMNS, " + 
+                    "pg_description.description AS DESCRIPTION " + 
+                "FROM pg_constraint " + 
+                    "left join pg_class ON pg_constraint.conrelid = pg_class.oid " + 
+                    "left join pg_namespace ON pg_constraint.connamespace = pg_namespace.oid " + 
+                    "left join pg_description ON pg_constraint.oid = pg_description.objoid " + 
+                "WHERE " + 
+                    "pg_constraint.contype = 'p' ";
 
-			if (restrictions != null && restrictions.Length > 0)
-			{
-				// TABLE_CATALOG
-				if (restrictions.Length > 0 && restrictions[0] != null)
-				{
-				}
+            if (restrictions != null && restrictions.Length > 0)
+            {
+                // TABLE_CATALOG
+                if (restrictions.Length > 0 && restrictions[0] != null)
+                {
+                }
 
-				// TABLE_SCHEMA
-				if (restrictions.Length > 1 && restrictions[1] != null)
-				{
-					sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
-				}
+                // TABLE_SCHEMA
+                if (restrictions.Length > 1 && restrictions[1] != null)
+                {
+                    sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
+                }
 
-				// TABLE_NAME
-				if (restrictions.Length > 2 && restrictions[2] != null)
-				{
-					sql += String.Format(" and pg_class.relname = '{0}'", restrictions[2]);
-				}
-			}
+                // TABLE_NAME
+                if (restrictions.Length > 2 && restrictions[2] != null)
+                {
+                    sql += String.Format(" and pg_class.relname = '{0}'", restrictions[2]);
+                }
+            }
 
-			sql += " ORDER BY pg_namespace.nspname, pg_class.relname, pg_constraint.conname";
+            sql += " ORDER BY pg_namespace.nspname, pg_class.relname, pg_constraint.conname";
 
-			return sql;
-		}
+            return sql;
+        }
 
         protected override System.Data.DataTable ProcessResult(PostgreSql.Data.PostgreSqlClient.PgConnection connection, System.Data.DataTable schema)
         {
@@ -146,6 +146,6 @@ namespace PostgreSql.Data.Schema
             return primaryKeyColumns;
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

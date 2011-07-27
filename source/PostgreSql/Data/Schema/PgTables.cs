@@ -22,7 +22,7 @@ namespace PostgreSql.Data.Schema
 {
     internal sealed class PgTables 
         : PgSchema
-	{
+    {
         #region · Constructors ·
 
         public PgTables(PgConnection connection)
@@ -32,10 +32,10 @@ namespace PostgreSql.Data.Schema
 
         #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected override string BuildSql(string[] restrictions)
-		{
+        protected override string BuildSql(string[] restrictions)
+        {
             string where = "";
             string sql =
                 "SELECT " +
@@ -125,35 +125,35 @@ namespace PostgreSql.Data.Schema
                 sql += " WHERE " + where;
             }
 
-			sql += " ORDER BY pg_class.relkind, pg_namespace.nspname, pg_class.relname";
+            sql += " ORDER BY pg_class.relkind, pg_namespace.nspname, pg_class.relname";
 
-			return sql;
-		}
+            return sql;
+        }
 
-		protected override string[] ParseRestrictions(string[] restrictions)
-		{
-			string[] parsed = restrictions;
+        protected override string[] ParseRestrictions(string[] restrictions)
+        {
+            string[] parsed = restrictions;
 
-			if (parsed != null)
-			{
-				if (parsed.Length == 4 && parsed[3] != null)
-				{
-					switch (parsed[3].ToString().ToUpper())
-					{
-						case "TABLE":
-							parsed[3] = "r";
-							break;
+            if (parsed != null)
+            {
+                if (parsed.Length == 4 && parsed[3] != null)
+                {
+                    switch (parsed[3].ToString().ToUpper())
+                    {
+                        case "TABLE":
+                            parsed[3] = "r";
+                            break;
 
-						case "VIEW":
-							parsed[3] = "v";
-							break;
-					}
-				}
-			}
+                        case "VIEW":
+                            parsed[3] = "v";
+                            break;
+                    }
+                }
+            }
 
-			return parsed;
-		}
+            return parsed;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

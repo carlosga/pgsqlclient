@@ -23,78 +23,78 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {	
-	internal sealed class PgConnectionInternal
+    internal sealed class PgConnectionInternal
         : MarshalByRefObject
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private PgConnection		                owningConnection;
+        private PgConnection		                owningConnection;
         private PgDatabase                          database;
-		private PgConnectionOptions	                options;
-		private PgTransaction		                activeTransaction;
+        private PgConnectionOptions	                options;
+        private PgTransaction		                activeTransaction;
         private SynchronizedCollection<PgCommand>   preparedCommands;
-		private long				                created;
+        private long				                created;
         private long                                lifetime;
-		private bool				                pooled;
+        private bool				                pooled;
         
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
         public PgDatabase Database
-		{
-			get { return this.database; }
-		}
+        {
+            get { return this.database; }
+        }
 
-		public PgTransaction ActiveTransaction
-		{
-			get { return this.activeTransaction; }
-			set { this.activeTransaction = value; }
-		}
+        public PgTransaction ActiveTransaction
+        {
+            get { return this.activeTransaction; }
+            set { this.activeTransaction = value; }
+        }
 
-		public long Created
-		{
-			get { return this.created; }
-			set { this.created = value; }
-		}
-		
-		public bool Pooled
-		{
-			get { return this.pooled; }
-			set { this.pooled = value; }
-		}
+        public long Created
+        {
+            get { return this.created; }
+            set { this.created = value; }
+        }
+        
+        public bool Pooled
+        {
+            get { return this.pooled; }
+            set { this.pooled = value; }
+        }
 
-		public PgConnectionOptions Options
-		{
-			get { return this.options; }
-		}
+        public PgConnectionOptions Options
+        {
+            get { return this.options; }
+        }
 
         public SynchronizedCollection<PgCommand> PreparedCommands
-		{
-			get
-			{
-				if (this.preparedCommands == null)
-				{
+        {
+            get
+            {
+                if (this.preparedCommands == null)
+                {
                     this.preparedCommands = new SynchronizedCollection<PgCommand>();
-				}
+                }
 
-				return this.preparedCommands;
-			}
-		}
+                return this.preparedCommands;
+            }
+        }
 
-		public bool HasActiveTransaction
-		{
-			get
-			{
-				return (this.activeTransaction != null && !this.activeTransaction.IsUpdated);
-			}
-		}
+        public bool HasActiveTransaction
+        {
+            get
+            {
+                return (this.activeTransaction != null && !this.activeTransaction.IsUpdated);
+            }
+        }
 
-		public PgConnection OwningConnection
-		{
-			get { return this.owningConnection; }
-			set { this.owningConnection = value; }
-		}
+        public PgConnection OwningConnection
+        {
+            get { return this.owningConnection; }
+            set { this.owningConnection = value; }
+        }
 
         public long Lifetime
         {
@@ -102,37 +102,37 @@ namespace PostgreSql.Data.PostgreSqlClient
             set { this.lifetime = value; }
         }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgConnectionInternal(string connectionString)
-		{
+        public PgConnectionInternal(string connectionString)
+        {
             this.options    = new PgConnectionOptions(connectionString);
             this.database   = new PgDatabase(this.options);
-			this.created	= 0;
+            this.created	= 0;
             this.lifetime   = 0;
-			this.pooled		= true;
-		}
+            this.pooled		= true;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public void Connect()
-		{
-			try
-			{
-				this.database.Connect();
-			}
-			catch (PgClientException ex)
-			{
-				throw new PgException(ex.Message, ex);
-			}
-		}
-		
-		public void Disconnect()
-		{
+        public void Connect()
+        {
+            try
+            {
+                this.database.Connect();
+            }
+            catch (PgClientException ex)
+            {
+                throw new PgException(ex.Message, ex);
+            }
+        }
+        
+        public void Disconnect()
+        {
             try
             {
                 this.database.Disconnect();
@@ -143,36 +143,36 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
             finally
             {
-		        this.owningConnection   = null;
+                this.owningConnection   = null;
                 this.database           = null;
-		        this.options            = null;
-		        this.activeTransaction  = null;
-		        this.preparedCommands   = null;
-		        this.created            = 0;
+                this.options            = null;
+                this.activeTransaction  = null;
+                this.preparedCommands   = null;
+                this.created            = 0;
                 this.lifetime           = 0;
                 this.pooled             = false;
             }
         }
 
-		public PgTransaction BeginTransaction(IsolationLevel level)
-		{
-			if (this.activeTransaction != null && !this.activeTransaction.IsUpdated)
-			{
-				throw new InvalidOperationException("A transaction is currently active. Parallel transactions are not supported.");
-			}
+        public PgTransaction BeginTransaction(IsolationLevel level)
+        {
+            if (this.activeTransaction != null && !this.activeTransaction.IsUpdated)
+            {
+                throw new InvalidOperationException("A transaction is currently active. Parallel transactions are not supported.");
+            }
 
-			try
-			{
-				this.activeTransaction = new PgTransaction(this.owningConnection, level);
-				this.activeTransaction.InternalBeginTransaction();
-			}
-			catch (PgClientException ex)
-			{
-				throw new PgException(ex.Message, ex);
-			}
+            try
+            {
+                this.activeTransaction = new PgTransaction(this.owningConnection, level);
+                this.activeTransaction.InternalBeginTransaction();
+            }
+            catch (PgClientException ex)
+            {
+                throw new PgException(ex.Message, ex);
+            }
 
-			return this.activeTransaction;			
-		}
+            return this.activeTransaction;			
+        }
 
         public PgTransaction BeginTransaction(IsolationLevel level, string transactionName)
         {
@@ -195,44 +195,44 @@ namespace PostgreSql.Data.PostgreSqlClient
             return this.activeTransaction;
         }
 
-		public void DisposeActiveTransaction()
-		{
-			// Rollback active transation
-			if (this.HasActiveTransaction)
-			{
-				this.activeTransaction.Dispose();
-				this.activeTransaction = null;
-			}
-		}
+        public void DisposeActiveTransaction()
+        {
+            // Rollback active transation
+            if (this.HasActiveTransaction)
+            {
+                this.activeTransaction.Dispose();
+                this.activeTransaction = null;
+            }
+        }
 
-		public void ClosePreparedCommands()
-		{
-			if (this.PreparedCommands.Count > 0)
-			{
+        public void ClosePreparedCommands()
+        {
+            if (this.PreparedCommands.Count > 0)
+            {
                 this.PreparedCommands
                     .ToList()
                     .ForEach(c => c.InternalClose());
-				
-				this.preparedCommands.Clear();
-				this.preparedCommands = null;
-			}
-		}
+                
+                this.preparedCommands.Clear();
+                this.preparedCommands = null;
+            }
+        }
 
-		public void AddPreparedCommand(PgCommand command)
-		{
-			if (!this.PreparedCommands.Contains(command))
-			{
-				this.PreparedCommands.Add(command);
-			}
-		}
+        public void AddPreparedCommand(PgCommand command)
+        {
+            if (!this.PreparedCommands.Contains(command))
+            {
+                this.PreparedCommands.Add(command);
+            }
+        }
 
-		public void RemovePreparedCommand(PgCommand command)
-		{
-			if (this.PreparedCommands.Contains(command))
-			{
-				this.PreparedCommands.Remove(command);
-			}
-		}
+        public void RemovePreparedCommand(PgCommand command)
+        {
+            if (this.PreparedCommands.Contains(command))
+            {
+                this.PreparedCommands.Remove(command);
+            }
+        }
 
         #endregion
 

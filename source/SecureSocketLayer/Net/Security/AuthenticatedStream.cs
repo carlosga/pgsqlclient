@@ -29,69 +29,69 @@ using System.IO;
 
 namespace SecureSocketLayer.Net.Security
 {
-	public abstract class AuthenticatedStream
+    public abstract class AuthenticatedStream
         : Stream
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private Stream innerStream;
-		private bool leaveStreamOpen;
-
-		#endregion
-
-        #region · Properties ·
-
-		public virtual bool LeaveInnerStreamOpen 
-		{
-			get { return this.leaveStreamOpen; }
-		}
+        private Stream innerStream;
+        private bool leaveStreamOpen;
 
         #endregion
 
-		#region · Protected Properties ·
+        #region · Properties ·
 
-		public Stream InnerStream 
-		{
-			get { return this.innerStream; }
-		}
+        public virtual bool LeaveInnerStreamOpen 
+        {
+            get { return this.leaveStreamOpen; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Abstract Properties ·
+        #region · Protected Properties ·
 
-		public abstract bool IsAuthenticated { get; }
-		public abstract bool IsEncrypted { get; }
-		public abstract bool IsMutuallyAuthenticated { get; }
-		public abstract bool IsServer { get; }
-		public abstract bool IsSigned { get; }
+        public Stream InnerStream 
+        {
+            get { return this.innerStream; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Abstract Properties ·
 
-		protected AuthenticatedStream(Stream innerStream, bool leaveStreamOpen)
-		{
-			this.innerStream = innerStream;
-			this.leaveStreamOpen = leaveStreamOpen;
-		}
+        public abstract bool IsAuthenticated { get; }
+        public abstract bool IsEncrypted { get; }
+        public abstract bool IsMutuallyAuthenticated { get; }
+        public abstract bool IsServer { get; }
+        public abstract bool IsSigned { get; }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Constructors ·
 
-		public override void Close()
-		{
-			if (!this.leaveStreamOpen)
-			{
-				this.innerStream.Close();
-			}
+        protected AuthenticatedStream(Stream innerStream, bool leaveStreamOpen)
+        {
+            this.innerStream = innerStream;
+            this.leaveStreamOpen = leaveStreamOpen;
+        }
 
-			this.innerStream        = null;
-			this.leaveStreamOpen    = false;
-		}
+        #endregion
 
-		#endregion
-	}
+        #region · Methods ·
+
+        public override void Close()
+        {
+            if (!this.leaveStreamOpen)
+            {
+                this.innerStream.Close();
+            }
+
+            this.innerStream        = null;
+            this.leaveStreamOpen    = false;
+        }
+
+        #endregion
+    }
 }
 
 #endif

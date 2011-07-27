@@ -21,86 +21,86 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PgTypes
 {
-	[Serializable]
-	public struct PgPoint
-	{
-		#region · Fields ·
+    [Serializable]
+    public struct PgPoint
+    {
+        #region · Fields ·
 
-		private double x;
-		private double y;
+        private double x;
+        private double y;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public double X
-		{
-			get { return x; }
-		}
-		
-		public double Y
-		{
-			get { return y; }
-		}
+        public double X
+        {
+            get { return x; }
+        }
+        
+        public double Y
+        {
+            get { return y; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgPoint(double x, double y)
-		{
-			this.x = x;
-			this.y = y;
-		}
+        public PgPoint(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
-		public static bool operator ==(PgPoint left, PgPoint right)
-		{
+        public static bool operator ==(PgPoint left, PgPoint right)
+        {
             return (left.X == right.X && left.Y == right.Y);
-		}
+        }
 
-		public static bool operator !=(PgPoint left, PgPoint right)
-		{
-			return (left.X != right.X || left.Y != right.Y);
-		}
+        public static bool operator !=(PgPoint left, PgPoint right)
+        {
+            return (left.X != right.X || left.Y != right.Y);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Overriden Methods ·
+        #region · Overriden Methods ·
 
-		public override string ToString()
-		{
+        public override string ToString()
+        {
             CultureInfo culture = CultureInfo.InvariantCulture;
 
-			return String.Format(culture, "({0},{1})", this.x, this.y);
-		}
+            return String.Format(culture, "({0},{1})", this.x, this.y);
+        }
 
-		public override int GetHashCode()
-		{
-			return (this.x.GetHashCode() ^ this.y.GetHashCode());
-		}
+        public override int GetHashCode()
+        {
+            return (this.x.GetHashCode() ^ this.y.GetHashCode());
+        }
 
-		public override bool Equals(object obj)
-		{
-			if (obj != null && obj is PgPoint)
-			{
-				return ((PgPoint)obj) == this;
-			}
-			else
-			{
-				return false;
-			}
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is PgPoint)
+            {
+                return ((PgPoint)obj) == this;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Static Methods ·
+        #region · Static Methods ·
 
-		public static PgPoint Parse(string s)
-		{
+        public static PgPoint Parse(string s)
+        {
             if (s == null)
             {
                 throw new ArgumentNullException("s cannot be null");
@@ -116,8 +116,8 @@ namespace PostgreSql.Data.PgTypes
             }
 
             return new PgPoint(Double.Parse(pointCoords[0]), Double.Parse(pointCoords[1]));
-		}
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

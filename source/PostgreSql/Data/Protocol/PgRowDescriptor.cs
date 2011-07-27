@@ -19,34 +19,34 @@
 namespace PostgreSql.Data.Protocol
 {
     internal sealed class PgRowDescriptor
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private PgFieldDescriptor[] fields;
+        private PgFieldDescriptor[] fields;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgFieldDescriptor[] Fields
-		{
-			get { return this.fields; }
-			set { this.fields = value; }
-		}
+        public PgFieldDescriptor[] Fields
+        {
+            get { return this.fields; }
+            set { this.fields = value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgRowDescriptor()
-		{
-		}
+        public PgRowDescriptor()
+        {
+        }
 
-		public PgRowDescriptor(int count)
-		{
-			this.fields = new PgFieldDescriptor[count];
-		}
+        public PgRowDescriptor(int count)
+        {
+            this.fields = new PgFieldDescriptor[count];
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

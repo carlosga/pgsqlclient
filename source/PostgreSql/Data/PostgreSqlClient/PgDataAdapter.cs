@@ -23,10 +23,10 @@ using System.Drawing;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {	
-	[DefaultEvent("RowUpdated")]
-	public sealed class PgDataAdapter 
+    [DefaultEvent("RowUpdated")]
+    public sealed class PgDataAdapter 
         : DbDataAdapter, ICloneable
-	{
+    {
         #region · Events ·
 
         private static readonly object EventRowUpdated = new object();
@@ -47,100 +47,100 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		[Category("DataCategory_Update")]
-		[DefaultValue(null)]
-		public new PgCommand SelectCommand 
-		{
-			get { return (PgCommand)base.SelectCommand; }
-			set { base.SelectCommand = value; }
-		}
+        [Category("DataCategory_Update")]
+        [DefaultValue(null)]
+        public new PgCommand SelectCommand 
+        {
+            get { return (PgCommand)base.SelectCommand; }
+            set { base.SelectCommand = value; }
+        }
 
-		[Category("DataCategory_Update")]
-		[DefaultValue(null)]
-		public new PgCommand InsertCommand 
-		{
-			get { return (PgCommand)base.InsertCommand; }
-			set { base.InsertCommand = value; }
-		}
-		
-		[Category("DataCategory_Fill")]
-		[DefaultValue(null)]
-		public new PgCommand UpdateCommand 
-		{
-			get { return (PgCommand)base.UpdateCommand; }
-			set { base.UpdateCommand = value; }
-		}
+        [Category("DataCategory_Update")]
+        [DefaultValue(null)]
+        public new PgCommand InsertCommand 
+        {
+            get { return (PgCommand)base.InsertCommand; }
+            set { base.InsertCommand = value; }
+        }
+        
+        [Category("DataCategory_Fill")]
+        [DefaultValue(null)]
+        public new PgCommand UpdateCommand 
+        {
+            get { return (PgCommand)base.UpdateCommand; }
+            set { base.UpdateCommand = value; }
+        }
 
-		[Category("DataCategory_Update")]
-		[DefaultValue(null)]
-		public new PgCommand DeleteCommand 
-		{
-			get { return (PgCommand)base.DeleteCommand; }
-			set { base.DeleteCommand = value; }
-		}
+        [Category("DataCategory_Update")]
+        [DefaultValue(null)]
+        public new PgCommand DeleteCommand 
+        {
+            get { return (PgCommand)base.DeleteCommand; }
+            set { base.DeleteCommand = value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgDataAdapter() 
-			: base()
-		{
-			GC.SuppressFinalize(this);
-		}
+        public PgDataAdapter() 
+            : base()
+        {
+            GC.SuppressFinalize(this);
+        }
 
-		public PgDataAdapter(PgCommand selectCommand) 
-			: this()
-		{
-			this.SelectCommand = selectCommand;
-		}
-		
-		public PgDataAdapter(string commandText, PgConnection connection) 
-			: this()
-		{
-			this.SelectCommand = new PgCommand(commandText, connection);
-		}
+        public PgDataAdapter(PgCommand selectCommand) 
+            : this()
+        {
+            this.SelectCommand = selectCommand;
+        }
+        
+        public PgDataAdapter(string commandText, PgConnection connection) 
+            : this()
+        {
+            this.SelectCommand = new PgCommand(commandText, connection);
+        }
 
-		public PgDataAdapter(string commandText, string connectionString) 
-			: this()
-		{
-			this.SelectCommand = new PgCommand(commandText, new PgConnection(connectionString));
-		}
+        public PgDataAdapter(string commandText, string connectionString) 
+            : this()
+        {
+            this.SelectCommand = new PgCommand(commandText, new PgConnection(connectionString));
+        }
 
-		#endregion
+        #endregion
 
-		#region · Protected Methods ·
-		
-		protected override RowUpdatedEventArgs CreateRowUpdatedEvent(DataRow dataRow, IDbCommand command, StatementType statementType, DataTableMapping tableMapping)
-		{
-			return new PgRowUpdatedEventArgs(dataRow, command, statementType, tableMapping);
-		}
+        #region · Protected Methods ·
+        
+        protected override RowUpdatedEventArgs CreateRowUpdatedEvent(DataRow dataRow, IDbCommand command, StatementType statementType, DataTableMapping tableMapping)
+        {
+            return new PgRowUpdatedEventArgs(dataRow, command, statementType, tableMapping);
+        }
 
-		protected override void OnRowUpdated(RowUpdatedEventArgs value)
-		{
-			PgRowUpdatedEventHandler handler = (PgRowUpdatedEventHandler) Events[EventRowUpdated];
-			if ((null != handler) && (value is PgRowUpdatedEventArgs)) 
-			{
-				handler(this, (PgRowUpdatedEventArgs) value);
-			}
-		}
+        protected override void OnRowUpdated(RowUpdatedEventArgs value)
+        {
+            PgRowUpdatedEventHandler handler = (PgRowUpdatedEventHandler) Events[EventRowUpdated];
+            if ((null != handler) && (value is PgRowUpdatedEventArgs)) 
+            {
+                handler(this, (PgRowUpdatedEventArgs) value);
+            }
+        }
 
-		protected override RowUpdatingEventArgs CreateRowUpdatingEvent(DataRow dataRow, IDbCommand command, StatementType statementType, DataTableMapping tableMapping)
-		{
-			return new PgRowUpdatingEventArgs(dataRow, command, statementType, tableMapping);
-		}
+        protected override RowUpdatingEventArgs CreateRowUpdatingEvent(DataRow dataRow, IDbCommand command, StatementType statementType, DataTableMapping tableMapping)
+        {
+            return new PgRowUpdatingEventArgs(dataRow, command, statementType, tableMapping);
+        }
 
-		protected override void OnRowUpdating(RowUpdatingEventArgs value)
-		{
-			PgRowUpdatingEventHandler handler = (PgRowUpdatingEventHandler) Events[EventRowUpdating];
-			if ((null != handler) && (value is PgRowUpdatingEventArgs)) 
-			{
-				handler(this, (PgRowUpdatingEventArgs) value);
-			}
-		}
+        protected override void OnRowUpdating(RowUpdatingEventArgs value)
+        {
+            PgRowUpdatingEventHandler handler = (PgRowUpdatingEventHandler) Events[EventRowUpdating];
+            if ((null != handler) && (value is PgRowUpdatingEventArgs)) 
+            {
+                handler(this, (PgRowUpdatingEventArgs) value);
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

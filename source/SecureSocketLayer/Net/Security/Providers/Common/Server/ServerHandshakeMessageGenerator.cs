@@ -26,89 +26,89 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common.Server
 {
-	internal abstract class ServerHandshakeMessageGenerator : IHandshakeMessageGenerator
-	{
-		#region · Fields ·
+    internal abstract class ServerHandshakeMessageGenerator : IHandshakeMessageGenerator
+    {
+        #region · Fields ·
 
-		private ISecureAuthenticator authenticator;
+        private ISecureAuthenticator authenticator;
 
-		#endregion
+        #endregion
 
-		#region · Protected Properties ·
+        #region · Protected Properties ·
 
-		protected ISecureAuthenticator Authenticator
-		{
-			get { return this.authenticator; }
-		}
+        protected ISecureAuthenticator Authenticator
+        {
+            get { return this.authenticator; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Protected Constructors ·
+        #region · Protected Constructors ·
 
         protected ServerHandshakeMessageGenerator(ISecureAuthenticator authenticator)
-		{
-			this.authenticator = authenticator;
-		}
+        {
+            this.authenticator = authenticator;
+        }
 
-		#endregion
+        #endregion
 
-		#region · IHandshakeMessageGenerator Members ·
+        #region · IHandshakeMessageGenerator Members ·
 
-		public virtual byte[] ClientHello()
-		{
+        public virtual byte[] ClientHello()
+        {
             return null;
-		}
+        }
 
-		public virtual byte[] Certificate()
-		{
+        public virtual byte[] Certificate()
+        {
             return null;
-		}
+        }
 
-		public virtual byte[] ServerKeyExchange()
-		{
-			return null;
-		}
+        public virtual byte[] ServerKeyExchange()
+        {
+            return null;
+        }
 
-		public virtual byte[] CertificateRequest()
-		{
-			return null;
-		}
+        public virtual byte[] CertificateRequest()
+        {
+            return null;
+        }
 
-		public virtual byte[] ServerHello()
-		{
-			return null;
-		}
+        public virtual byte[] ServerHello()
+        {
+            return null;
+        }
 
-		public virtual byte[] ServerHelloDone()
-		{
-			return null;
-		}
+        public virtual byte[] ServerHelloDone()
+        {
+            return null;
+        }
 
-		public virtual byte[] CertificateVerify()
-		{
-			return null;
-		}
+        public virtual byte[] CertificateVerify()
+        {
+            return null;
+        }
 
-		public virtual byte[] ClientKeyExchange()
-		{
-			return null;
-		}
+        public virtual byte[] ClientKeyExchange()
+        {
+            return null;
+        }
 
-		public virtual byte[] Finished()
-		{
-			return null;
-		}
+        public virtual byte[] Finished()
+        {
+            return null;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected virtual void WriteMessageLength(MemoryStreamEx message)
-		{
-			message.Position = 1;
-			message.WriteInt24(message.Length - 4);
-		}
+        protected virtual void WriteMessageLength(MemoryStreamEx message)
+        {
+            message.Position = 1;
+            message.WriteInt24(message.Length - 4);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

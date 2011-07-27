@@ -22,7 +22,7 @@ using System.Data.Common;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public sealed class PgConnectionStringBuilder
+    public sealed class PgConnectionStringBuilder
         : DbConnectionStringBuilder
     {
         #region · Static Fields ·
@@ -101,7 +101,7 @@ namespace PostgreSql.Data.PostgreSqlClient
             set { this.SetValue("Packet Size", value); }
         }
 
-		public int ConnectionTimeout
+        public int ConnectionTimeout
         {
             get { return this.GetInt32("Connection Timeout"); }
             set { this.SetValue("Connection Timeout", value); }
@@ -198,5 +198,5 @@ namespace PostgreSql.Data.PostgreSqlClient
         }
 
         #endregion
-	}
+    }
 }

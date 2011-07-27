@@ -31,18 +31,18 @@ using SecureSocketLayer.Net.Security.Providers.Common;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {
-	internal sealed class NullCompressionMethod : ICompressionMethod
+    internal sealed class NullCompressionMethod : ICompressionMethod
     {
         #region · Properties ·
 
         public byte Code
-		{
-			get { return 0; }
-		}
+        {
+            get { return 0; }
+        }
 
-		public string Name
-		{
-			get { return "Null(No Compression)"; }
+        public string Name
+        {
+            get { return "Null(No Compression)"; }
         }
 
         #endregion
@@ -50,20 +50,20 @@ namespace SecureSocketLayer.Net.Security.Providers.Common
         #region · Constructors ·
 
         public NullCompressionMethod()
-		{
-		}
+        {
+        }
 
-		#endregion
+        #endregion
 
-		#region · ICompressionMethod Members ·
+        #region · ICompressionMethod Members ·
 
-		public Stream Create(Stream innerStream, CompressionMode mode)
-		{
-			return null;
-		}
+        public Stream Create(Stream innerStream, CompressionMode mode)
+        {
+            return null;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

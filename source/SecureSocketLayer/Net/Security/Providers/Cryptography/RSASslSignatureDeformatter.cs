@@ -30,32 +30,32 @@ using MSC = Mono.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Cryptography
 {
-	internal class RSASslSignatureDeformatter : AsymmetricSignatureDeformatter
-	{
-		#region · Fields ·
+    internal class RSASslSignatureDeformatter : AsymmetricSignatureDeformatter
+    {
+        #region · Fields ·
 
-		private RSA key;
-		private HashAlgorithm hash;
+        private RSA key;
+        private HashAlgorithm hash;
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public RSASslSignatureDeformatter()
-		{
-		}
+        public RSASslSignatureDeformatter()
+        {
+        }
 
-		public RSASslSignatureDeformatter(AsymmetricAlgorithm key)
-		{
-			this.SetKey(key);
-		}
+        public RSASslSignatureDeformatter(AsymmetricAlgorithm key)
+        {
+            this.SetKey(key);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public override bool VerifySignature(byte[] rgbHash, byte[] rgbSignature)
-		{
+        public override bool VerifySignature(byte[] rgbHash, byte[] rgbSignature)
+        {
             if (this.key == null)
             {
                 throw new CryptographicUnexpectedOperationException("The key is a null reference");
@@ -71,34 +71,34 @@ namespace SecureSocketLayer.Net.Security.Providers.Cryptography
                 throw new ArgumentNullException("The rgbHash parameter is a null reference.");
             }
 
-			return MSC.PKCS1.Verify_v15(this.key, this.hash, rgbHash, rgbSignature);
-		}
+            return MSC.PKCS1.Verify_v15(this.key, this.hash, rgbHash, rgbSignature);
+        }
 
-		public override void SetHashAlgorithm(string strName)
-		{
-			switch (strName) {
-				case "MD5SHA1":
-					this.hash = new MD5SHA1();
-					break;
+        public override void SetHashAlgorithm(string strName)
+        {
+            switch (strName) {
+                case "MD5SHA1":
+                    this.hash = new MD5SHA1();
+                    break;
 
-				default:
-					this.hash = HashAlgorithm.Create(strName);
-					break;
-			}
-		}
+                default:
+                    this.hash = HashAlgorithm.Create(strName);
+                    break;
+            }
+        }
 
-		public override void SetKey(AsymmetricAlgorithm key)
-		{
+        public override void SetKey(AsymmetricAlgorithm key)
+        {
             if (!(key is RSA))
             {
                 throw new ArgumentException("Specfied key is not an RSA key");
             }
 
-			this.key = key as RSA;
-		}
+            this.key = key as RSA;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

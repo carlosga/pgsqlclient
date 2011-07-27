@@ -23,74 +23,74 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	[Serializable]
-	public class PgException
+    [Serializable]
+    public class PgException
         : DbException
-	{	
-		#region · Fields ·
-		
-		private PgErrorCollection	errors;
+    {	
+        #region · Fields ·
+        
+        private PgErrorCollection	errors;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
-		
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public PgErrorCollection Errors
-		{
-			get { return this.errors; }
-		}
-	    
-		#endregion
+        #region · Properties ·
+        
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public PgErrorCollection Errors
+        {
+            get { return this.errors; }
+        }
+        
+        #endregion
 
-		#region · Constructors ·
-		
-		internal PgException() : base()
-		{
-			this.errors = new PgErrorCollection();
-		}
+        #region · Constructors ·
+        
+        internal PgException() : base()
+        {
+            this.errors = new PgErrorCollection();
+        }
 
-		internal PgException(string message) : base(message)
-		{
-			this.errors = new PgErrorCollection();
-		}
+        internal PgException(string message) : base(message)
+        {
+            this.errors = new PgErrorCollection();
+        }
 
-		internal PgException(SerializationInfo info, StreamingContext context) : base(info, context)
-		{
-			this.errors = new PgErrorCollection();
-		}
-		
-		internal PgException(string message, PgClientException ex) : base(message)
-		{
-			this.errors	= new PgErrorCollection();
+        internal PgException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.errors = new PgErrorCollection();
+        }
+        
+        internal PgException(string message, PgClientException ex) : base(message)
+        {
+            this.errors	= new PgErrorCollection();
 
-			this.GetPgExceptionErrors(ex);
-		}
+            this.GetPgExceptionErrors(ex);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
-		private void GetPgExceptionErrors(PgClientException ex)
-		{
-			foreach (PgClientError error in ex.Errors)
-			{
-				PgError newError = new PgError();
+        private void GetPgExceptionErrors(PgClientException ex)
+        {
+            foreach (PgClientError error in ex.Errors)
+            {
+                PgError newError = new PgError();
 
-				newError.Severity	= error.Severity;
-				newError.Code		= error.Code;
-				newError.Message	= error.Message;
-				newError.Detail		= error.Detail;
-				newError.Hint		= error.Hint;
-				newError.Line		= error.Line;
-				newError.Where		= error.Where;
-				newError.Position	= error.Position;
-				newError.Routine	= error.Routine;
+                newError.Severity	= error.Severity;
+                newError.Code		= error.Code;
+                newError.Message	= error.Message;
+                newError.Detail		= error.Detail;
+                newError.Hint		= error.Hint;
+                newError.Line		= error.Line;
+                newError.Where		= error.Where;
+                newError.Position	= error.Position;
+                newError.Routine	= error.Routine;
 
-				errors.Add(newError);
-			}
-		}
+                errors.Add(newError);
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

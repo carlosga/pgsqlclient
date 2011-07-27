@@ -20,65 +20,65 @@ using System.Data.Common;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public class PostgreSqlClientFactory 
+    public class PostgreSqlClientFactory 
         : DbProviderFactory
-	{
-		#region · Static Fields ·
+    {
+        #region · Static Fields ·
 
-		public static readonly PostgreSqlClientFactory Instance = new PostgreSqlClientFactory();
+        public static readonly PostgreSqlClientFactory Instance = new PostgreSqlClientFactory();
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		private PostgreSqlClientFactory() 
-			: base()
-		{
-		}
+        private PostgreSqlClientFactory() 
+            : base()
+        {
+        }
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public override bool CanCreateDataSourceEnumerator
-		{
-			get { throw new Exception("The method or operation is not implemented."); }
-		}
+        public override bool CanCreateDataSourceEnumerator
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public override DbCommand CreateCommand()
-		{
-			return new PgCommand();
-		}
+        public override DbCommand CreateCommand()
+        {
+            return new PgCommand();
+        }
 
-		public override DbCommandBuilder CreateCommandBuilder()
-		{
-			return new PgCommandBuilder();
-		}
+        public override DbCommandBuilder CreateCommandBuilder()
+        {
+            return new PgCommandBuilder();
+        }
 
-		public override DbConnection CreateConnection()
-		{
-			return new PgConnection();
-		}
+        public override DbConnection CreateConnection()
+        {
+            return new PgConnection();
+        }
 
-		public override DbConnectionStringBuilder CreateConnectionStringBuilder()
-		{
-			return new PgConnectionStringBuilder();
-		}
+        public override DbConnectionStringBuilder CreateConnectionStringBuilder()
+        {
+            return new PgConnectionStringBuilder();
+        }
 
-		public override DbDataAdapter CreateDataAdapter()
-		{
-			return new PgDataAdapter();
-		}
+        public override DbDataAdapter CreateDataAdapter()
+        {
+            return new PgDataAdapter();
+        }
 
-		public override DbParameter CreateParameter()
-		{
-			return new PgParameter();
-		}
+        public override DbParameter CreateParameter()
+        {
+            return new PgParameter();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -30,100 +30,100 @@ using SecureSocketLayer.Net.Security.Providers.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Cryptography
 {
-	internal class MD5SHA1 : HashAlgorithm
-	{
-		#region · Fields ·
+    internal class MD5SHA1 : HashAlgorithm
+    {
+        #region · Fields ·
 
-		private HashAlgorithm md5;
-		private HashAlgorithm sha;
-		private bool hashing;
+        private HashAlgorithm md5;
+        private HashAlgorithm sha;
+        private bool hashing;
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public MD5SHA1() : base()
-		{
-			this.md5 = MD5.Create();
-			this.sha = SHA1.Create();
+        public MD5SHA1() : base()
+        {
+            this.md5 = MD5.Create();
+            this.sha = SHA1.Create();
 
-			// Set HashSizeValue
-			this.HashSizeValue = this.md5.HashSize + this.sha.HashSize;
-		}
+            // Set HashSizeValue
+            this.HashSizeValue = this.md5.HashSize + this.sha.HashSize;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public override void Initialize()
-		{
-			this.md5.Initialize();
-			this.sha.Initialize();
-			this.hashing = false;
-		}
+        public override void Initialize()
+        {
+            this.md5.Initialize();
+            this.sha.Initialize();
+            this.hashing = false;
+        }
 
-		protected override byte[] HashFinal()
-		{
-			if (!hashing) 
+        protected override byte[] HashFinal()
+        {
+            if (!hashing) 
             {
-				this.hashing = true;
-			}
+                this.hashing = true;
+            }
 
-			// Finalize the original hash
-			this.md5.TransformFinalBlock(new byte[0], 0, 0);
-			this.sha.TransformFinalBlock(new byte[0], 0, 0);
+            // Finalize the original hash
+            this.md5.TransformFinalBlock(new byte[0], 0, 0);
+            this.sha.TransformFinalBlock(new byte[0], 0, 0);
 
-			byte[] hash = new byte[36];
+            byte[] hash = new byte[36];
 
-			Buffer.BlockCopy(this.md5.Hash, 0, hash, 0, 16);
-			Buffer.BlockCopy(this.sha.Hash, 0, hash, 16, 20);
+            Buffer.BlockCopy(this.md5.Hash, 0, hash, 0, 16);
+            Buffer.BlockCopy(this.sha.Hash, 0, hash, 16, 20);
 
-			return hash;
-		}
+            return hash;
+        }
 
-		protected override void HashCore(byte[] array, int ibStart, int cbSize)
-		{
-			if (!hashing) 
+        protected override void HashCore(byte[] array, int ibStart, int cbSize)
+        {
+            if (!hashing) 
             {
-				hashing = true;
-			}
+                hashing = true;
+            }
 
-			this.md5.TransformBlock(array, ibStart, cbSize, array, ibStart);
-			this.sha.TransformBlock(array, ibStart, cbSize, array, ibStart);
-		}
+            this.md5.TransformBlock(array, ibStart, cbSize, array, ibStart);
+            this.sha.TransformBlock(array, ibStart, cbSize, array, ibStart);
+        }
 
-		public byte[] CreateSignature(AsymmetricAlgorithm key)
-		{
-			if (key == null) 
+        public byte[] CreateSignature(AsymmetricAlgorithm key)
+        {
+            if (key == null) 
             {
-				throw new CryptographicUnexpectedOperationException("missing key");
-			}
+                throw new CryptographicUnexpectedOperationException("missing key");
+            }
 
-			RSASslSignatureFormatter f = new RSASslSignatureFormatter(key);
-			f.SetHashAlgorithm("MD5SHA1");
+            RSASslSignatureFormatter f = new RSASslSignatureFormatter(key);
+            f.SetHashAlgorithm("MD5SHA1");
 
-			return f.CreateSignature(this.Hash);
-		}
+            return f.CreateSignature(this.Hash);
+        }
 
-		public bool VerifySignature(AsymmetricAlgorithm key, byte[] rgbSignature)
-		{
-			if (key == null) 
+        public bool VerifySignature(AsymmetricAlgorithm key, byte[] rgbSignature)
+        {
+            if (key == null) 
             {
-				throw new CryptographicUnexpectedOperationException("missing key");
-			}
-			if (rgbSignature == null) 
+                throw new CryptographicUnexpectedOperationException("missing key");
+            }
+            if (rgbSignature == null) 
             {
-				throw new ArgumentNullException("rgbSignature");
-			}
+                throw new ArgumentNullException("rgbSignature");
+            }
 
-			RSASslSignatureDeformatter d = new RSASslSignatureDeformatter(key);
-			d.SetHashAlgorithm("MD5SHA1");
+            RSASslSignatureDeformatter d = new RSASslSignatureDeformatter(key);
+            d.SetHashAlgorithm("MD5SHA1");
 
-			return d.VerifySignature(this.Hash, rgbSignature);
-		}
+            return d.VerifySignature(this.Hash, rgbSignature);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

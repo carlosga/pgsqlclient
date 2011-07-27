@@ -19,40 +19,40 @@ using System;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	[Serializable]
-	public enum PgDbType
-	{
-		Array			,
-		Binary			,
-		Boolean			,
-		Box				,
+    [Serializable]
+    public enum PgDbType
+    {
+        Array			,
+        Binary			,
+        Boolean			,
+        Box				,
         Box2D           ,
         Box3D           ,
         Byte            ,
-		Char			,
-		Circle			,
-		Currency		,
-		Date			,
-		Decimal			,
-		Double			,
-		Float			,
-		Int2			,
-		Int4			,
-		Int8			,
-		Interval		,
-		Line			,
-		LSeg			,
-		Numeric			,
-		Path			,
-		Point			,
-		Polygon			,
+        Char			,
+        Circle			,
+        Currency		,
+        Date			,
+        Decimal			,
+        Double			,
+        Float			,
+        Int2			,
+        Int4			,
+        Int8			,
+        Interval		,
+        Line			,
+        LSeg			,
+        Numeric			,
+        Path			,
+        Point			,
+        Polygon			,
         Refcursor       ,
-		Text			,
-		Time			,
-		TimeWithTZ		,
-		Timestamp		,
-		TimestampWithTZ	,
-		VarChar			,
-		Vector
-	}
+        Text			,
+        Time			,
+        TimeWithTZ		,
+        Timestamp		,
+        TimestampWithTZ	,
+        VarChar			,
+        Vector
+    }
 }

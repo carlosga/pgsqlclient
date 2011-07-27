@@ -24,50 +24,50 @@ namespace PostgreSql.Data.PgTypes
     [Serializable]
     public struct PgPoint2D
     {
-		#region · Fields ·
+        #region · Fields ·
 
-		private double x;
-		private double y;
+        private double x;
+        private double y;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public double X
-		{
+        public double X
+        {
             get { return this.x; }
-		}
-		
-		public double Y
-		{
+        }
+        
+        public double Y
+        {
             get { return this.y; }
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgPoint2D(double x, double y)
-		{
-			this.x = x;
-			this.y = y;
-		}
+        public PgPoint2D(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
         public static bool operator ==(PgPoint2D left, PgPoint2D right)
-		{
-			return (left.X == right.X && left.Y == right.Y);
-		}
+        {
+            return (left.X == right.X && left.Y == right.Y);
+        }
 
         public static bool operator !=(PgPoint2D left, PgPoint2D right)
-		{
+        {
             return (left.X != right.X || left.Y != right.Y);
-		}
+        }
 
-		#endregion
+        #endregion
 
         #region · Overriden Methods ·
 
@@ -78,10 +78,10 @@ namespace PostgreSql.Data.PgTypes
             return String.Format(culture, "{0} {1}", this.x, this.y);
         }
 
-		public override int GetHashCode()
-		{
-			return (this.x.GetHashCode() ^ this.y.GetHashCode());
-		}
+        public override int GetHashCode()
+        {
+            return (this.x.GetHashCode() ^ this.y.GetHashCode());
+        }
 
         public override bool Equals(object obj)
         {

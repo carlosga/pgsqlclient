@@ -20,75 +20,75 @@ using System.Globalization;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal sealed class PgClientErrorCollection 
+    internal sealed class PgClientErrorCollection 
         : List<PgClientError>
-	{
-		#region · Properties ·
+    {
+        #region · Properties ·
 
-		public PgClientError this[string errorMessage] 
-		{
-			get { return (PgClientError)this[IndexOf(errorMessage)]; }
-			set { this[IndexOf(errorMessage)] = (PgClientError)value; }
-		}
+        public PgClientError this[string errorMessage] 
+        {
+            get { return (PgClientError)this[IndexOf(errorMessage)]; }
+            set { this[IndexOf(errorMessage)] = (PgClientError)value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
-	
-		public bool Contains(string errorMessage)
-		{
-			return (this.IndexOf(errorMessage) != -1);
-		}
-		
-		public int IndexOf(string errorMessage)
-		{
-			int index = 0;
+        #region · Methods ·
+    
+        public bool Contains(string errorMessage)
+        {
+            return (this.IndexOf(errorMessage) != -1);
+        }
+        
+        public int IndexOf(string errorMessage)
+        {
+            int index = 0;
 
-			foreach(PgClientError item in this)
-			{
-				if (this.CultureAwareCompare(item.Message, errorMessage))
-				{
-					return index;
-				}
+            foreach(PgClientError item in this)
+            {
+                if (this.CultureAwareCompare(item.Message, errorMessage))
+                {
+                    return index;
+                }
 
-				index++;
-			}
+                index++;
+            }
 
-			return -1;
-		}
+            return -1;
+        }
 
-		public void RemoveAt(string errorMessage)
-		{
-			this.RemoveAt(IndexOf(errorMessage));
-		}
+        public void RemoveAt(string errorMessage)
+        {
+            this.RemoveAt(IndexOf(errorMessage));
+        }
 
-		public PgClientError Add(PgClientError error)
-		{
-			base.Add(error);
+        public PgClientError Add(PgClientError error)
+        {
+            base.Add(error);
 
-			return error;
-		}
+            return error;
+        }
 
-		public PgClientError Add(string severity, string message, string code)
-		{
-			PgClientError error = new PgClientError(severity, code, message);
+        public PgClientError Add(string severity, string message, string code)
+        {
+            PgClientError error = new PgClientError(severity, code, message);
 
-			return Add(error);
-		}
+            return Add(error);
+        }
 
         #endregion
 
         #region · Private Methods ·
 
         private bool CultureAwareCompare(string strA, string strB)
-		{
-			return CultureInfo.CurrentCulture.CompareInfo.Compare(
-				strA, 
-				strB, 
-				CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-				CompareOptions.IgnoreCase) == 0 ? true : false;
-		}
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.Compare(
+                strA, 
+                strB, 
+                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
+                CompareOptions.IgnoreCase) == 0 ? true : false;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

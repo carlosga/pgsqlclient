@@ -34,168 +34,168 @@ using Mono.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {
-	internal sealed class CipherSuite
-	{
-		#region · Fields ·
+    internal sealed class CipherSuite
+    {
+        #region · Fields ·
 
-		private short                   code;
-		private string                  name;
-		private CipherAlgorithmType     cipherAlgorithmType;
-		private HashAlgorithmType       hashAlgorithmType;
-		private ExchangeAlgorithmType   exchangeAlgorithmType;
-		private bool                    isExportable;
-		private CipherMode              cipherMode;
-		private byte                    keyMaterialSize;
-		private int                     keyBlockSize;
-		private byte                    expandedKeyMaterialSize;
-		private short                   effectiveKeyBits;
-		private byte                    ivSize;
-		private byte                    blockSize;
+        private short                   code;
+        private string                  name;
+        private CipherAlgorithmType     cipherAlgorithmType;
+        private HashAlgorithmType       hashAlgorithmType;
+        private ExchangeAlgorithmType   exchangeAlgorithmType;
+        private bool                    isExportable;
+        private CipherMode              cipherMode;
+        private byte                    keyMaterialSize;
+        private int                     keyBlockSize;
+        private byte                    expandedKeyMaterialSize;
+        private short                   effectiveKeyBits;
+        private byte                    ivSize;
+        private byte                    blockSize;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public CipherAlgorithmType CipherAlgorithmType
-		{
-			get { return this.cipherAlgorithmType; }
-		}
+        public CipherAlgorithmType CipherAlgorithmType
+        {
+            get { return this.cipherAlgorithmType; }
+        }
 
-		public string HashAlgorithmName
-		{
-			get
-			{
-				switch (this.hashAlgorithmType) {
-					case HashAlgorithmType.Md5:
-						return "MD5";
+        public string HashAlgorithmName
+        {
+            get
+            {
+                switch (this.hashAlgorithmType) {
+                    case HashAlgorithmType.Md5:
+                        return "MD5";
 
-					case HashAlgorithmType.Sha1:
-						return "SHA1";
+                    case HashAlgorithmType.Sha1:
+                        return "SHA1";
 
-					default:
-						return "None";
-				}
-			}
-		}
+                    default:
+                        return "None";
+                }
+            }
+        }
 
-		public HashAlgorithmType HashAlgorithmType
-		{
-			get { return this.hashAlgorithmType; }
-		}
+        public HashAlgorithmType HashAlgorithmType
+        {
+            get { return this.hashAlgorithmType; }
+        }
 
-		public int HashSize
-		{
-			get
-			{
-				switch (this.hashAlgorithmType) 
+        public int HashSize
+        {
+            get
+            {
+                switch (this.hashAlgorithmType) 
                 {
-					case HashAlgorithmType.Md5:
-						return 16;
+                    case HashAlgorithmType.Md5:
+                        return 16;
 
-					case HashAlgorithmType.Sha1:
-						return 20;
+                    case HashAlgorithmType.Sha1:
+                        return 20;
 
-					default:
-						return 0;
-				}
-			}
-		}
+                    default:
+                        return 0;
+                }
+            }
+        }
 
-		public ExchangeAlgorithmType ExchangeAlgorithmType
-		{
-			get { return this.exchangeAlgorithmType; }
-		}
+        public ExchangeAlgorithmType ExchangeAlgorithmType
+        {
+            get { return this.exchangeAlgorithmType; }
+        }
 
-		public CipherMode CipherMode
-		{
-			get { return this.cipherMode; }
-		}
+        public CipherMode CipherMode
+        {
+            get { return this.cipherMode; }
+        }
 
-		public short Code
-		{
-			get { return this.code; }
-		}
+        public short Code
+        {
+            get { return this.code; }
+        }
 
-		public string Name
-		{
-			get { return this.name; }
-		}
+        public string Name
+        {
+            get { return this.name; }
+        }
 
-		public bool IsExportable
-		{
-			get { return this.isExportable; }
-		}
+        public bool IsExportable
+        {
+            get { return this.isExportable; }
+        }
 
-		public byte KeyMaterialSize
-		{
-			get { return this.keyMaterialSize; }
-		}
+        public byte KeyMaterialSize
+        {
+            get { return this.keyMaterialSize; }
+        }
 
-		public int KeyBlockSize
-		{
-			get { return this.keyBlockSize; }
-		}
+        public int KeyBlockSize
+        {
+            get { return this.keyBlockSize; }
+        }
 
-		public byte ExpandedKeyMaterialSize
-		{
-			get { return this.expandedKeyMaterialSize; }
-		}
+        public byte ExpandedKeyMaterialSize
+        {
+            get { return this.expandedKeyMaterialSize; }
+        }
 
-		public short EffectiveKeyBits
-		{
-			get { return this.effectiveKeyBits; }
-		}
+        public short EffectiveKeyBits
+        {
+            get { return this.effectiveKeyBits; }
+        }
 
-		public byte IvSize
-		{
-			get { return this.ivSize; }
-		}
+        public byte IvSize
+        {
+            get { return this.ivSize; }
+        }
 
-		public byte BlockSize
-		{
-			get { return this.blockSize; }
-		}
+        public byte BlockSize
+        {
+            get { return this.blockSize; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public CipherSuite(
-			short                   code,
-			string                  name,
-			CipherAlgorithmType     cipherAlgorithmType,
-			HashAlgorithmType       hashAlgorithmType,
-			ExchangeAlgorithmType   exchangeAlgorithmType,
-			bool                    exportable,
-			bool                    blockMode,
-			byte                    keyMaterialSize,
-			byte                    expandedKeyMaterialSize,
+        public CipherSuite(
+            short                   code,
+            string                  name,
+            CipherAlgorithmType     cipherAlgorithmType,
+            HashAlgorithmType       hashAlgorithmType,
+            ExchangeAlgorithmType   exchangeAlgorithmType,
+            bool                    exportable,
+            bool                    blockMode,
+            byte                    keyMaterialSize,
+            byte                    expandedKeyMaterialSize,
             short                   effectiveKeyBits,
-			byte                    ivSize,
-			byte                    blockSize)
-		{
-			this.code                   = code;
-			this.name                   = name;
-			this.cipherAlgorithmType    = cipherAlgorithmType;
-			this.hashAlgorithmType      = hashAlgorithmType;
-			this.exchangeAlgorithmType  = exchangeAlgorithmType;
-			this.isExportable           = exportable;
+            byte                    ivSize,
+            byte                    blockSize)
+        {
+            this.code                   = code;
+            this.name                   = name;
+            this.cipherAlgorithmType    = cipherAlgorithmType;
+            this.hashAlgorithmType      = hashAlgorithmType;
+            this.exchangeAlgorithmType  = exchangeAlgorithmType;
+            this.isExportable           = exportable;
 
             if (blockMode)
             {
                 this.cipherMode = CipherMode.CBC;
             }
 
-			this.keyMaterialSize            = keyMaterialSize;
-			this.expandedKeyMaterialSize    = expandedKeyMaterialSize;
+            this.keyMaterialSize            = keyMaterialSize;
+            this.expandedKeyMaterialSize    = expandedKeyMaterialSize;
             this.effectiveKeyBits           = effectiveKeyBits;
-			this.ivSize                     = ivSize;
-			this.blockSize                  = blockSize;
-			this.keyBlockSize               = (this.keyMaterialSize + this.HashSize + this.ivSize) << 1;
-		}
+            this.ivSize                     = ivSize;
+            this.blockSize                  = blockSize;
+            this.keyBlockSize               = (this.keyMaterialSize + this.HashSize + this.ivSize) << 1;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

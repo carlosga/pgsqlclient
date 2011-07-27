@@ -123,7 +123,7 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #region · Fields ·
 
-		private PgRowUpdatingEventHandler rowUpdatingHandler;
+        private PgRowUpdatingEventHandler rowUpdatingHandler;
 
         #endregion
 
@@ -140,12 +140,12 @@ namespace PostgreSql.Data.PostgreSqlClient
         #region · Constructors ·
 
         public PgCommandBuilder() 
-			: this(null)
+            : this(null)
         {
         }
 
         public PgCommandBuilder(PgDataAdapter adapter) 
-			: base()
+            : base()
         {
             this.DataAdapter    = adapter;
             this.ConflictOption = ConflictOption.OverwriteChanges;
@@ -241,19 +241,19 @@ namespace PostgreSql.Data.PostgreSqlClient
                 throw new InvalidOperationException("adapter needs to be a PgDataAdapter");
             }
 
-			this.rowUpdatingHandler = new PgRowUpdatingEventHandler(this.RowUpdatingHandler);
+            this.rowUpdatingHandler = new PgRowUpdatingEventHandler(this.RowUpdatingHandler);
             ((PgDataAdapter)adapter).RowUpdating += this.rowUpdatingHandler;
         }
 
         #endregion
 
-		#region · Event Handlers ·
+        #region · Event Handlers ·
 
-		private void RowUpdatingHandler(object sender, PgRowUpdatingEventArgs e)
-		{
+        private void RowUpdatingHandler(object sender, PgRowUpdatingEventArgs e)
+        {
             base.RowUpdatingHandler(e);
-		}
+        }
 
-		#endregion
+        #endregion
     }
 }

@@ -19,21 +19,21 @@ using System;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal static class PgErrorCodes
+    internal static class PgErrorCodes
     {
         #region · Constants ·
 
         public const char SEVERITY  = 'S';
-		public const char CODE      = 'C';
-		public const char MESSAGE   = 'M';
-		public const char DETAIL    = 'D';
-		public const char HINT      = 'H';
-		public const char POSITION  = 'P';
-		public const char WHERE     = 'W';
-		public const char FILE      = 'F';
-		public const char LINE      = 'L';
-		public const char ROUTINE   = 'R';		
-		public const char END       = '\0';
+        public const char CODE      = 'C';
+        public const char MESSAGE   = 'M';
+        public const char DETAIL    = 'D';
+        public const char HINT      = 'H';
+        public const char POSITION  = 'P';
+        public const char WHERE     = 'W';
+        public const char FILE      = 'F';
+        public const char LINE      = 'L';
+        public const char ROUTINE   = 'R';		
+        public const char END       = '\0';
 
         #endregion
     }

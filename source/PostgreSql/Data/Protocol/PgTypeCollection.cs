@@ -20,74 +20,74 @@ using System.Globalization;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal sealed class PgTypeCollection 
+    internal sealed class PgTypeCollection 
         : List<PgType>
-	{
-		#region · Properties ·
+    {
+        #region · Properties ·
 
-		public PgType this[string name] 
-		{
-			get { return (PgType)this[this.IndexOf(name)]; }
-			set { this[this.IndexOf(name)] = (PgType)value; }
-		}
+        public PgType this[string name] 
+        {
+            get { return (PgType)this[this.IndexOf(name)]; }
+            set { this[this.IndexOf(name)] = (PgType)value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
-	
-		public bool Contains(int oid)
-		{
-			return (this.IndexOf(oid) != -1);
-		}
-		
-		public int IndexOf(int oid)
-		{
-			int index = 0;
+        #region · Methods ·
+    
+        public bool Contains(int oid)
+        {
+            return (this.IndexOf(oid) != -1);
+        }
+        
+        public int IndexOf(int oid)
+        {
+            int index = 0;
 
-			foreach (PgType item in this)
-			{
-				if (item.Oid == oid)
-				{
-					return index;
-				}
+            foreach (PgType item in this)
+            {
+                if (item.Oid == oid)
+                {
+                    return index;
+                }
 
-				index++;
-			}
+                index++;
+            }
 
-			return -1;
-		}
+            return -1;
+        }
 
-		public int IndexOf(string name)
-		{
-			int index = 0;
+        public int IndexOf(string name)
+        {
+            int index = 0;
 
-			foreach (PgType item in this)
-			{
-				if (this.CultureAwareCompare(item.Name, name))
-				{
-					return index;
-				}
-				index++;
-			}
+            foreach (PgType item in this)
+            {
+                if (this.CultureAwareCompare(item.Name, name))
+                {
+                    return index;
+                }
+                index++;
+            }
 
-			return -1;
-		}
+            return -1;
+        }
 
-		public void RemoveAt(string typeName)
-		{
-			this.RemoveAt(this.IndexOf(typeName));
-		}
+        public void RemoveAt(string typeName)
+        {
+            this.RemoveAt(this.IndexOf(typeName));
+        }
 
-		public PgType Add(
+        public PgType Add(
             int             oid, 
             string          name, 
             PgDataType      dataType, 
             int             elementType, 
             PgTypeFormat    formatCode, 
             int             size)
-		{
-			return this.Add(new PgType(oid, name, dataType, elementType, formatCode, size));
-		}
+        {
+            return this.Add(new PgType(oid, name, dataType, elementType, formatCode, size));
+        }
 
         public PgType Add(
             int             oid, 
@@ -124,14 +124,14 @@ namespace PostgreSql.Data.Protocol
         #region · Private Methods ·
 
         private bool CultureAwareCompare(string strA, string strB)
-		{
-			return CultureInfo.CurrentCulture.CompareInfo.Compare(
-				strA, 
-				strB, 
-				CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-				CompareOptions.IgnoreCase) == 0 ? true : false;
-		}
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.Compare(
+                strA, 
+                strB, 
+                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
+                CompareOptions.IgnoreCase) == 0 ? true : false;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

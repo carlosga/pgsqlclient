@@ -21,57 +21,57 @@ using System.Data;
 namespace PostgreSql.Data.Protocol
 {
     internal sealed class PgType
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private int				oid;
-		private string			name;
-		private PgDataType		dataType;
-		private Type			systemType;
-		private int				elementType;
-		private PgTypeFormat	formatCode;
-		private int				size;
+        private int				oid;
+        private string			name;
+        private PgDataType		dataType;
+        private Type			systemType;
+        private int				elementType;
+        private PgTypeFormat	formatCode;
+        private int				size;
         private string          delimiter;
         private string          prefix;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public int Oid
-		{
-			get { return this.oid; }
-		}
+        public int Oid
+        {
+            get { return this.oid; }
+        }
 
-		public PgDataType DataType
-		{
-			get { return this.dataType; }
-		}
+        public PgDataType DataType
+        {
+            get { return this.dataType; }
+        }
 
-		public string Name
-		{
-			get { return this.name; }
-		}
+        public string Name
+        {
+            get { return this.name; }
+        }
 
-		public Type SystemType
-		{
-			get { return this.systemType; }
-		}
-		
-		public int ElementType
-		{
-			get { return this.elementType; }
-		}
+        public Type SystemType
+        {
+            get { return this.systemType; }
+        }
+        
+        public int ElementType
+        {
+            get { return this.elementType; }
+        }
 
-		public PgTypeFormat FormatCode
-		{
-			get { return this.formatCode; }
-		}
+        public PgTypeFormat FormatCode
+        {
+            get { return this.formatCode; }
+        }
 
-		public int Size
-		{
-			get { return this.size; }
-		}
+        public int Size
+        {
+            get { return this.size; }
+        }
 
         public bool IsNumeric
         {
@@ -140,14 +140,14 @@ namespace PostgreSql.Data.Protocol
             get { return this.prefix; }
         }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgType(int oid, string name, PgDataType dataType, int elementType, PgTypeFormat formatCode, int size)
+        public PgType(int oid, string name, PgDataType dataType, int elementType, PgTypeFormat formatCode, int size)
             : this(oid, name, dataType, elementType, formatCode, size, "")
-		{
-		}
+        {
+        }
 
         public PgType(
             int             oid, 
@@ -182,7 +182,7 @@ namespace PostgreSql.Data.Protocol
             this.prefix         = prefix;
         }
 
-		#endregion
+        #endregion
 
         #region · Internal Methods ·
 
@@ -196,81 +196,81 @@ namespace PostgreSql.Data.Protocol
         #region · Private Methods ·
 
         private Type InferSystemType()
-		{
-			switch (this.dataType)
-			{
-				case PgDataType.Array:
-				case PgDataType.Binary:
-				case PgDataType.Vector:
-					return Type.GetType("System.Array");
-				
-				case PgDataType.Boolean:
-					return Type.GetType("System.Boolean");
+        {
+            switch (this.dataType)
+            {
+                case PgDataType.Array:
+                case PgDataType.Binary:
+                case PgDataType.Vector:
+                    return Type.GetType("System.Array");
+                
+                case PgDataType.Boolean:
+                    return Type.GetType("System.Boolean");
 
-				case PgDataType.Box:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgBox");
+                case PgDataType.Box:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgBox");
 
-				case PgDataType.Circle:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgCircle");
+                case PgDataType.Circle:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgCircle");
 
-				case PgDataType.Line:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgLine");
+                case PgDataType.Line:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgLine");
 
-				case PgDataType.LSeg:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgLSeg");
+                case PgDataType.LSeg:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgLSeg");
 
-				case PgDataType.Path:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgPath");
+                case PgDataType.Path:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgPath");
 
-				case PgDataType.Point:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgPoint");
+                case PgDataType.Point:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgPoint");
 
-				case PgDataType.Polygon:
-					return Type.GetType("PostgreSql.Data.PgTypes.PgPolygon");
-				
-				case PgDataType.Byte:
-					return Type.GetType("System.Byte");
-				
-				case PgDataType.Char:
-				case PgDataType.Text:
-				case PgDataType.VarChar:
-					return Type.GetType("System.String");
-				
-				case PgDataType.Currency:
-				case PgDataType.Decimal:
-				case PgDataType.Numeric:
-					return Type.GetType("System.Decimal");
-				
-				case PgDataType.Date:
-				case PgDataType.Time:
-				case PgDataType.TimeWithTZ:
-				case PgDataType.Timestamp:
-				case PgDataType.TimestampWithTZ:
-					return Type.GetType("System.DateTime");
+                case PgDataType.Polygon:
+                    return Type.GetType("PostgreSql.Data.PgTypes.PgPolygon");
+                
+                case PgDataType.Byte:
+                    return Type.GetType("System.Byte");
+                
+                case PgDataType.Char:
+                case PgDataType.Text:
+                case PgDataType.VarChar:
+                    return Type.GetType("System.String");
+                
+                case PgDataType.Currency:
+                case PgDataType.Decimal:
+                case PgDataType.Numeric:
+                    return Type.GetType("System.Decimal");
+                
+                case PgDataType.Date:
+                case PgDataType.Time:
+                case PgDataType.TimeWithTZ:
+                case PgDataType.Timestamp:
+                case PgDataType.TimestampWithTZ:
+                    return Type.GetType("System.DateTime");
 
-				case PgDataType.Double:
-					return Type.GetType("System.Double");
-				
-				case PgDataType.Float:
-					return Type.GetType("System.Single");
-				
-				case PgDataType.Int2:
-					return Type.GetType("System.Int16");
-				
-				case PgDataType.Int4:
-					return Type.GetType("System.Int32");
-				
-				case PgDataType.Int8:
-					return Type.GetType("System.Int64");
+                case PgDataType.Double:
+                    return Type.GetType("System.Double");
+                
+                case PgDataType.Float:
+                    return Type.GetType("System.Single");
+                
+                case PgDataType.Int2:
+                    return Type.GetType("System.Int16");
+                
+                case PgDataType.Int4:
+                    return Type.GetType("System.Int32");
+                
+                case PgDataType.Int8:
+                    return Type.GetType("System.Int64");
 
                 case PgDataType.Refcursor:
                     return typeof(DataTable);
 
-				default:
-					return Type.GetType("System.Object");
-			}
-		}
+                default:
+                    return Type.GetType("System.Object");
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

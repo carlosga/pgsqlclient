@@ -29,168 +29,168 @@ using System.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Cryptography
 {
-	/*
-	 * References:
-	 * 		RFC 2104(http://www.ietf.org/rfc/rfc2104.txt)
-	 *		RFC 2202(http://www.ietf.org/rfc/rfc2202.txt)
-	 * MSDN:
-	 * 
-	 *		Extending the KeyedHashAlgorithm Class(http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpguide/html/cpconextendingkeyedhashalgorithmclass.asp)
-	 */
-	internal class HMACSsl : System.Security.Cryptography.KeyedHashAlgorithm
-	{
-		#region · Fields ·
+    /*
+     * References:
+     * 		RFC 2104(http://www.ietf.org/rfc/rfc2104.txt)
+     *		RFC 2202(http://www.ietf.org/rfc/rfc2202.txt)
+     * MSDN:
+     * 
+     *		Extending the KeyedHashAlgorithm Class(http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpguide/html/cpconextendingkeyedhashalgorithmclass.asp)
+     */
+    internal class HMACSsl : System.Security.Cryptography.KeyedHashAlgorithm
+    {
+        #region · Fields ·
 
-		private HashAlgorithm hash;
-		private bool hashing;
-		private byte[] innerPad;
-		private byte[] outerPad;
+        private HashAlgorithm hash;
+        private bool hashing;
+        private byte[] innerPad;
+        private byte[] outerPad;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public override byte[] Key
-		{
-			get { return (byte[])base.KeyValue.Clone(); }
-			set
-			{
-				if (this.hashing) 
+        public override byte[] Key
+        {
+            get { return (byte[])base.KeyValue.Clone(); }
+            set
+            {
+                if (this.hashing) 
                 {
-					throw new Exception("Cannot change key during hash operation.");
-				}
+                    throw new Exception("Cannot change key during hash operation.");
+                }
 
-				/* if key is longer than 64 bytes reset it to rgbKey = Hash(rgbKey) */
-				if (value.Length > 64) 
+                /* if key is longer than 64 bytes reset it to rgbKey = Hash(rgbKey) */
+                if (value.Length > 64) 
                 {
-					base.KeyValue = this.hash.ComputeHash(value);
-				}
-				else 
+                    base.KeyValue = this.hash.ComputeHash(value);
+                }
+                else 
                 {
-					base.KeyValue = (byte[])value.Clone();
-				}
+                    base.KeyValue = (byte[])value.Clone();
+                }
 
-				this.InitializePad();
-			}
-		}
+                this.InitializePad();
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public HMACSsl()
-		{
-			// Create the hash
-			this.hash = MD5.Create();
+        public HMACSsl()
+        {
+            // Create the hash
+            this.hash = MD5.Create();
 
-			// Set HashSizeValue
-			base.HashSizeValue = this.hash.HashSize;
+            // Set HashSizeValue
+            base.HashSizeValue = this.hash.HashSize;
 
-			// Generate a radom key
-			byte[] rgbKey = new byte[64];
-			RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-			rng.GetNonZeroBytes(rgbKey);
+            // Generate a radom key
+            byte[] rgbKey = new byte[64];
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            rng.GetNonZeroBytes(rgbKey);
 
-			base.KeyValue = (byte[])rgbKey.Clone();
+            base.KeyValue = (byte[])rgbKey.Clone();
 
-			this.Initialize();
-		}
+            this.Initialize();
+        }
 
-		public HMACSsl(string hashName, byte[] rgbKey)
-		{
-			// Create the hash
-			if (hashName == null || hashName.Length == 0) 
+        public HMACSsl(string hashName, byte[] rgbKey)
+        {
+            // Create the hash
+            if (hashName == null || hashName.Length == 0) 
             {
-				hashName = "MD5";
-			}
-			this.hash = HashAlgorithm.Create(hashName);
+                hashName = "MD5";
+            }
+            this.hash = HashAlgorithm.Create(hashName);
 
-			// Set HashSizeValue
-			base.HashSizeValue = this.hash.HashSize;
+            // Set HashSizeValue
+            base.HashSizeValue = this.hash.HashSize;
 
-			/* if key is longer than 64 bytes reset it to rgbKey = Hash(rgbKey) */
-			if (rgbKey.Length > 64) 
+            /* if key is longer than 64 bytes reset it to rgbKey = Hash(rgbKey) */
+            if (rgbKey.Length > 64) 
             {
-				base.KeyValue = this.hash.ComputeHash(rgbKey);
-			}
-			else 
+                base.KeyValue = this.hash.ComputeHash(rgbKey);
+            }
+            else 
             {
-				base.KeyValue = (byte[])rgbKey.Clone();
-			}
+                base.KeyValue = (byte[])rgbKey.Clone();
+            }
 
-			this.Initialize();
-		}
+            this.Initialize();
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public override void Initialize()
-		{
-			this.hash.Initialize();
-			this.InitializePad();
-			this.hashing = false;
-		}
+        public override void Initialize()
+        {
+            this.hash.Initialize();
+            this.InitializePad();
+            this.hashing = false;
+        }
 
-		protected override byte[] HashFinal()
-		{
-			if (!this.hashing) 
+        protected override byte[] HashFinal()
+        {
+            if (!this.hashing) 
             {
-				this.hash.TransformBlock(this.innerPad, 0, this.innerPad.Length, this.innerPad, 0);
-				this.hashing = true;
-			}
+                this.hash.TransformBlock(this.innerPad, 0, this.innerPad.Length, this.innerPad, 0);
+                this.hashing = true;
+            }
 
-			// Finalize the original hash
-			this.hash.TransformFinalBlock(new byte[0], 0, 0);
+            // Finalize the original hash
+            this.hash.TransformFinalBlock(new byte[0], 0, 0);
 
-			byte[] firstResult = this.hash.Hash;
+            byte[] firstResult = this.hash.Hash;
 
-			this.hash.Initialize();
-			this.hash.TransformBlock(this.outerPad, 0, this.outerPad.Length, this.outerPad, 0);
-			this.hash.TransformFinalBlock(firstResult, 0, firstResult.Length);
+            this.hash.Initialize();
+            this.hash.TransformBlock(this.outerPad, 0, this.outerPad.Length, this.outerPad, 0);
+            this.hash.TransformFinalBlock(firstResult, 0, firstResult.Length);
 
-			this.Initialize();
+            this.Initialize();
 
-			return this.hash.Hash;
-		}
+            return this.hash.Hash;
+        }
 
-		protected override void HashCore(byte[] array, int ibStart, int cbSize)
-		{
-			if (!this.hashing) 
+        protected override void HashCore(byte[] array, int ibStart, int cbSize)
+        {
+            if (!this.hashing) 
             {
-				this.hash.TransformBlock(this.innerPad, 0, this.innerPad.Length, this.innerPad, 0);
-				this.hashing = true;
-			}
+                this.hash.TransformBlock(this.innerPad, 0, this.innerPad.Length, this.innerPad, 0);
+                this.hashing = true;
+            }
 
-			this.hash.TransformBlock(array, ibStart, cbSize, array, ibStart);
-		}
+            this.hash.TransformBlock(array, ibStart, cbSize, array, ibStart);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
-		private void InitializePad()
-		{
-			// Fill pad arrays
-			innerPad = new byte[64];
-			outerPad = new byte[64];
+        private void InitializePad()
+        {
+            // Fill pad arrays
+            innerPad = new byte[64];
+            outerPad = new byte[64];
 
-			/* Pad the key for inner and outer digest */
-			for (int i = 0; i < KeyValue.Length; ++i) 
+            /* Pad the key for inner and outer digest */
+            for (int i = 0; i < KeyValue.Length; ++i) 
             {
-				innerPad[i] = (byte)(KeyValue[i] ^ 0x36);
-				outerPad[i] = (byte)(KeyValue[i] ^ 0x5C);
-			}
+                innerPad[i] = (byte)(KeyValue[i] ^ 0x36);
+                outerPad[i] = (byte)(KeyValue[i] ^ 0x5C);
+            }
 
-			for (int i = KeyValue.Length; i < 64; ++i) 
+            for (int i = KeyValue.Length; i < 64; ++i) 
             {
-				innerPad[i] = 0x36;
-				outerPad[i] = 0x5C;
-			}
-		}
+                innerPad[i] = 0x36;
+                outerPad[i] = 0x5C;
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
 
 #endif

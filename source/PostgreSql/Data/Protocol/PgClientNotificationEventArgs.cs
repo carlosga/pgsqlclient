@@ -20,45 +20,45 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal sealed class PgClientNotificationEventArgs 
+    internal sealed class PgClientNotificationEventArgs 
         : EventArgs
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private int		processID;
-		private string	condition;
-		private string	aditional;
+        private int		processID;
+        private string	condition;
+        private string	aditional;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public int ProcessID
-		{
-			get { return this.processID; }
-		}
+        public int ProcessID
+        {
+            get { return this.processID; }
+        }
 
-		public string Condition
-		{
-			get { return this.condition; }
-		}
+        public string Condition
+        {
+            get { return this.condition; }
+        }
 
-		public string Aditional
-		{
-			get { return this.aditional; }
-		}
+        public string Aditional
+        {
+            get { return this.aditional; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgClientNotificationEventArgs(int processID, string condition, string addtional)
-		{
-			this.processID	= processID;
-			this.condition	= condition;
-			this.aditional	= addtional;
-		}
+        public PgClientNotificationEventArgs(int processID, string condition, string addtional)
+        {
+            this.processID	= processID;
+            this.condition	= condition;
+            this.aditional	= addtional;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

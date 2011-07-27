@@ -21,12 +21,12 @@ using System.Security.Cryptography;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal class MD5Authentication
-	{
-		#region · Static Methods ·
+    internal class MD5Authentication
+    {
+        #region · Static Methods ·
 
-		public static string GetMD5Hash(byte[] salt, string password)
-		{
+        public static string GetMD5Hash(byte[] salt, string password)
+        {
             using (HashAlgorithm csp = MD5.Create())
             {
                 StringBuilder   md5     = new StringBuilder();
@@ -48,8 +48,8 @@ namespace PostgreSql.Data.Protocol
 
                 return md5.ToString();
             }
-		}
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

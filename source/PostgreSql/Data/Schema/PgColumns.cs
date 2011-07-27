@@ -24,7 +24,7 @@ namespace PostgreSql.Data.Schema
 {
     internal sealed class PgColumns 
         : PgSchema
-	{
+    {
         #region · Constructors ·
 
         public PgColumns(PgConnection connection)
@@ -34,10 +34,10 @@ namespace PostgreSql.Data.Schema
 
         #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected override string BuildSql(string[] restrictions)
-		{
+        protected override string BuildSql(string[] restrictions)
+        {
             string sql =
                 "SELECT  " +
                     "current_database() AS TABLE_CATALOG, " +
@@ -84,37 +84,37 @@ namespace PostgreSql.Data.Schema
                     "pg_type on (pg_type.oid = pg_attribute.atttypid) " +
                 "WHERE " +
                     "pg_attribute.attisdropped = false AND pg_attribute.attnum > 0 ";
-					
-			if (restrictions != null && restrictions.Length > 0)
-			{
-				// TABLE_CATALOG
-				if (restrictions.Length > 0 && restrictions[0] != null)
-				{
-				}
+                    
+            if (restrictions != null && restrictions.Length > 0)
+            {
+                // TABLE_CATALOG
+                if (restrictions.Length > 0 && restrictions[0] != null)
+                {
+                }
 
-				// TABLE_SCHEMA
-				if (restrictions.Length > 1 && restrictions[1] != null)
-				{
+                // TABLE_SCHEMA
+                if (restrictions.Length > 1 && restrictions[1] != null)
+                {
                     sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
-				}
+                }
 
-				// TABLE_NAME
-				if (restrictions.Length > 2 && restrictions[2] != null)
-				{
+                // TABLE_NAME
+                if (restrictions.Length > 2 && restrictions[2] != null)
+                {
                     sql += String.Format(" and pg_class.relname = '{0}'", restrictions[2]);
-				}
+                }
 
-				// COLUMN_NAME
-				if (restrictions.Length > 3 && restrictions[3] != null)
-				{
+                // COLUMN_NAME
+                if (restrictions.Length > 3 && restrictions[3] != null)
+                {
                     sql += String.Format(" and pg_attribute.attname = '{0}'", restrictions[3]);
-				}
-			}
+                }
+            }
 
-			sql += " ORDER BY pg_namespace.nspname, pg_class.relname, pg_attribute.attnum";	                
+            sql += " ORDER BY pg_namespace.nspname, pg_class.relname, pg_attribute.attnum";	                
 
-			return sql;
-		}
+            return sql;
+        }
 
         protected override DataTable ProcessResult(PgConnection connection, DataTable schema)
         {
@@ -163,6 +163,6 @@ namespace PostgreSql.Data.Schema
             return schema;
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

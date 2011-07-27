@@ -43,18 +43,18 @@ namespace PostgreSql.Data.PostgreSqlClient
         
         #region · Fields ·
 
-		private PgConnectionOptions	options;
-		private ArrayList			locked;
-		private ArrayList			unlocked;
-		private Thread				cleanUpThread;
-		private string				connectionString;
-		private bool				isRunning;
-		private long				lifeTime;
-		private object				syncObject;
+        private PgConnectionOptions	options;
+        private ArrayList			locked;
+        private ArrayList			unlocked;
+        private Thread				cleanUpThread;
+        private string				connectionString;
+        private bool				isRunning;
+        private long				lifeTime;
+        private object				syncObject;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
         public object SyncObject
         {
@@ -69,64 +69,64 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
         }
 
-		public int Count
-		{
-			get 
+        public int Count
+        {
+            get 
             {
                 lock (this.unlocked.SyncRoot)
                 {
                     return this.unlocked.Count + this.locked.Count;
                 }
             }
-		}
+        }
 
         public bool HasUnlocked
         {
             get { return this.unlocked.Count > 0; }
         }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgConnectionPool(string connectionString)
-		{
-			this.connectionString	= connectionString;
-			this.options			= new PgConnectionOptions(connectionString);
-			this.lifeTime			= this.options.ConnectionLifeTime * TimeSpan.TicksPerSecond;
+        public PgConnectionPool(string connectionString)
+        {
+            this.connectionString	= connectionString;
+            this.options			= new PgConnectionOptions(connectionString);
+            this.lifeTime			= this.options.ConnectionLifeTime * TimeSpan.TicksPerSecond;
 
-			if (this.options.MaxPoolSize == 0)
-			{
-				this.locked     = ArrayList.Synchronized(new ArrayList());
-				this.unlocked   = ArrayList.Synchronized(new ArrayList());
-			}
-			else
-			{
-				this.locked     = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
-				this.unlocked   = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
-			}
+            if (this.options.MaxPoolSize == 0)
+            {
+                this.locked     = ArrayList.Synchronized(new ArrayList());
+                this.unlocked   = ArrayList.Synchronized(new ArrayList());
+            }
+            else
+            {
+                this.locked     = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
+                this.unlocked   = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
+            }
 
-			// If a	minimun	number of connections is requested initialize the pool
-			this.Initialize();
+            // If a	minimun	number of connections is requested initialize the pool
+            this.Initialize();
 
-			// Start the cleanup thread	only if	needed
-			if (this.lifeTime != 0)
-			{
-				this.isRunning = true;
+            // Start the cleanup thread	only if	needed
+            if (this.lifeTime != 0)
+            {
+                this.isRunning = true;
 
-				this.cleanUpThread = new Thread(new ThreadStart(this.RunCleanup));
-				this.cleanUpThread.Name = "Cleanup Thread";
-				this.cleanUpThread.Start();
-				this.cleanUpThread.IsBackground = true;
-			}
-		}
+                this.cleanUpThread = new Thread(new ThreadStart(this.RunCleanup));
+                this.cleanUpThread.Name = "Cleanup Thread";
+                this.cleanUpThread.Start();
+                this.cleanUpThread.IsBackground = true;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public void CheckIn(PgConnectionInternal connection)
-		{
+        public void CheckIn(PgConnectionInternal connection)
+        {
             connection.OwningConnection = null;
             connection.Created = System.DateTime.Now.Ticks;
 
@@ -135,10 +135,10 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public PgConnectionInternal CheckOut()
         {
-	        PgConnectionInternal newConnection = null;
+            PgConnectionInternal newConnection = null;
 
-	        lock (this.SyncObject)
-	        {
+            lock (this.SyncObject)
+            {
                 // 1. Try to Get a connection from the unlocked connection list.
                 newConnection = this.GetConnection();
                 if (newConnection != null)
@@ -165,60 +165,60 @@ namespace PostgreSql.Data.PostgreSqlClient
 
                 // Added to	the	locked connections list.
                 this.locked.Add(newConnection);
-	        }
+            }
 
-	        return newConnection;
+            return newConnection;
         }
 
-		public void Clear()
-		{
-			lock (this.SyncObject)
-			{
-				// Stop	cleanup	thread
-				if (this.cleanUpThread != null)
-				{
-					this.cleanUpThread.Abort();
-					this.cleanUpThread.Join();
-				}
+        public void Clear()
+        {
+            lock (this.SyncObject)
+            {
+                // Stop	cleanup	thread
+                if (this.cleanUpThread != null)
+                {
+                    this.cleanUpThread.Abort();
+                    this.cleanUpThread.Join();
+                }
 
-				// Close all unlocked connections
-				PgConnectionInternal[] list = (PgConnectionInternal[])this.unlocked.ToArray(typeof(PgConnectionInternal));
+                // Close all unlocked connections
+                PgConnectionInternal[] list = (PgConnectionInternal[])this.unlocked.ToArray(typeof(PgConnectionInternal));
 
-				foreach (PgConnectionInternal connection in list)
-				{
-					connection.Disconnect();
-				}
+                foreach (PgConnectionInternal connection in list)
+                {
+                    connection.Disconnect();
+                }
 
-				// Close all locked	connections
-				list = (PgConnectionInternal[])this.locked.ToArray(typeof(PgConnectionInternal));
+                // Close all locked	connections
+                list = (PgConnectionInternal[])this.locked.ToArray(typeof(PgConnectionInternal));
 
-				foreach (PgConnectionInternal connection in list)
-				{
-					connection.Disconnect();
-				}
+                foreach (PgConnectionInternal connection in list)
+                {
+                    connection.Disconnect();
+                }
 
-				// Clear lists
-				this.unlocked.Clear();
-				this.locked.Clear();
+                // Clear lists
+                this.unlocked.Clear();
+                this.locked.Clear();
 
-				// Raise EmptyPool event
-				if (this.EmptyPool != null)
-				{
-					this.EmptyPool(this.connectionString.GetHashCode(), null);
-				}
+                // Raise EmptyPool event
+                if (this.EmptyPool != null)
+                {
+                    this.EmptyPool(this.connectionString.GetHashCode(), null);
+                }
 
-				// Reset fields
-				this.unlocked			= null;
-				this.locked				= null;
-				this.connectionString	= null;
-				this.cleanUpThread		= null;
-				this.EmptyPool			= null;
-			}
-		}
+                // Reset fields
+                this.unlocked			= null;
+                this.locked				= null;
+                this.connectionString	= null;
+                this.cleanUpThread		= null;
+                this.EmptyPool			= null;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Private Methods ·
+        #region · Private Methods ·
 
         private void Initialize()
         {
@@ -299,13 +299,13 @@ namespace PostgreSql.Data.PostgreSqlClient
             return result;
         }
 
-		private bool CheckMinPoolSize()
-		{
-			return !(this.options.MinPoolSize > 0 && this.Count == this.options.MinPoolSize);
-		}
+        private bool CheckMinPoolSize()
+        {
+            return !(this.options.MinPoolSize > 0 && this.Count == this.options.MinPoolSize);
+        }
 
-		private void CheckMaxPoolSize()
-		{
+        private void CheckMaxPoolSize()
+        {
             if (this.options.MaxPoolSize > 0 && this.Count >= this.options.MaxPoolSize)
             {
                 long timeout    = this.options.ConnectionTimeout * TimeSpan.TicksPerSecond;
@@ -333,88 +333,88 @@ namespace PostgreSql.Data.PostgreSqlClient
                     }
                 }
             }
-		}
+        }
 
-		private void RunCleanup()
-		{
-			int interval = Convert.ToInt32(TimeSpan.FromTicks(this.lifeTime).TotalMilliseconds);
+        private void RunCleanup()
+        {
+            int interval = Convert.ToInt32(TimeSpan.FromTicks(this.lifeTime).TotalMilliseconds);
 
-			if (interval > 60000)
-			{
-				interval = 60000;
-			}
+            if (interval > 60000)
+            {
+                interval = 60000;
+            }
 
-			try
-			{
-				while (this.isRunning)
-				{
-					Thread.Sleep(interval);
+            try
+            {
+                while (this.isRunning)
+                {
+                    Thread.Sleep(interval);
 
-					this.Cleanup();
+                    this.Cleanup();
 
-					if (this.Count == 0)
-					{
-						lock (this.SyncObject)
-						{
-							// Empty pool
-							if (this.EmptyPool != null)
-							{
-								this.EmptyPool(this.connectionString.GetHashCode(), null);
-							}
+                    if (this.Count == 0)
+                    {
+                        lock (this.SyncObject)
+                        {
+                            // Empty pool
+                            if (this.EmptyPool != null)
+                            {
+                                this.EmptyPool(this.connectionString.GetHashCode(), null);
+                            }
 
-							// Stop	running
-							this.isRunning = false;
-						}
-					}
-				}
-			}
-			catch (ThreadAbortException)
-			{
-				this.isRunning = false;
-			}
-		}
+                            // Stop	running
+                            this.isRunning = false;
+                        }
+                    }
+                }
+            }
+            catch (ThreadAbortException)
+            {
+                this.isRunning = false;
+            }
+        }
 
-		private void Expire(PgConnectionInternal connection)
-		{
-			try
-			{
-				if (connection.Verify())
-				{
-					connection.Disconnect();
-				}
-			}
-			catch (Exception)
-			{
+        private void Expire(PgConnectionInternal connection)
+        {
+            try
+            {
+                if (connection.Verify())
+                {
+                    connection.Disconnect();
+                }
+            }
+            catch (Exception)
+            {
                 // Do not raise an exception as the connection could be invalid due to several reasons
                 // ( network problems, server shutdown, ... )
-			}
-		}
+            }
+        }
 
-		private void Cleanup()
-		{
-			lock (this.unlocked.SyncRoot)
-			{
-				if (this.unlocked.Count > 0 && this.lifeTime != 0)
-				{
-					PgConnectionInternal[] list = (PgConnectionInternal[])this.unlocked.ToArray(typeof(PgConnectionInternal));
+        private void Cleanup()
+        {
+            lock (this.unlocked.SyncRoot)
+            {
+                if (this.unlocked.Count > 0 && this.lifeTime != 0)
+                {
+                    PgConnectionInternal[] list = (PgConnectionInternal[])this.unlocked.ToArray(typeof(PgConnectionInternal));
 
-					foreach (PgConnectionInternal connection in list)
-					{
-						long now = DateTime.Now.Ticks;
-						long expire = connection.Created + this.lifeTime;
+                    foreach (PgConnectionInternal connection in list)
+                    {
+                        long now = DateTime.Now.Ticks;
+                        long expire = connection.Created + this.lifeTime;
 
-						if (now >= expire)
-						{
-							if (this.CheckMinPoolSize())
-							{
-								this.unlocked.Remove(connection);
-								this.Expire(connection);
-							}
-						}
-					}
-				}
-			}
-		}
+                        if (now >= expire)
+                        {
+                            if (this.CheckMinPoolSize())
+                            {
+                                this.unlocked.Remove(connection);
+                                this.Expire(connection);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         private void MoveConnection(PgConnectionInternal connection, MoveType moveType)
         {
@@ -440,6 +440,6 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
         }
 
-		#endregion
+        #endregion
     }
 }

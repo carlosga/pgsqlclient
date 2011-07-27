@@ -20,38 +20,38 @@ using System.Text;
 
 namespace PostgreSql.Data.Protocol
 {
-	internal sealed class PgClientException 
+    internal sealed class PgClientException 
         : Exception
-	{	
-		#region · Fields ·
-		
-		private string					message;
-		private PgClientErrorCollection	errors;
+    {	
+        #region · Fields ·
+        
+        private string					message;
+        private PgClientErrorCollection	errors;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
-		
-		public new string Message
-		{
-			get { return this.message; }
-		}
+        #region · Properties ·
+        
+        public new string Message
+        {
+            get { return this.message; }
+        }
 
-		public PgClientErrorCollection Errors
-		{
-			get { return this.errors; }
-		}
-	    
-		#endregion
+        public PgClientErrorCollection Errors
+        {
+            get { return this.errors; }
+        }
+        
+        #endregion
 
-		#region · Constructors ·
-		
-		public PgClientException(string message) : base(message)
-		{
-			this.errors = new PgClientErrorCollection();
-			this.message = message;
-		}
+        #region · Constructors ·
+        
+        public PgClientException(string message) : base(message)
+        {
+            this.errors = new PgClientErrorCollection();
+            this.message = message;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

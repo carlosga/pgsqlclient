@@ -20,71 +20,71 @@ using System;
 namespace PostgreSql.Data.Protocol
 {
     internal sealed class PgFieldDescriptor
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private string			fieldName;
-		private int				oidTable;
-		private short			oidNumber;		
-		private PgType			dataType;
-		private short			dataTypeSize;
-		private int				typeModifier;
-		private PgTypeFormat	formatCode;
+        private string			fieldName;
+        private int				oidTable;
+        private short			oidNumber;		
+        private PgType			dataType;
+        private short			dataTypeSize;
+        private int				typeModifier;
+        private PgTypeFormat	formatCode;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public string FieldName
-		{
-			get { return this.fieldName; }
-			set { this.fieldName = value; }
-		}
+        public string FieldName
+        {
+            get { return this.fieldName; }
+            set { this.fieldName = value; }
+        }
 
-		public int OidTable
-		{
-			get { return this.oidTable; }
-			set { this.oidTable = value; }
-		}
+        public int OidTable
+        {
+            get { return this.oidTable; }
+            set { this.oidTable = value; }
+        }
 
-		public short OidNumber
-		{
-			get { return this.oidNumber; }
-			set { this.oidNumber = value; }
-		}
-	
-		public PgType DataType
-		{
-			get { return this.dataType; }
-			set { this.dataType = value; }
-		}
+        public short OidNumber
+        {
+            get { return this.oidNumber; }
+            set { this.oidNumber = value; }
+        }
+    
+        public PgType DataType
+        {
+            get { return this.dataType; }
+            set { this.dataType = value; }
+        }
 
-		public short DataTypeSize
-		{
-			get { return this.dataTypeSize; }
-			set { this.dataTypeSize = value; }
-		}
+        public short DataTypeSize
+        {
+            get { return this.dataTypeSize; }
+            set { this.dataTypeSize = value; }
+        }
 
-		public int TypeModifier
-		{
-			get { return this.typeModifier; }
-			set { this.typeModifier = value; }
-		}
+        public int TypeModifier
+        {
+            get { return this.typeModifier; }
+            set { this.typeModifier = value; }
+        }
 
-		public PgTypeFormat FormatCode
-		{
-			get { return this.formatCode; }
-			set { this.formatCode = value; }
-		}
+        public PgTypeFormat FormatCode
+        {
+            get { return this.formatCode; }
+            set { this.formatCode = value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgFieldDescriptor()
-		{
-		}
+        public PgFieldDescriptor()
+        {
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -20,54 +20,54 @@ using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public sealed class PgInfoMessageEventArgs 
+    public sealed class PgInfoMessageEventArgs 
         : EventArgs
-	{
-		#region · Fields ·
+    {
+        #region · Fields ·
 
-		private PgErrorCollection errors	= new PgErrorCollection();
-		private string			  message	= String.Empty;
+        private PgErrorCollection errors	= new PgErrorCollection();
+        private string			  message	= String.Empty;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgErrorCollection Errors
-		{
-			get { return this.errors; }
-		}
+        public PgErrorCollection Errors
+        {
+            get { return this.errors; }
+        }
 
-		public string Message
-		{
-			get { return this.message; }
-		}
+        public string Message
+        {
+            get { return this.message; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		internal PgInfoMessageEventArgs(PgClientException ex)
-		{
-			this.message = ex.Message;
-			
-			foreach (PgClientError error in ex.Errors)
-			{
-				PgError newError = new PgError();
+        internal PgInfoMessageEventArgs(PgClientException ex)
+        {
+            this.message = ex.Message;
+            
+            foreach (PgClientError error in ex.Errors)
+            {
+                PgError newError = new PgError();
 
-				newError.Severity	= error.Severity;
-				newError.Code		= error.Code;
-				newError.Message	= error.Message;
-				newError.Detail		= error.Detail;
-				newError.Hint		= error.Hint;
-				newError.Line		= error.Line;
-				newError.Where		= error.Where;
-				newError.Position	= error.Position;
-				newError.Routine	= error.Routine;
+                newError.Severity	= error.Severity;
+                newError.Code		= error.Code;
+                newError.Message	= error.Message;
+                newError.Detail		= error.Detail;
+                newError.Hint		= error.Hint;
+                newError.Line		= error.Line;
+                newError.Where		= error.Where;
+                newError.Position	= error.Position;
+                newError.Routine	= error.Routine;
 
-				this.errors.Add(newError);
-			}
-		}
+                this.errors.Add(newError);
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

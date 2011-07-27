@@ -18,18 +18,18 @@
 
 namespace PostgreSql.Data.Protocol
 {
-	internal enum PgStatementStatus
-	{
-		Initial     ,
+    internal enum PgStatementStatus
+    {
+        Initial     ,
         Parsing     ,
-		Parsed      ,
+        Parsed      ,
         Describing  ,
-		Described   ,
+        Described   ,
         Binding     ,
-		Binded      ,
+        Binded      ,
         Executing   ,
-		Executed    ,
-		OnQuery     ,
-		Error
-	}
+        Executed    ,
+        OnQuery     ,
+        Error
+    }
 }

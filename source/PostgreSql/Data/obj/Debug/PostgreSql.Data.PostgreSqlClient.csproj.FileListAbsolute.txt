@@ -1,0 +1,8 @@
+D:\bin\debug\PostgreSql.Data.PostgreSqlClient.dll
+D:\bin\debug\PostgreSql.Data.PostgreSqlClient.pdb
+D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\PostgreSql\Data\obj\Debug\ResolveAssemblyReference.cache
+D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\PostgreSql\Data\obj\Debug\PostgreSql.Data.Properties.Resources.resources
+D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\PostgreSql\Data\obj\Debug\GenerateResource.read.1.tlog
+D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\PostgreSql\Data\obj\Debug\GenerateResource.write.1.tlog
+D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\PostgreSql\Data\obj\Debug\PostgreSql.Data.PostgreSqlClient.dll
+D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\PostgreSql\Data\obj\Debug\PostgreSql.Data.PostgreSqlClient.pdb

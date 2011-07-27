@@ -28,8 +28,8 @@ using System;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {
-	internal class Alert
-	{
+    internal class Alert
+    {
         #region · Static Methods ·
 
         public static string GetAlertMessage(AlertDescription description)
@@ -110,7 +110,7 @@ namespace SecureSocketLayer.Net.Security.Providers.Common
                     return "";
             }
 #else
-			return "The authentication or decryption has failed.";
+            return "The authentication or decryption has failed.";
 #endif
         }
 
@@ -118,111 +118,111 @@ namespace SecureSocketLayer.Net.Security.Providers.Common
         
         #region · Fields ·
 
-		private AlertLevel level;
-		private AlertDescription description;
+        private AlertLevel level;
+        private AlertDescription description;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public AlertLevel Level
-		{
-			get { return this.level; }
-		}
+        public AlertLevel Level
+        {
+            get { return this.level; }
+        }
 
-		public AlertDescription Description
-		{
-			get { return this.description; }
-		}
+        public AlertDescription Description
+        {
+            get { return this.description; }
+        }
 
-		public string Message
-		{
-			get { return Alert.GetAlertMessage(this.description); }
-		}
+        public string Message
+        {
+            get { return Alert.GetAlertMessage(this.description); }
+        }
 
-		public bool IsWarning
-		{
-			get { return this.level == AlertLevel.Warning ? true : false; }
-		}
+        public bool IsWarning
+        {
+            get { return this.level == AlertLevel.Warning ? true : false; }
+        }
 
-		/*
-		public bool IsFatal
-		{
-			get { return this.level == AlertLevel.Fatal ? true : false; }
-		}
-		*/
+        /*
+        public bool IsFatal
+        {
+            get { return this.level == AlertLevel.Fatal ? true : false; }
+        }
+        */
 
-		public bool IsCloseNotify
-		{
-			get
-			{
-				if (this.IsWarning && this.description == AlertDescription.CloseNotify) 
-                {
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		#endregion
-
-		#region · Constructors ·
-
-		public Alert(AlertDescription description)
-		{
-			this.InferAlertLevel();
-			this.description = description;
-		}
-
-		public Alert(AlertLevel level, AlertDescription description)
-		{
-			this.level = level;
-			this.description = description;
-		}
-
-		#endregion
-
-		#region · Private Methods ·
-
-		private void InferAlertLevel()
-		{
-			switch (description) 
+        public bool IsCloseNotify
+        {
+            get
             {
-				case AlertDescription.CloseNotify:
-				case AlertDescription.NoRenegotiation:
-				case AlertDescription.UserCancelled:
-					this.level = AlertLevel.Warning;
-					break;
+                if (this.IsWarning && this.description == AlertDescription.CloseNotify) 
+                {
+                    return true;
+                }
 
-				case AlertDescription.AccessDenied:
-				case AlertDescription.BadCertificate:
-				case AlertDescription.BadRecordMAC:
-				case AlertDescription.CertificateExpired:
-				case AlertDescription.CertificateRevoked:
-				case AlertDescription.CertificateUnknown:
-				case AlertDescription.DecodeError:
-				case AlertDescription.DecompressionFailiure:
-				case AlertDescription.DecryptError:
-				case AlertDescription.DecryptionFailed:
-				case AlertDescription.ExportRestriction:
-				case AlertDescription.HandshakeFailiure:
-				case AlertDescription.IlegalParameter:
-				case AlertDescription.InsuficientSecurity:
-				case AlertDescription.InternalError:
-				case AlertDescription.ProtocolVersion:
-				case AlertDescription.RecordOverflow:
-				case AlertDescription.UnexpectedMessage:
-				case AlertDescription.UnknownCA:
-				case AlertDescription.UnsupportedCertificate:
-				default:
-					this.level = AlertLevel.Fatal;
-					break;
-			}
-		}
+                return false;
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+
+        #region · Constructors ·
+
+        public Alert(AlertDescription description)
+        {
+            this.InferAlertLevel();
+            this.description = description;
+        }
+
+        public Alert(AlertLevel level, AlertDescription description)
+        {
+            this.level = level;
+            this.description = description;
+        }
+
+        #endregion
+
+        #region · Private Methods ·
+
+        private void InferAlertLevel()
+        {
+            switch (description) 
+            {
+                case AlertDescription.CloseNotify:
+                case AlertDescription.NoRenegotiation:
+                case AlertDescription.UserCancelled:
+                    this.level = AlertLevel.Warning;
+                    break;
+
+                case AlertDescription.AccessDenied:
+                case AlertDescription.BadCertificate:
+                case AlertDescription.BadRecordMAC:
+                case AlertDescription.CertificateExpired:
+                case AlertDescription.CertificateRevoked:
+                case AlertDescription.CertificateUnknown:
+                case AlertDescription.DecodeError:
+                case AlertDescription.DecompressionFailiure:
+                case AlertDescription.DecryptError:
+                case AlertDescription.DecryptionFailed:
+                case AlertDescription.ExportRestriction:
+                case AlertDescription.HandshakeFailiure:
+                case AlertDescription.IlegalParameter:
+                case AlertDescription.InsuficientSecurity:
+                case AlertDescription.InternalError:
+                case AlertDescription.ProtocolVersion:
+                case AlertDescription.RecordOverflow:
+                case AlertDescription.UnexpectedMessage:
+                case AlertDescription.UnknownCA:
+                case AlertDescription.UnsupportedCertificate:
+                default:
+                    this.level = AlertLevel.Fatal;
+                    break;
+            }
+        }
+
+        #endregion
+    }
 }
 
 #endif
