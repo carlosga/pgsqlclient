@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8CA6C4CF-1737-4680-8AC7-4D34E3CC35DE}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>SecureSocketLayer</AssemblyName>
+    <AssemblyOriginatorKeyFile>SecureSocketLayer.snk</AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SecureSocketLayer</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SignAssembly>true</SignAssembly>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>http://localhost/SecureSocketLayer/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;DEBUG;NET_2_0</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;NET_2_0</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mono\Math\BigInteger.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Math\Prime\ConfidenceFactor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Math\Prime\Generator\NextPrimeFinder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Math\Prime\Generator\PrimeGeneratorBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Math\Prime\Generator\SequentialSearchPrimeGeneratorBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Math\Prime\PrimalityTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\ASN1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\ASN1Convert.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\BitConverterLE.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\ARC4Managed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\CryptoConvert.cs" />
+    <Compile Include="Mono\Security\Cryptography\CryptoTools.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\MD2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\MD2Managed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\MD4.cs" />
+    <Compile Include="Mono\Security\Cryptography\MD4Managed.cs" />
+    <Compile Include="Mono\Security\Cryptography\PKCS1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\PKCS8.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\RC4.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\RSAManaged.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\Cryptography\SHA224.cs" />
+    <Compile Include="Mono\Security\Cryptography\SHA224Managed.cs" />
+    <Compile Include="Mono\Security\Cryptography\SymmetricTransform.cs" />
+    <Compile Include="Mono\Security\PKCS7.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\StrongName.cs" />
+    <Compile Include="Mono\Security\X509\ITrustAnchors.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\PKCS12.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\TrustAnchors.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X501Name.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X509Builder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X509Certificate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X509CertificateBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X509CertificateCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X509Extension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X509Extensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mono\Security\X509\X520Attributes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\AuthenticatedStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\LocalCertificateSelectionCallback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Alert.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\AlertDescription.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\AlertLevel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\CipherSuite.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\CipherSuiteCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\CipherSuiteFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Client\ClientHandshakeMessageGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Client\ClientHandshakeMessageProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Client\ClientRecordDecryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Client\ClientRecordEncryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Client\ClientSecureAuthenticator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Client\SecureClientProtocol.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ClientCertificateType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\CompressionMethodCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ContentType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\HandshakeMessageType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Helper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ICompressionMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\IHandshakeMessageGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\IHandshakeMessageProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\IRecordDecryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\IRecordEncryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\IRecordMACManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ISecureAuthenticator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ISecureFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ISecureKeyGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ISecureKeyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\ISecureProtocol.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\IX509ChainValidator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\MemoryStreamEx.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\NullCompressionMethod.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\RecordDecryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\RecordEncryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\RecordReceivedCallback.cs" />
+    <Compile Include="Net\Security\Providers\Common\RecordReceivedEventHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\RecordSentCallback.cs" />
+    <Compile Include="Net\Security\Providers\Common\SecureAuthenticatorCallbacks.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureKeyGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureKeyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureProtocol.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureRecordCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\SecureSession.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Server\ServerHandshakeMessageGenerator.cs" />
+    <Compile Include="Net\Security\Providers\Common\Server\ServerHandshakeMessageProcessor.cs" />
+    <Compile Include="Net\Security\Providers\Common\Server\ServerRecordDecryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\Server\ServerRecordEncryptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Common\X509ChainValidator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Cryptography\HandshakeMessageHash.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Cryptography\HMACSsl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Cryptography\MD5SHA1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Cryptography\RSASslSignatureDeformatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Cryptography\RSASslSignatureFormatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Ssl\Client\SslClientFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Ssl\Client\SslClientRecordMACManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Ssl\Client\SslHandshakeMessageGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Ssl\Client\SslHandshakeMessageProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Ssl\SslRecordMACManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Ssl\SslSecureKeyGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Tls\Client\TlsClientFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Tls\Client\TlsClientRecordMACManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Tls\Client\TlsHandshakeMessageGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Tls\Client\TlsHandshakeMessageProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Tls\TlsRecordMACManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\Providers\Tls\TlsSecureKeyGenerator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\RemoteCertificateValidationCallback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\SslPolicyErrors.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net\Security\SslStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Security\Authentication\AuthenticationException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\Authentication\CipherAlgorithmType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\Authentication\ExchangeAlgorithmType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\Authentication\HashAlgorithmType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\Authentication\SslProtocols.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="SecureSocketLayer.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Net\Security\Providers\Ssl\Server\" />
+    <Folder Include="Net\Security\Providers\Tls\Server\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

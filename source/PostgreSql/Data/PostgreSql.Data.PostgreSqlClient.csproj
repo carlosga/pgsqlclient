@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9E572C05-CC26-410B-9D2D-8ABCF0E359DA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PostgreSql.Data</RootNamespace>
+    <AssemblyName>PostgreSql.Data.PostgreSqlClient</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>PostgreSql.Data.PostgreSqlClient.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>http://localhost/PostgreSql.Data.PostgreSqlClient/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\..\bin\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="PgTypes\PgBox2D.cs" />
+    <Compile Include="PgTypes\PgBox3D.cs" />
+    <Compile Include="PgTypes\PgPoint2D.cs" />
+    <Compile Include="PgTypes\PgPoint3D.cs" />
+    <Compile Include="PostgreSqlClient\CaseInsensitiveEqualityComparer.cs" />
+    <Compile Include="PostgreSqlClient\EmptyPoolEventHandler.cs" />
+    <Compile Include="PostgreSqlClient\PgCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PostgreSqlClient\PgCommandBuilder.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PostgreSqlClient\PgConnection.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PostgreSqlClient\PgConnectionInternal.cs" />
+    <Compile Include="PostgreSqlClient\PgConnectionPool.cs" />
+    <Compile Include="PostgreSqlClient\PgConnectionStringBuilder.cs" />
+    <Compile Include="PostgreSqlClient\PgDataAdapter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PostgreSqlClient\PgDataReader.cs" />
+    <Compile Include="PostgreSqlClient\PgDbType.cs" />
+    <Compile Include="PostgreSqlClient\PgError.cs" />
+    <Compile Include="PostgreSqlClient\PgErrorCollection.cs" />
+    <Compile Include="PostgreSqlClient\PgException.cs" />
+    <Compile Include="PostgreSqlClient\PgInfoMessageEventArgs.cs" />
+    <Compile Include="PostgreSqlClient\PgInfoMessageEventHandler.cs" />
+    <Compile Include="PostgreSqlClient\PgNotificationEventArgs.cs" />
+    <Compile Include="PostgreSqlClient\PgNotificationEventHandler.cs" />
+    <Compile Include="PostgreSqlClient\PgParameter.cs" />
+    <Compile Include="PostgreSqlClient\PgParameterCollection.cs" />
+    <Compile Include="PostgreSqlClient\PgPoolManager.cs" />
+    <Compile Include="PostgreSqlClient\PgRowUpdatedEventArgs.cs" />
+    <Compile Include="PostgreSqlClient\PgRowUpdatedEventHandler.cs" />
+    <Compile Include="PostgreSqlClient\PgRowUpdatingEventArgs.cs" />
+    <Compile Include="PostgreSqlClient\PgRowUpdatingEventHandler.cs" />
+    <Compile Include="PostgreSqlClient\PgTransaction.cs" />
+    <Compile Include="PostgreSqlClient\PostgreSqlClientFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Protocol\InfoMessageCallback.cs" />
+    <Compile Include="Protocol\NotificationCallback.cs" />
+    <Compile Include="Protocol\PgAuthMethods.cs" />
+    <Compile Include="Protocol\PgBackendCodes.cs" />
+    <Compile Include="Protocol\PgCharacterSet.cs" />
+    <Compile Include="Protocol\PgCharactersetCollection.cs" />
+    <Compile Include="Protocol\PgClientError.cs" />
+    <Compile Include="Protocol\PgClientErrorCollection.cs" />
+    <Compile Include="Protocol\PgClientException.cs" />
+    <Compile Include="Protocol\PgClientMessageEventArgs.cs" />
+    <Compile Include="Protocol\PgClientMessageEventHandler.cs" />
+    <Compile Include="Protocol\PgClientNotificationEventArgs.cs" />
+    <Compile Include="Protocol\PgClientNotificationEventHandler.cs" />
+    <Compile Include="Protocol\PgCodes.cs" />
+    <Compile Include="Protocol\PgConnectionOptions.cs" />
+    <Compile Include="Protocol\PgDatabase.cs" />
+    <Compile Include="Protocol\PgDataType.cs" />
+    <Compile Include="Protocol\PgErrorCodes.cs" />
+    <Compile Include="Protocol\PgFieldDescriptor.cs" />
+    <Compile Include="Protocol\PgFrontEndCodes.cs" />
+    <Compile Include="Protocol\PgOutputPacket.cs" />
+    <Compile Include="Protocol\PgParameter.cs" />
+    <Compile Include="Protocol\PgResponsePacket.cs" />
+    <Compile Include="Protocol\PgRowDescriptor.cs" />
+    <Compile Include="Protocol\PgStatement.cs" />
+    <Compile Include="Protocol\PgStatementStatus.cs" />
+    <Compile Include="Protocol\PgType.cs" />
+    <Compile Include="Protocol\PgTypeCollection.cs" />
+    <Compile Include="Protocol\PgTypeFormat.cs" />
+    <Compile Include="Protocol\PgTypeStringFormats.cs" />
+    <Compile Include="PgTypes\PgBox.cs" />
+    <Compile Include="PgTypes\PgCircle.cs" />
+    <Compile Include="PgTypes\PgLine.cs" />
+    <Compile Include="PgTypes\PgLSeg.cs" />
+    <Compile Include="PgTypes\PgPath.cs" />
+    <Compile Include="PgTypes\PgPoint.cs" />
+    <Compile Include="PgTypes\PgPolygon.cs" />
+    <Compile Include="PgTypes\PgTimeSpan.cs" />
+    <Compile Include="Schema\PgForeignKeyColumns.cs" />
+    <Compile Include="Schema\PgForeignKeys.cs" />
+    <Compile Include="Schema\PgFunctionParameters.cs" />
+    <Compile Include="Schema\PgSequences.cs" />
+    <Compile Include="Schema\PgUniqueKeys.cs" />
+    <Compile Include="Schema\PgViewColumns.cs" />
+    <Compile Include="Schema\PgViews.cs" />
+    <Compile Include="Schema\PgCheckConstraints.cs" />
+    <Compile Include="Schema\PgFunctions.cs" />
+    <Compile Include="Schema\PgIndexColumns.cs" />
+    <Compile Include="Schema\PgIndexes.cs" />
+    <Compile Include="Schema\PgPrimaryKeys.cs" />
+    <Compile Include="Schema\PgColumns.cs" />
+    <Compile Include="Schema\PgSchema.cs" />
+    <Compile Include="Schema\PgSchemaFactory.cs" />
+    <Compile Include="Schema\PgTables.cs" />
+    <Compile Include="Schema\PgTriggers.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ToolBox\PgCommand.bmp" />
+    <EmbeddedResource Include="Resources\ToolBox\PgConnection.bmp" />
+    <EmbeddedResource Include="Resources\ToolBox\PgDataAdapter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schema\MetaData.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PostgreSql.Data.PostgreSqlClient.snk" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+</Project>

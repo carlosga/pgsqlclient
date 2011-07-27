@@ -1,0 +1,52 @@
+PostgreSqlClient - ADO.NET Data Provider for PostgreSQL 7.4+
+---------------- - -----------------------------------------
+
+
+2006-05-31 Carlos Guzman Alvarez (carlosga05@gmail.com)
+
+	- Committed initial support for fetching PostGIS Box2D values.
+
+2006-05-23 Carlos Guzman Alvarez (carlosga05@gmail.com)
+
+	- PostgreSql\Data\PostgreSqlClient\Protocol\PgDatabase.cs:
+
+		- Added regclass datatype definition.
+
+2006-05-18 Carlos Guzman Alvarez (carlosga05@gmail.com)
+
+	* Added initial refcursor support for StoredProcedure calls 
+	to the PgDataReader class ( multiple refcursor's supported ).
+
+	* Initial implementation for PostgreSql Domains, 
+	not all domains are supported only those who have 
+	a base data type that is supported by the provider
+
+	* Fixed bug on parameters collection references on file PgCommand.cs
+	( Thanks to Alexander Tyaglov for his feedback )
+
+	* Use Guids for portal names.
+
+2006-05-17 Carlos Guzman Alvarez (carlosga05@gmail.com)
+
+	* Fixed bad references in PgConnectionPoolManager class.
+
+2006-05-15 Carlos Guzman Alvarez (carlosga05@gmail.com)
+
+	* Fixed bpchar data type mapping in protocol implementation
+
+	* Trim traling spaces when reading character values ( char or bpchar 
+	datatype fields )
+
+2006-04-14 Carlos Guzman Alvarez (carlosga@telefonica.net)
+
+	* Ported the connection pooling implementation from the FirebirdClient provider.
+
+	* Bug fix for the Decimal parameters handling ( found running nhibernate test suite )
+
+	* Bug fix on named parameters handling.
+
+2006-04-11 Carlos Guzman Alvarez (carlosga@telefonica.net)
+
+	- Implemented Savepoint support.
+
+	- Added several changes and bug fixes on database schema support.

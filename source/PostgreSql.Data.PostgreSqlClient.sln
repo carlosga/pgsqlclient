@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSql.Data.PostgreSqlClient", "PostgreSql\Data\PostgreSql.Data.PostgreSqlClient.csproj", "{9E572C05-CC26-410B-9D2D-8ABCF0E359DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureSocketLayer", "SecureSocketLayer\SecureSocketLayer.csproj", "{8CA6C4CF-1737-4680-8AC7-4D34E3CC35DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E572C05-CC26-410B-9D2D-8ABCF0E359DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E572C05-CC26-410B-9D2D-8ABCF0E359DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E572C05-CC26-410B-9D2D-8ABCF0E359DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E572C05-CC26-410B-9D2D-8ABCF0E359DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA6C4CF-1737-4680-8AC7-4D34E3CC35DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA6C4CF-1737-4680-8AC7-4D34E3CC35DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA6C4CF-1737-4680-8AC7-4D34E3CC35DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA6C4CF-1737-4680-8AC7-4D34E3CC35DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

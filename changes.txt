@@ -1,0 +1,4 @@
+PostgreSqlClient - ADO.NET Data Provider for PostgreSQL 7.4+
+---------------- - -----------------------------------------
+
+
