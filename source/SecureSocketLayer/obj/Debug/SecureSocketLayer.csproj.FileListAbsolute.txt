@@ -1,8 +1,0 @@
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\bin\Debug\SecureSocketLayer.dll
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\bin\Debug\SecureSocketLayer.pdb
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\obj\Debug\ResolveAssemblyReference.cache
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\obj\Debug\SecureSocketLayer.Properties.Resources.resources
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\obj\Debug\GenerateResource.read.1.tlog
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\obj\Debug\GenerateResource.write.1.tlog
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\obj\Debug\SecureSocketLayer.dll
-D:\desarrollo\Proyectos\Open Source\PostgreSqlClient\source\SecureSocketLayer\obj\Debug\SecureSocketLayer.pdb
