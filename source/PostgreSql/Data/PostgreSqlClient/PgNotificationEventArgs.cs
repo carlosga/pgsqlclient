@@ -17,7 +17,6 @@
 
 
 using System;
-using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {

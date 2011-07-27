@@ -21,7 +21,7 @@ using PostgreSql.Data.PostgreSqlClient;
 
 namespace PostgreSql.Data.Schema
 {
-	internal abstract class PgSchema
+    internal abstract class PgSchema
     {
         #region · Fields ·
 
@@ -41,69 +41,69 @@ namespace PostgreSql.Data.Schema
         #region · Constructors ·
 
         public PgSchema(PgConnection connection)
-		{
+        {
             this.connection = connection;
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Abstract Methods ·
+        #region · Abstract Methods ·
 
-		protected abstract string BuildSql(string[] restrictions);
+        protected abstract string BuildSql(string[] restrictions);
 
-		#endregion
+        #endregion
 
-		#region · Methods ·
+        #region · Methods ·
 
-		public DataTable GetSchema(string collectionName, string[] restrictions)
-		{
-			DataTable		dataTable = null;
-			PgDataAdapter	adapter = null;
-			PgCommand		command = new PgCommand();
-			
-			try
-			{
-				command.Connection	= connection;
-				command.CommandText = this.BuildSql(this.ParseRestrictions(restrictions));
+        public DataTable GetSchema(string collectionName, string[] restrictions)
+        {
+            DataTable		dataTable = null;
+            PgDataAdapter	adapter = null;
+            PgCommand		command = new PgCommand();
+            
+            try
+            {
+                command.Connection	= connection;
+                command.CommandText = this.BuildSql(this.ParseRestrictions(restrictions));
 
-				adapter = new PgDataAdapter(command);
-				dataTable = new DataTable(collectionName);
+                adapter = new PgDataAdapter(command);
+                dataTable = new DataTable(collectionName);
 
-				adapter.Fill(dataTable);
+                adapter.Fill(dataTable);
 
                 dataTable = this.ProcessResult(connection, dataTable);
-			}
-			catch (PgException)
-			{
-				throw;
-			}
-			catch (Exception ex)
-			{
-				throw new PgException(ex.Message);
-			}
-			finally
-			{
-				command.Dispose();
-				adapter.Dispose();
-			}
+            }
+            catch (PgException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new PgException(ex.Message);
+            }
+            finally
+            {
+                command.Dispose();
+                adapter.Dispose();
+            }
 
-			return dataTable;
-		}
+            return dataTable;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Protected Methods ·
+        #region · Protected Methods ·
 
-		protected virtual string[] ParseRestrictions(string[] restrictions)
-		{
-			return restrictions;
-		}
+        protected virtual string[] ParseRestrictions(string[] restrictions)
+        {
+            return restrictions;
+        }
 
         protected virtual DataTable ProcessResult(PgConnection connection, DataTable schema)
         {
             return schema;
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

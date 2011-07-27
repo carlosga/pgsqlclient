@@ -17,7 +17,6 @@
 
 using System;
 using System.Globalization;
-using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PgTypes
 {

@@ -18,7 +18,6 @@
 using System;
 using System.Data;
 using System.IO;
-using System.Collections;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
@@ -27,7 +26,6 @@ using System.Net.Sockets;
 using SecureSocketLayer.Net.Security;
 #else
 using System.Net.Security;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 #endif
 

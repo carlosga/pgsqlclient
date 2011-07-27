@@ -15,7 +15,6 @@
  *  All Rights Reserved.
  */
 
-using System;
 using System.Text;
 
 namespace PostgreSql.Data.Protocol

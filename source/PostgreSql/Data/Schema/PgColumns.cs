@@ -18,7 +18,6 @@
 using System;
 using System.Data;
 using PostgreSql.Data.PostgreSqlClient;
-using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.Schema
 {
