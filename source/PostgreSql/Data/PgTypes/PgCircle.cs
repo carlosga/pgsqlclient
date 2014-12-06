@@ -19,107 +19,91 @@ using System;
 
 namespace PostgreSql.Data.PgTypes
 {
-	[Serializable]
-	public struct PgCircle
-	{
-		#region · Fields ·
+    [Serializable]
+    public struct PgCircle
+    {
+        #region · Fields ·
 
-		private PgPoint center;
-		private double	radius;
+        private PgPoint center;
+        private double	radius;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgPoint Center
-		{
-			get { return center; }
-		}
-		
-		public double Radius
-		{
-			get { return radius; }
-		}
+        public PgPoint Center
+        {
+            get { return this.center; }
+        }
+        
+        public double Radius
+        {
+            get { return this.radius; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgCircle(PgPoint center, double radius)
-		{
-			this.center = center;
-			this.radius = radius;
-		}
+        public PgCircle(PgPoint center, double radius)
+        {
+            this.center = center;
+            this.radius = radius;
+        }
 
-		public PgCircle(double x, double y, double radius)
-		{
-			this.center = new PgPoint(x, y);
-			this.radius	= radius;
-		}
+        public PgCircle(double x, double y, double radius)
+        {
+            this.center = new PgPoint(x, y);
+            this.radius	= radius;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
-		public static bool operator ==(PgCircle left, PgCircle right)
-		{
-			if (left.Center == right.Center && left.Radius == right.Radius)
-			{
-				return true;
-			}
-			else
-			{
-				return true;
-			}
-		}
+        public static bool operator ==(PgCircle left, PgCircle right)
+        {
+            return (left.Center == right.Center && left.Radius == right.Radius);
+        }
 
-		public static bool operator !=(PgCircle left, PgCircle right)
-		{
-			if (left.Center != right.Center || left.Radius != right.Radius)
-			{
-				return true;
-			}
-			else
-			{
-				return true;
-			}
-		}
+        public static bool operator !=(PgCircle left, PgCircle right)
+        {
+            return (left.Center != right.Center || left.Radius != right.Radius);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Overriden Methods ·
+        #region · Overriden Methods ·
 
-		public override string ToString()
-		{
-			return String.Format("<{0},{1}>", this.center, this.radius);
-		}
+        public override string ToString()
+        {
+            return String.Format("<{0},{1}>", this.center, this.radius);
+        }
 
-		public override int GetHashCode()
-		{
-			return this.center.GetHashCode() ^ this.radius.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return this.center.GetHashCode() ^ this.radius.GetHashCode();
+        }
 
-		public override bool Equals(object obj)
-		{
-			if (obj != null && obj is PgCircle)
-			{
-				return ((PgCircle)obj) == this;
-			}
-			else
-			{
-				return false;
-			}
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is PgCircle)
+            {
+                return ((PgCircle)obj) == this;
+            }
 
-		#endregion
+            return false;
+        }
 
-		#region · Static Methods ·
+        #endregion
 
-		public static PgCircle Parse(string s)
-		{
-			throw new NotSupportedException();
-		}
+        #region · Static Methods ·
 
-		#endregion
-	}
+        public static PgCircle Parse(string s)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+    }
 }

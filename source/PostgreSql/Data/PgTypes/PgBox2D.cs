@@ -47,7 +47,7 @@ namespace PostgreSql.Data.PgTypes
 
         public PgBox2D(PgPoint2D lowerLeft, PgPoint2D upperRight)
         {
-            this.lowerLeft = lowerLeft;
+            this.lowerLeft  = lowerLeft;
             this.upperRight = upperRight;
         }
 
@@ -63,28 +63,12 @@ namespace PostgreSql.Data.PgTypes
 
         public static bool operator ==(PgBox2D left, PgBox2D right)
         {
-            if (left.UpperRight == right.UpperRight &&
-                left.LowerLeft == right.LowerLeft)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (left.UpperRight == right.UpperRight && left.LowerLeft == right.LowerLeft);
         }
 
         public static bool operator !=(PgBox2D left, PgBox2D right)
         {
-            if (left.UpperRight != right.UpperRight ||
-                left.LowerLeft != right.LowerLeft)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (left.UpperRight != right.UpperRight || left.LowerLeft != right.LowerLeft);
         }
 
         #endregion
@@ -107,10 +91,8 @@ namespace PostgreSql.Data.PgTypes
             {
                 return ((PgBox2D)obj) == this;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         #endregion
@@ -130,13 +112,9 @@ namespace PostgreSql.Data.PgTypes
             }
 
             string[] delimiters = new string[] { "," };
+            string[] boxPoints  = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
-            string[] boxPoints = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-
-            PgPoint2D left  = PgPoint2D.Parse(boxPoints[0]);
-            PgPoint2D right = PgPoint2D.Parse(boxPoints[1]);
-
-            return new PgBox2D(left, right);
+            return new PgBox2D(PgPoint2D.Parse(boxPoints[0]), PgPoint2D.Parse(boxPoints[1]));
         }
 
         #endregion

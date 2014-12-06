@@ -88,10 +88,8 @@ namespace PostgreSql.Data.PgTypes
             {
                 return ((PgPoint2D)obj) == this;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         #endregion

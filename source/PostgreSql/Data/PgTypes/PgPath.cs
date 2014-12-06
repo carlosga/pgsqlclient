@@ -19,132 +19,133 @@ using System;
 
 namespace PostgreSql.Data.PgTypes
 {
-	[Serializable]
-	public struct PgPath
-	{
-		#region · Fields ·
+    [Serializable]
+    public struct PgPath
+    {
+        #region · Fields ·
 
-		private PgPoint[]	points;
-		private bool		isClosedPath;
+        private PgPoint[] points;
+        private bool	  isClosedPath;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgPoint[] Points
-		{
-			get { return points; }
-		}
+        public PgPoint[] Points
+        {
+            get { return this.points; }
+        }
 
-		public bool IsClosedPath
-		{
-			get { return isClosedPath; }
-		}
+        public bool IsClosedPath
+        {
+            get { return this.isClosedPath; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgPath(bool isClosedPath, PgPoint[] points)
-		{
-			this.isClosedPath	= isClosedPath;
-			this.points			= (PgPoint[])points.Clone();
-		}
+        public PgPath(bool isClosedPath, PgPoint[] points)
+        {
+            this.isClosedPath = isClosedPath;
+            this.points		  = (PgPoint[])points.Clone();
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
-		public static bool operator ==(PgPath left, PgPath right)
-		{
-			bool equals = false;
+        public static bool operator ==(PgPath left, PgPath right)
+        {
+            bool equals = false;
 
-			if (left.Points.Length == right.Points.Length)
-			{
-				equals = true;
-				for (int i = 0; i < left.Points.Length; i++)
-				{
-					if (left.Points[i] != right.Points[i])
-					{
-						equals = false;
-						break;
-					}
-				}
-			}
+            if (left.Points.Length == right.Points.Length)
+            {
+                equals = true;
 
-			return equals;
-		}
+                for (int i = 0; i < left.Points.Length; i++)
+                {
+                    if (left.Points[i] != right.Points[i])
+                    {
+                        equals = false;
+                        break;
+                    }
+                }
+            }
 
-		public static bool operator !=(PgPath left, PgPath right)
-		{
-			bool notequals = true;
+            return equals;
+        }
 
-			if (left.Points.Length == right.Points.Length)
-			{
-				notequals = false;
-				for (int i = 0; i < left.Points.Length; i++)
-				{
-					if (left.Points[i] != right.Points[i])
-					{
-						notequals = true;
-						break;
-					}
-				}
-			}
+        public static bool operator !=(PgPath left, PgPath right)
+        {
+            bool notequals = true;
 
-			return notequals;
-		}
+            if (left.Points.Length == right.Points.Length)
+            {
+                notequals = false;
 
-		#endregion
+                for (int i = 0; i < left.Points.Length; i++)
+                {
+                    if (left.Points[i] != right.Points[i])
+                    {
+                        notequals = true;
+                        break;
+                    }
+                }
+            }
 
-		#region · Overriden Methods ·
+            return notequals;
+        }
 
-		public override string ToString()
-		{
-			System.Text.StringBuilder b = new System.Text.StringBuilder();
+        #endregion
 
-			b.Append(this.isClosedPath ? "(" : "[");
+        #region · Overriden Methods ·
 
-			for (int i = 0; i < this.points.Length; i++)
-			{
-				if (b.Length > 1)
-				{
-					b.Append(",");
-				}
-				b.Append(this.points[i].ToString());
-			}
+        public override string ToString()
+        {
+            System.Text.StringBuilder b = new System.Text.StringBuilder();
 
-			b.Append(this.isClosedPath ? ")" : "]");
+            b.Append(this.isClosedPath ? "(" : "[");
 
-			return b.ToString();
-		}
+            for (int i = 0; i < this.points.Length; i++)
+            {
+                if (b.Length > 1)
+                {
+                    b.Append(",");
+                }
 
-		public override int GetHashCode()
-		{
-			return (this.points.GetHashCode() ^ this.isClosedPath.GetHashCode());
-		}
+                b.Append(this.points[i].ToString());
+            }
 
-		public override bool Equals(object obj)
-		{
-			if (obj != null && obj is PgPath)
-			{
-				return ((PgPath)obj) == this;
-			}
-			else
-			{
-				return false;
-			}
-		}
+            b.Append(this.isClosedPath ? ")" : "]");
 
-		#endregion
+            return b.ToString();
+        }
 
-		#region · Static Methods ·
+        public override int GetHashCode()
+        {
+            return (this.points.GetHashCode() ^ this.isClosedPath.GetHashCode());
+        }
 
-		public static PgPath Parse(string s)
-		{
-			throw new NotSupportedException();
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is PgPath)
+            {
+                return ((PgPath)obj) == this;
+            }
 
-		#endregion
-	}
+            return false;
+        }
+
+        #endregion
+
+        #region · Static Methods ·
+
+        public static PgPath Parse(string s)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+    }
 }

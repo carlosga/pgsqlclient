@@ -34,12 +34,12 @@ namespace PostgreSql.Data.PgTypes
 
         public double X
         {
-            get { return x; }
+            get { return this.x; }
         }
         
         public double Y
         {
-            get { return y; }
+            get { return this.y; }
         }
 
         #endregion
@@ -105,8 +105,7 @@ namespace PostgreSql.Data.PgTypes
                 throw new ArgumentNullException("s cannot be null");
             }
 
-            string[] delimiters = new string[] { "," };
-
+            string[] delimiters  = new string[] { "," };
             string[] pointCoords = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             if (pointCoords == null || pointCoords.Length != 2)

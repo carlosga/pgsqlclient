@@ -19,219 +19,217 @@ using System;
 
 namespace PostgreSql.Data.PgTypes
 {
-	[Serializable]
-	public struct PgTimeSpan : IComparable
-	{
-		#region · Fields ·
+    [Serializable]
+    public struct PgTimeSpan : IComparable
+    {
+        #region · Static Members ·
 
-		private TimeSpan interval;
+        public static readonly PgTimeSpan MaxValue = new PgTimeSpan(TimeSpan.MaxValue);
+        public static readonly PgTimeSpan MinValue = new PgTimeSpan(TimeSpan.MinValue);
+        public static readonly PgTimeSpan Null     = new PgTimeSpan(TimeSpan.Zero);
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Fields ·
 
-		public int Days
-		{
-			get { return this.interval.Days; }
-		}
+        private TimeSpan interval;
 
-		public int Hours
-		{
-			get { return this.interval.Hours; }
-		}
+        #endregion
 
-		public int Milliseconds
-		{
-			get { return this.interval.Milliseconds; }
-		}
+        #region · Properties ·
 
-		public int Minutes
-		{
-			get { return this.interval.Minutes; }
-		}
+        public int Days
+        {
+            get { return this.interval.Days; }
+        }
 
-		public int Seconds
-		{
-			get { return this.interval.Seconds; }
-		}
+        public int Hours
+        {
+            get { return this.interval.Hours; }
+        }
 
-		public TimeSpan Value
-		{
-			get { return interval; }
-		}
+        public int Milliseconds
+        {
+            get { return this.interval.Milliseconds; }
+        }
 
-		#endregion
+        public int Minutes
+        {
+            get { return this.interval.Minutes; }
+        }
 
-		#region · Static Fields ·
+        public int Seconds
+        {
+            get { return this.interval.Seconds; }
+        }
 
-		public static readonly PgTimeSpan	MaxValue = new PgTimeSpan(TimeSpan.MaxValue);
-		public static readonly PgTimeSpan	MinValue = new PgTimeSpan(TimeSpan.MinValue);
-		public static readonly PgTimeSpan	Null	 = new PgTimeSpan(TimeSpan.Zero);
+        public TimeSpan Value
+        {
+            get { return interval; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgTimeSpan(TimeSpan interval)
-		{
-			this.interval = interval;
-		}
+        public PgTimeSpan(TimeSpan interval)
+        {
+            this.interval = interval;
+        }
 
-		#endregion
+        #endregion
 
-		#region · IComparable methods ·
+        #region · IComparable methods ·
 
-		public int CompareTo(object obj)
-		{
-			return interval.CompareTo(obj);
-		}
+        public int CompareTo(object obj)
+        {
+            return interval.CompareTo(obj);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Static Methods ·
+        #region · Static Methods ·
 
-		public static bool GreatherThan(PgTimeSpan x, PgTimeSpan y)
-		{
-			return (x > y);
-		}
+        public static bool GreatherThan(PgTimeSpan x, PgTimeSpan y)
+        {
+            return (x > y);
+        }
 
-		public static bool GreatherThanOrEqual(PgTimeSpan x, PgTimeSpan y)
-		{
-			return (x >= y);
-		}
+        public static bool GreatherThanOrEqual(PgTimeSpan x, PgTimeSpan y)
+        {
+            return (x >= y);
+        }
 
-		public static bool LessThan(PgTimeSpan x, PgTimeSpan y)
-		{
-			return (x < y);
-		}
+        public static bool LessThan(PgTimeSpan x, PgTimeSpan y)
+        {
+            return (x < y);
+        }
 
-		public static bool LessThanOrEqual(PgTimeSpan x, PgTimeSpan y)
-		{
-			return (x <= y);
-		}
+        public static bool LessThanOrEqual(PgTimeSpan x, PgTimeSpan y)
+        {
+            return (x <= y);
+        }
 
-		public static bool NotEquals(PgTimeSpan x, PgTimeSpan y)
-		{
-			return (x != y);
-		}
+        public static bool NotEquals(PgTimeSpan x, PgTimeSpan y)
+        {
+            return (x != y);
+        }
 
-		public static PgTimeSpan Parse(string s)
-		{
-			return new PgTimeSpan(TimeSpan.Parse(s));
-		}
+        public static PgTimeSpan Parse(string s)
+        {
+            return new PgTimeSpan(TimeSpan.Parse(s));
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
-		public static bool operator ==(PgTimeSpan left, PgTimeSpan right)
-		{
-			bool equals = false;
+        public static bool operator ==(PgTimeSpan left, PgTimeSpan right)
+        {
+            bool equals = false;
 
-			if (left.Value == right.Value)
-			{
-				equals = true;
-			}
+            if (left.Value == right.Value)
+            {
+                equals = true;
+            }
 
-			return equals;
-		}
+            return equals;
+        }
 
-		public static bool operator !=(PgTimeSpan left, PgTimeSpan right)
-		{
-			bool notequals = false;
+        public static bool operator !=(PgTimeSpan left, PgTimeSpan right)
+        {
+            bool notequals = false;
 
-			if (left.Value != right.Value)
-			{
-				notequals = true;
-			}
+            if (left.Value != right.Value)
+            {
+                notequals = true;
+            }
 
-			return notequals;
-		}
+            return notequals;
+        }
 
-		public static bool operator >(PgTimeSpan left, PgTimeSpan right)
-		{
-			bool greater = false;
+        public static bool operator >(PgTimeSpan left, PgTimeSpan right)
+        {
+            bool greater = false;
 
-			if (left.Value > right.Value)
-			{
-				greater = true;
-			}
+            if (left.Value > right.Value)
+            {
+                greater = true;
+            }
 
-			return greater;
-		}
+            return greater;
+        }
 
-		public static bool operator >=(PgTimeSpan left, PgTimeSpan right)
-		{
-			bool greater = false;
+        public static bool operator >=(PgTimeSpan left, PgTimeSpan right)
+        {
+            bool greater = false;
 
-			if (left.Value >= right.Value)
-			{
-				greater = true;
-			}
+            if (left.Value >= right.Value)
+            {
+                greater = true;
+            }
 
-			return greater;
-		}
+            return greater;
+        }
 
-		public static bool operator <(PgTimeSpan left, PgTimeSpan right)
-		{
-			bool less = false;
+        public static bool operator <(PgTimeSpan left, PgTimeSpan right)
+        {
+            bool less = false;
 
-			if (left.Value < right.Value)
-			{
-				less = true;
-			}
+            if (left.Value < right.Value)
+            {
+                less = true;
+            }
 
-			return less;
-		}
+            return less;
+        }
 
-		public static bool operator <=(PgTimeSpan left, PgTimeSpan right)
-		{
-			bool less = false;
+        public static bool operator <=(PgTimeSpan left, PgTimeSpan right)
+        {
+            bool less = false;
 
-			if (left.Value <= right.Value)
-			{
-				less = true;
-			}
+            if (left.Value <= right.Value)
+            {
+                less = true;
+            }
 
-			return less;
-		}
+            return less;
+        }
 
-		public static explicit operator TimeSpan(PgTimeSpan x)
-		{
-			return x.Value;
-		}
+        public static explicit operator TimeSpan(PgTimeSpan x)
+        {
+            return x.Value;
+        }
 
-		public static explicit operator PgTimeSpan(string x)
-		{
-			return new PgTimeSpan(TimeSpan.Parse(x));
-		}
+        public static explicit operator PgTimeSpan(string x)
+        {
+            return new PgTimeSpan(TimeSpan.Parse(x));
+        }
 
-		#endregion
+        #endregion
 
-		#region · Overriden Methods ·
+        #region · Overriden Methods ·
 
-		public override string ToString()
-		{
-			return interval.ToString();
-		}
+        public override string ToString()
+        {
+            return interval.ToString();
+        }
 
-		public override int GetHashCode()
-		{
-			return interval.GetHashCode();
-		}
+        public override int GetHashCode()
+        {
+            return interval.GetHashCode();
+        }
 
-		public override bool Equals(object obj)
-		{
-			if (obj != null && obj is PgTimeSpan)
-			{
-				return ((PgTimeSpan)obj) == this;
-			}
-			else
-			{
-				return false;
-			}
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is PgTimeSpan)
+            {
+                return ((PgTimeSpan)obj) == this;
+            }
 
-		#endregion
-	}
+            return false;
+        }
+
+        #endregion
+    }
 }

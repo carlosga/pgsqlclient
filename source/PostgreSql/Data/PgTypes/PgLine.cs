@@ -19,114 +19,95 @@ using System;
 
 namespace PostgreSql.Data.PgTypes
 {
-	[Serializable]
-	public struct PgLine
-	{
-		#region · Fields ·
+    [Serializable]
+    public struct PgLine
+    {
+        #region · Fields ·
 
-		private PgPoint startPoint;
-		private PgPoint	endPoint;
+        private PgPoint startPoint;
+        private PgPoint	endPoint;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgPoint StartPoint
-		{
-			get { return startPoint; }
-		}
-		
-		public PgPoint EndPoint
-		{
-			get { return endPoint; }
-		}
+        public PgPoint StartPoint
+        {
+            get { return this.startPoint; }
+        }
+        
+        public PgPoint EndPoint
+        {
+            get { return this.endPoint; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgLine(PgPoint startPoint, PgPoint endPoint)
-		{
-			this.startPoint = startPoint;
-			this.endPoint	= endPoint;
-		}
+        public PgLine(PgPoint startPoint, PgPoint endPoint)
+        {
+            this.startPoint = startPoint;
+            this.endPoint	= endPoint;
+        }
 
-		public PgLine(double x1, double y1, double x2, double y2)
-		{
-			this.startPoint	= new PgPoint(x1, y1);
-			this.endPoint	= new PgPoint(x2, y2);
-		}
+        public PgLine(double x1, double y1, double x2, double y2)
+        {
+            this.startPoint	= new PgPoint(x1, y1);
+            this.endPoint	= new PgPoint(x2, y2);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
-		public static bool operator ==(PgLine left, PgLine right)
-		{
-			if (left.StartPoint == right.StartPoint && 
-				left.EndPoint == right.EndPoint)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+        public static bool operator ==(PgLine left, PgLine right)
+        {
+            return (left.StartPoint == right.StartPoint && left.EndPoint == right.EndPoint);
+        }
 
-		public static bool operator !=(PgLine left, PgLine right)
-		{
-			if (left.StartPoint != right.StartPoint ||
-				left.EndPoint != right.EndPoint)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+        public static bool operator !=(PgLine left, PgLine right)
+        {
+            return (left.StartPoint != right.StartPoint || left.EndPoint != right.EndPoint);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Overriden Methods ·
+        #region · Overriden Methods ·
 
-		public override string ToString()
-		{
-			System.Text.StringBuilder b = new System.Text.StringBuilder();
-			b.AppendFormat("(({0},{1}),({2},{3}))", 
-				this.startPoint.X	, this.startPoint.Y,
-				this.endPoint.X		, this.endPoint.Y);
+        public override string ToString()
+        {
+            return String.Format("(({0},{1}),({2},{3}))"
+                               , this.startPoint.X
+                               , this.startPoint.Y
+                               , this.endPoint.X
+                               , this.endPoint.Y);
+        }
 
-			return b.ToString();
-		}
+        public override int GetHashCode()
+        {
+            return this.startPoint.GetHashCode() ^ this.endPoint.GetHashCode();
+        }
 
-		public override int GetHashCode()
-		{
-			return this.startPoint.GetHashCode() ^ this.endPoint.GetHashCode();
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is PgLine)
+            {
+                return ((PgLine)obj) == this;
+            }
 
-		public override bool Equals(object obj)
-		{
-			if (obj != null && obj is PgLine)
-			{
-				return ((PgLine)obj) == this;
-			}
-			else
-			{
-				return false;
-			}
-		}
+            return false;
+        }
 
-		#endregion
+        #endregion
 
-		#region · Static Methods ·
+        #region · Static Methods ·
 
-		public static PgLine Parse(string s)
-		{
-			throw new NotSupportedException();
-		}
+        public static PgLine Parse(string s)
+        {
+            throw new NotSupportedException();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

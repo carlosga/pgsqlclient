@@ -91,10 +91,8 @@ namespace PostgreSql.Data.PgTypes
             {
                 return ((PgBox3D)obj) == this;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         #endregion
@@ -114,13 +112,9 @@ namespace PostgreSql.Data.PgTypes
             }
 
             string[] delimiters = new string[] { "," };
+            string[] boxPoints  = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
-            string[] boxPoints = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-
-            PgPoint3D left  = PgPoint3D.Parse(boxPoints[0]);
-            PgPoint3D right = PgPoint3D.Parse(boxPoints[1]);
-
-            return new PgBox3D(left, right);
+            return new PgBox3D(PgPoint3D.Parse(boxPoints[0]), PgPoint3D.Parse(boxPoints[1]));
         }
 
         #endregion

@@ -16,99 +16,98 @@
  */
 
 using System;
-using System.Text;
 
 namespace PostgreSql.Data.PgTypes
 {
-	[Serializable]
-	public struct PgBox
-	{
-		#region · Fields ·
+    [Serializable]
+    public struct PgBox
+    {
+        #region · Fields ·
 
-		private PgPoint upperRight;
-		private PgPoint	lowerLeft;
+        private PgPoint upperRight;
+        private PgPoint	lowerLeft;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public PgPoint UpperRight
-		{
-			get { return this.upperRight; }
-		}
+        public PgPoint UpperRight
+        {
+            get { return this.upperRight; }
+        }
 
-		public PgPoint LowerLeft
-		{
+        public PgPoint LowerLeft
+        {
             get { return this.lowerLeft; }
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		public PgBox(PgPoint lowerLeft, PgPoint upperRight)
-		{
-			this.lowerLeft	= lowerLeft;
-			this.upperRight	= upperRight;
-		}
+        public PgBox(PgPoint lowerLeft, PgPoint upperRight)
+        {
+            this.lowerLeft	= lowerLeft;
+            this.upperRight	= upperRight;
+        }
 
-		public PgBox(double x1, double y1, double x2, double y2)
-		{
-			this.lowerLeft	= new PgPoint(x1, y1);
-			this.upperRight	= new PgPoint(x2, y2);
-		}
+        public PgBox(double x1, double y1, double x2, double y2)
+        {
+            this.lowerLeft	= new PgPoint(x1, y1);
+            this.upperRight	= new PgPoint(x2, y2);
+        }
 
-		#endregion
+        #endregion
 
-		#region · Operators ·
+        #region · Operators ·
 
-		public static bool operator ==(PgBox left, PgBox right)
-		{
+        public static bool operator ==(PgBox left, PgBox right)
+        {
             return (left.UpperRight == right.UpperRight && left.LowerLeft == right.LowerLeft);
-		}
+        }
 
-		public static bool operator !=(PgBox left, PgBox right)
-		{
+        public static bool operator !=(PgBox left, PgBox right)
+        {
             return (left.UpperRight != right.UpperRight || left.LowerLeft != right.LowerLeft);
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Overriden Methods ·
+        #region · Overriden Methods ·
 
-		public override string ToString()
-		{
-			return String.Format("(({0},{1}),({2},{3}))"
+        public override string ToString()
+        {
+            return String.Format("(({0},{1}),({2},{3}))"
                                , this.lowerLeft.X
                                , this.lowerLeft.Y
                                , this.upperRight.X
                                , this.upperRight.Y);
-		}
+        }
 
-		public override int GetHashCode()
-		{
-			return (this.UpperRight.GetHashCode() ^ this.LowerLeft.GetHashCode());
-		}
+        public override int GetHashCode()
+        {
+            return (this.UpperRight.GetHashCode() ^ this.LowerLeft.GetHashCode());
+        }
 
-		public override bool Equals(object obj)
-		{
-			if (obj is PgBox)
-			{
-				return ((PgBox)obj) == this;
-			}
+        public override bool Equals(object obj)
+        {
+            if (obj is PgBox)
+            {
+                return ((PgBox)obj) == this;
+            }
 
             return false;
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region · Static Methods ·
+        #region · Static Methods ·
 
-		public static PgBox Parse(string s)
-		{
-			throw new NotSupportedException();
-		}
+        public static PgBox Parse(string s)
+        {
+            throw new NotSupportedException();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
