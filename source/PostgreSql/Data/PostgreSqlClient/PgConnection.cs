@@ -45,17 +45,17 @@ namespace PostgreSql.Data.PostgreSqlClient
         #region · SSL Events ·
 
         public event RemoteCertificateValidationCallback UserCertificateValidation;
-        public event LocalCertificateSelectionCallback UserCertificateSelection;
+        public event LocalCertificateSelectionCallback   UserCertificateSelection;
 
         #endregion
 
         #region · Fields ·
 
-        private PgConnectionInternal	connectionInternal;
-        private PgConnectionOptions		options;
-        private ConnectionState			state;
-        private bool					disposed;
-        private string					connectionString;
+        private PgConnectionInternal connectionInternal;
+        private PgConnectionOptions	 options;
+        private ConnectionState		 state;
+        private bool				 disposed;
+        private string				 connectionString;
 
         #endregion
         
@@ -124,6 +124,7 @@ namespace PostgreSql.Data.PostgreSqlClient
             get 
             { 
                 int packetSize = 8192;
+
                 if (this.connectionInternal != null)
                 {
                     packetSize = this.connectionInternal.Options.PacketSize;
@@ -175,8 +176,8 @@ namespace PostgreSql.Data.PostgreSqlClient
         public PgConnection(string connectionString) 
             : base()
         {			
-            this.state				= ConnectionState.Closed;
-            this.connectionString	= String.Empty;
+            this.state			  = ConnectionState.Closed;
+            this.connectionString = String.Empty;
 
             if (connectionString != null)
             {
@@ -418,10 +419,7 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public new PgCommand CreateCommand()
         {		
-            PgCommand command = new PgCommand();
-            command.Connection = this;
-    
-            return command;
+            return new PgCommand(String.Empty, this);
         }
 
         #endregion
@@ -479,11 +477,10 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
         }
 
-        private bool OnUserCertificateValidation(
-            object          sender,
-            X509Certificate certificate,
-            X509Chain       chain,
-            SslPolicyErrors sslPolicyErrors)
+        private bool OnUserCertificateValidation(object          sender
+                                               , X509Certificate certificate
+                                               , X509Chain       chain
+                                               , SslPolicyErrors sslPolicyErrors)
         {
             if (this.UserCertificateValidation != null)
             {
@@ -493,12 +490,11 @@ namespace PostgreSql.Data.PostgreSqlClient
             return false;
         }
 
-        private X509Certificate OnUserCertificateSelection(
-            object                      sender,
-            string                      targetHost,
-            X509CertificateCollection   localCertificates,
-            X509Certificate             remoteCertificate,
-            string[]                    acceptableIssuers)
+        private X509Certificate OnUserCertificateSelection(object                    sender
+                                                         , string                    targetHost
+                                                         , X509CertificateCollection localCertificates
+                                                         , X509Certificate           remoteCertificate
+                                                         , string[]                  acceptableIssuers)
         {
             if (this.UserCertificateSelection != null)
             {

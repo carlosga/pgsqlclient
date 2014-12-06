@@ -35,11 +35,11 @@ namespace PostgreSql.Data.PostgreSqlClient
                 throw new InvalidOperationException("The command text is not a valid stored procedure name.");
             }
 
-            string originalSpName   = command.CommandText.Trim();
-            string schemaName       = "";
-            string spName           = "";
-            string quotePrefix      = "\"";
-            string quoteSuffix      = "\"";
+            string originalSpName = command.CommandText.Trim();
+            string schemaName     = "";
+            string spName         = "";
+            string quotePrefix    = "\"";
+            string quoteSuffix    = "\"";
 
             if (originalSpName.Contains("."))
             {
@@ -81,28 +81,24 @@ namespace PostgreSql.Data.PostgreSqlClient
             command.Parameters.Clear();
 
             DataView dataTypes = command.Connection.GetSchema("DataTypes").DefaultView;
-
-            DataTable spSchema = command.Connection.GetSchema(
-                "FunctionParameters", new string[] { null, schemaName, spName });
+            DataTable spSchema = command.Connection.GetSchema("FunctionParameters", new string[] { null, schemaName, spName });
 
             int count = 1;
+
             foreach (DataRow row in spSchema.Rows)
             {
-                dataTypes.RowFilter = String.Format(
-                    CultureInfo.CurrentUICulture,
-                    "TypeName = '{0}'",
-                    row["PARAMETER_DATA_TYPE"]);
+                dataTypes.RowFilter = String.Format(CultureInfo.CurrentUICulture
+                                                  , "TypeName = '{0}'"
+                                                  , row["PARAMETER_DATA_TYPE"]);
 
-                PgParameter parameter = command.Parameters.Add(
-                    "@" + row["PARAMETER_NAME"].ToString().Trim(),
-                    PgDbType.VarChar);
+                PgParameter parameter = command.Parameters.Add("@" + row["PARAMETER_NAME"].ToString().Trim()
+                                                             , PgDbType.VarChar);
 
                 parameter.PgDbType  = (PgDbType)dataTypes[0]["ProviderDbType"];
                 parameter.Direction = (ParameterDirection)row["PARAMETER_DIRECTION"];
                 parameter.Size      = Convert.ToInt32(row["PARAMETER_SIZE"], CultureInfo.InvariantCulture);
 
-                if (parameter.PgDbType == PgDbType.Decimal ||
-                    parameter.PgDbType == PgDbType.Numeric)
+                if (parameter.PgDbType == PgDbType.Decimal || parameter.PgDbType == PgDbType.Numeric)
                 {
                     if (row["NUMERIC_PRECISION"] != DBNull.Value)
                     {
@@ -241,6 +237,7 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
 
             this.rowUpdatingHandler = new PgRowUpdatingEventHandler(this.RowUpdatingHandler);
+
             ((PgDataAdapter)adapter).RowUpdating += this.rowUpdatingHandler;
         }
 

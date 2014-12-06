@@ -25,8 +25,8 @@ namespace PostgreSql.Data.PostgreSqlClient
     {
         #region · Fields ·
 
-        private PgErrorCollection errors	= new PgErrorCollection();
-        private string			  message	= String.Empty;
+        private PgErrorCollection errors  = new PgErrorCollection();
+        private string			  message = String.Empty;
 
         #endregion
 
@@ -54,15 +54,15 @@ namespace PostgreSql.Data.PostgreSqlClient
             {
                 PgError newError = new PgError();
 
-                newError.Severity	= error.Severity;
-                newError.Code		= error.Code;
-                newError.Message	= error.Message;
-                newError.Detail		= error.Detail;
-                newError.Hint		= error.Hint;
-                newError.Line		= error.Line;
-                newError.Where		= error.Where;
-                newError.Position	= error.Position;
-                newError.Routine	= error.Routine;
+                newError.Severity = error.Severity;
+                newError.Code	  = error.Code;
+                newError.Message  = error.Message;
+                newError.Detail	  = error.Detail;
+                newError.Hint	  = error.Hint;
+                newError.Line	  = error.Line;
+                newError.Where	  = error.Where;
+                newError.Position = error.Position;
+                newError.Routine  = error.Routine;
 
                 this.errors.Add(newError);
             }

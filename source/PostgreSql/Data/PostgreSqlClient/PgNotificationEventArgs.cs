@@ -15,49 +15,49 @@
  *  All Rights Reserved.
  */
 
-
 using System;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	public sealed class PgNotificationEventArgs : EventArgs
-	{
-		#region · Fields ·
+    public sealed class PgNotificationEventArgs
+        : EventArgs
+    {
+        #region · Fields ·
 
-		private int		processID;
-		private string	condition;
-		private string	aditional;
+        private int	   processID;
+        private string condition;
+        private string aditional;
 
-		#endregion
+        #endregion
 
-		#region · Properties ·
+        #region · Properties ·
 
-		public int ProcessID
-		{
-			get { return this.processID; }
-		}
+        public int ProcessID
+        {
+            get { return this.processID; }
+        }
 
-		public string Condition
-		{
-			get { return this.condition; }
-		}
+        public string Condition
+        {
+            get { return this.condition; }
+        }
 
-		public string Aditional
-		{
-			get { return this.aditional; }
-		}
+        public string Aditional
+        {
+            get { return this.aditional; }
+        }
 
-		#endregion
+        #endregion
 
-		#region · Constructors ·
+        #region · Constructors ·
 
-		internal PgNotificationEventArgs(int processID, string condition, string addtional)
-		{
-			this.processID	= processID;
-			this.condition	= condition;
-			this.aditional	= addtional;
-		}
+        internal PgNotificationEventArgs(int processID, string condition, string addtional)
+        {
+            this.processID = processID;
+            this.condition = condition;
+            this.aditional = addtional;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

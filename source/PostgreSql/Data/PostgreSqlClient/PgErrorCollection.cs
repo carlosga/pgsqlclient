@@ -98,18 +98,5 @@ namespace PostgreSql.Data.PostgreSqlClient
         }
 
         #endregion
-
-        #region · Private Methods ·
-
-        private bool cultureAwareCompare(string strA, string strB)
-        {
-            return CultureInfo.CurrentCulture.CompareInfo.Compare(
-                strA, 
-                strB, 
-                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-                CompareOptions.IgnoreCase) == 0 ? true : false;
-        }
-
-        #endregion
     }
 }

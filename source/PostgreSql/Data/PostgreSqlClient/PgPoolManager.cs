@@ -40,9 +40,9 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #region · Fields ·
 
-        private Hashtable	pools;
-        private Hashtable	handlers;
-        private object		syncObject;
+        private Hashtable pools;
+        private Hashtable handlers;
+        private object	  syncObject;
 
         #endregion
 
@@ -56,6 +56,7 @@ namespace PostgreSql.Data.PostgreSqlClient
                 {
                     return this.pools.Count;
                 }
+
                 return 0;
             }
         }

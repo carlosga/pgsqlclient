@@ -15,7 +15,6 @@
  *  All Rights Reserved.
  */
 
-
 namespace PostgreSql.Data.PostgreSqlClient
 {
 	public delegate void PgInfoMessageEventHandler(object sender, PgInfoMessageEventArgs e);

@@ -123,9 +123,7 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public override void CopyTo(Array array, int index)
         {
-            this.parameters
-                .ToList()
-                .CopyTo((PgParameter[])array, index);
+            this.parameters.CopyTo((PgParameter[])array, index);
         }
 
         public override void Clear()

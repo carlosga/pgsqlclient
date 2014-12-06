@@ -64,14 +64,14 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         internal PgDataReader(PgConnection connection, PgCommand command)
         {
-            this.open               = true;
-            this.recordsAffected    = -1;
-            this.position           = STARTPOS;
-            this.refCursors         = new Queue();
-            this.connection         = connection;
-            this.command            = command;
-            this.behavior	        = this.command.CommandBehavior;
-            this.statement          = this.command.Statement;
+            this.open            = true;
+            this.recordsAffected = -1;
+            this.position        = STARTPOS;
+            this.refCursors      = new Queue();
+            this.connection      = connection;
+            this.command         = command;
+            this.behavior	     = this.command.CommandBehavior;
+            this.statement       = this.command.Statement;
 
             this.Initialize();
         }
@@ -80,7 +80,6 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #region · Finalizer ·
 
-        /// <include file='Doc/en_EN/FbDataReader.xml' path='doc/class[@name="FbDataReader"]/destructor[@name="Finalize"]/*'/>
         ~PgDataReader()
         {
             this.Dispose(false);
@@ -101,14 +100,14 @@ namespace PostgreSql.Data.PostgreSqlClient
                         // release any managed resources
                         this.Close();
                         
-                        this.command            = null;
-                        this.statement          = null;
-                        this.connection         = null;
-                        this.refCursors         = null;
-                        this.row                = null;
-                        this.schemaTable        = null;
-                        this.recordsAffected    = -1;
-                        this.position           = -1;
+                        this.command         = null;
+                        this.statement       = null;
+                        this.connection      = null;
+                        this.refCursors      = null;
+                        this.row             = null;
+                        this.schemaTable     = null;
+                        this.recordsAffected = -1;
+                        this.position        = -1;
                     }
 
                     // release any unmanaged resources
@@ -195,9 +194,9 @@ namespace PostgreSql.Data.PostgreSqlClient
                 this.statement.Close();
 
                 // Create a new statement to fetch the current refcursor
-                string statementName    = Guid.NewGuid().ToString();
-                string prepareName      = String.Format("PS{0}", statementName);
-                string portalName       = String.Format("PR{0}", statementName);
+                string statementName = Guid.NewGuid().ToString();
+                string prepareName   = String.Format("PS{0}", statementName);
+                string portalName    = String.Format("PR{0}", statementName);
 
                 this.statement = this.connection.InternalConnection.Database.CreateStatement(prepareName, portalName, sql);
                 // this.statement.Query();
@@ -217,8 +216,8 @@ namespace PostgreSql.Data.PostgreSqlClient
         {
             bool read = false;
 
-            if ((this.behavior == CommandBehavior.SingleRow && this.position != STARTPOS) || 
-                !this.command.Statement.HasRows)
+            if ((this.behavior == CommandBehavior.SingleRow && this.position != STARTPOS) 
+             || !this.command.Statement.HasRows)
             {
             }
             else
@@ -227,8 +226,7 @@ namespace PostgreSql.Data.PostgreSqlClient
                 {
                     this.position++;
 
-                    row = this.statement.FetchRow();
-
+                    row  = this.statement.FetchRow();
                     read = (this.row == null) ? false : true;
                 }
                 catch (PgClientException ex)
@@ -248,24 +246,26 @@ namespace PostgreSql.Data.PostgreSqlClient
         {
             if (this.schemaTable == null)
             {
-                int     tableCount      = 0;
-                string  currentTable    = "";
+                int    tableCount   = 0;
+                string currentTable = String.Empty;
 
                 this.schemaTable = this.GetSchemaTableStructure();
 
                 this.schemaTable.BeginLoadData();
 
                 PgCommand columnsCmd = new PgCommand(this.GetColumnsSql(), this.connection);
+                
                 columnsCmd.Parameters.Add("@OidNumber", PgDbType.Int4);
                 columnsCmd.Parameters.Add("@OidTable", PgDbType.Int4);
                                 
                 PgCommand primaryKeyCmd	= new PgCommand(this.GetPrimaryKeysSql(), this.connection);
+
                 primaryKeyCmd.Parameters.Add("@OidTable", PgDbType.Int4);
                 
                 for (int i = 0; i < this.statement.RowDescriptor.Fields.Length; i++)
                 {
-                    object[]	columnInfo	= null;
-                    Array		pKeyInfo	= null;
+                    object[] columnInfo	= null;
+                    Array	 pKeyInfo	= null;
 
                     // Execute commands
                     columnsCmd.Parameters[0].Value = this.statement.RowDescriptor.Fields[i].OidNumber;
@@ -295,51 +295,53 @@ namespace PostgreSql.Data.PostgreSqlClient
                     // Add row information
                     DataRow schemaRow = this.schemaTable.NewRow();
 
-                    schemaRow["ColumnName"]			= this.GetName(i);
-                    schemaRow["ColumnOrdinal"]		= (i + 1);
-                    schemaRow["ColumnSize"]         = this.GetSize(i);
+                    schemaRow["ColumnName"]	   = this.GetName(i);
+                    schemaRow["ColumnOrdinal"] = (i + 1);
+                    schemaRow["ColumnSize"]    = this.GetSize(i);
+
                     if (this.IsNumeric(i))
                     {
-                        schemaRow["NumericPrecision"]	= this.GetNumericPrecision(i);
-                        schemaRow["NumericScale"]		= this.GetNumericScale(i);
+                        schemaRow["NumericPrecision"] = this.GetNumericPrecision(i);
+                        schemaRow["NumericScale"]	  = this.GetNumericScale(i);
                     }
                     else
                     {
-                        schemaRow["NumericPrecision"]	= DBNull.Value;
-                        schemaRow["NumericScale"]		= DBNull.Value;
+                        schemaRow["NumericPrecision"] = DBNull.Value;
+                        schemaRow["NumericScale"]	  = DBNull.Value;
                     }
-                    schemaRow["DataType"]			= this.GetFieldType(i);
-                    schemaRow["ProviderType"]       = this.GetProviderDbType(i);
-                    schemaRow["IsLong"]				= this.IsLong(i);
-                    schemaRow["IsRowVersion"]		= this.CultureAwareCompare(this.GetName(i), "oid");
-                    schemaRow["IsUnique"]			= false;
-                    schemaRow["IsAliased"]			= this.IsAliased(i);
-                    schemaRow["IsExpression"]       = this.IsExpression(i);
-                    schemaRow["BaseCatalogName"]	= System.DBNull.Value;
+
+                    schemaRow["DataType"]		 = this.GetFieldType(i);
+                    schemaRow["ProviderType"]    = this.GetProviderDbType(i);
+                    schemaRow["IsLong"]			 = this.IsLong(i);
+                    schemaRow["IsRowVersion"]	 = this.GetName(i).CaseInsensitiveCompare("oid");
+                    schemaRow["IsUnique"]		 = false;
+                    schemaRow["IsAliased"]		 = this.IsAliased(i);
+                    schemaRow["IsExpression"]    = this.IsExpression(i);
+                    schemaRow["BaseCatalogName"] = System.DBNull.Value;
 
                     if (columnInfo != null)
                     {
-                        schemaRow["BaseSchemaName"]		= columnInfo[0].ToString();
-                        schemaRow["BaseTableName"]		= columnInfo[1].ToString();
-                        schemaRow["BaseColumnName"]		= columnInfo[2].ToString();
-                        schemaRow["IsReadOnly"]			= (bool)columnInfo[7];
-                        schemaRow["IsAutoIncrement"]	= (bool)columnInfo[7];
-                        schemaRow["IsKey"]              = this.IsPrimaryKey(pKeyInfo, Convert.ToInt32(columnInfo[5]));
-                        schemaRow["AllowDBNull"]		= ((bool)columnInfo[6]) ? false : true;
+                        schemaRow["BaseSchemaName"]	 = columnInfo[0].ToString();
+                        schemaRow["BaseTableName"]	 = columnInfo[1].ToString();
+                        schemaRow["BaseColumnName"]	 = columnInfo[2].ToString();
+                        schemaRow["IsReadOnly"]		 = (bool)columnInfo[7];
+                        schemaRow["IsAutoIncrement"] = (bool)columnInfo[7];
+                        schemaRow["IsKey"]           = this.IsPrimaryKey(pKeyInfo, Convert.ToInt32(columnInfo[5]));
+                        schemaRow["AllowDBNull"]	= ((bool)columnInfo[6]) ? false : true;
                     }
                     else
                     {
-                        schemaRow["IsReadOnly"]			= false;
-                        schemaRow["IsAutoIncrement"]	= false;
-                        schemaRow["IsKey"]				= false;
-                        schemaRow["AllowDBNull"]		= System.DBNull.Value;						
-                        schemaRow["BaseSchemaName"]		= System.DBNull.Value;
-                        schemaRow["BaseTableName"]		= System.DBNull.Value;
-                        schemaRow["BaseColumnName"]		= System.DBNull.Value;
+                        schemaRow["IsReadOnly"]		 = false;
+                        schemaRow["IsAutoIncrement"] = false;
+                        schemaRow["IsKey"]			 = false;
+                        schemaRow["AllowDBNull"]	 = System.DBNull.Value;						
+                        schemaRow["BaseSchemaName"]	 = System.DBNull.Value;
+                        schemaRow["BaseTableName"]	 = System.DBNull.Value;
+                        schemaRow["BaseColumnName"]	 = System.DBNull.Value;
                     }
 
-                    if (!String.IsNullOrEmpty(schemaRow["BaseSchemaName"].ToString()) &&
-                        schemaRow["BaseSchemaName"].ToString() != currentTable)
+                    if (!String.IsNullOrEmpty(schemaRow["BaseSchemaName"].ToString()) 
+                     && schemaRow["BaseSchemaName"].ToString() != currentTable)
                     {
                         tableCount++;
                         currentTable = schemaRow["BaseSchemaName"].ToString();
@@ -487,7 +489,7 @@ namespace PostgreSql.Data.PostgreSqlClient
 
             for (int i = 0; i < this.FieldCount; i++)
             {
-                if (this.CultureAwareCompare(this.statement.RowDescriptor.Fields[i].FieldName, name))
+                if (this.statement.RowDescriptor.Fields[i].FieldName.CaseInsensitiveCompare(name))
                 {
                     return i;
                 }
@@ -514,8 +516,8 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public override long GetBytes(int i, long dataIndex, byte[]	buffer, int	bufferIndex, int length)
         {
-            int bytesRead	= 0;
-            int realLength	= length;
+            int bytesRead  = 0;
+            int realLength = length;
 
             if (buffer == null)
             {
@@ -580,8 +582,8 @@ namespace PostgreSql.Data.PostgreSqlClient
                 }
             }
             
-            int charsRead	= 0;
-            int realLength	= length;
+            int charsRead  = 0;
+            int realLength = length;
             
             char[] charArray = ((string)this.GetValue(i)).ToCharArray();
 
@@ -812,9 +814,9 @@ namespace PostgreSql.Data.PostgreSqlClient
             if (this.connection.InternalConnection.HasActiveTransaction)
             {
                 // Ref cursors can be fetched only if there are an active transaction
-                if (this.command.CommandType == CommandType.StoredProcedure &&
-                    this.command.Statement.RowDescriptor.Fields.Length == 1 &&
-                    this.command.Statement.RowDescriptor.Fields[0].DataType.IsRefCursor)
+                if (this.command.CommandType                           == CommandType.StoredProcedure 
+                 && this.command.Statement.RowDescriptor.Fields.Length == 1 
+                 && this.command.Statement.RowDescriptor.Fields[0].DataType.IsRefCursor)
                 {
                     // Clear refcursor's queue
                     this.refCursors.Clear();
@@ -906,8 +908,8 @@ namespace PostgreSql.Data.PostgreSqlClient
         {	
             bool returnValue = false;
 
-            if (this.command.Statement.RowDescriptor.Fields[i].OidNumber == 0 &&
-                this.command.Statement.RowDescriptor.Fields[i].OidTable	== 0)
+            if (this.command.Statement.RowDescriptor.Fields[i].OidNumber == 0 
+             && this.command.Statement.RowDescriptor.Fields[i].OidTable	 == 0)
             {
                 returnValue = true;
             }
@@ -919,26 +921,26 @@ namespace PostgreSql.Data.PostgreSqlClient
         {
             DataTable schema = new DataTable("Schema");			
 
-            schema.Columns.Add("ColumnName"		, System.Type.GetType("System.String"));
-            schema.Columns.Add("ColumnOrdinal"	, System.Type.GetType("System.Int32"));
-            schema.Columns.Add("ColumnSize"		, System.Type.GetType("System.Int32"));
+            schema.Columns.Add("ColumnName"		 , System.Type.GetType("System.String"));
+            schema.Columns.Add("ColumnOrdinal"	 , System.Type.GetType("System.Int32"));
+            schema.Columns.Add("ColumnSize"		 , System.Type.GetType("System.Int32"));
             schema.Columns.Add("NumericPrecision", System.Type.GetType("System.Int32"));
-            schema.Columns.Add("NumericScale"	, System.Type.GetType("System.Int32"));
-            schema.Columns.Add("DataType"		, System.Type.GetType("System.Type"));
-            schema.Columns.Add("ProviderType"	, System.Type.GetType("System.Int32"));
-            schema.Columns.Add("IsLong"			, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("AllowDBNull"	, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsReadOnly"		, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsRowVersion"	, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsUnique"		, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsKey"			, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsAutoIncrement", System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsAliased"		, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("IsExpression"	, System.Type.GetType("System.Boolean"));
-            schema.Columns.Add("BaseSchemaName"	, System.Type.GetType("System.String"));
-            schema.Columns.Add("BaseCatalogName", System.Type.GetType("System.String"));
-            schema.Columns.Add("BaseTableName"	, System.Type.GetType("System.String"));
-            schema.Columns.Add("BaseColumnName"	, System.Type.GetType("System.String"));
+            schema.Columns.Add("NumericScale"	 , System.Type.GetType("System.Int32"));
+            schema.Columns.Add("DataType"		 , System.Type.GetType("System.Type"));
+            schema.Columns.Add("ProviderType"	 , System.Type.GetType("System.Int32"));
+            schema.Columns.Add("IsLong"			 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("AllowDBNull"	 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsReadOnly"		 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsRowVersion"	 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsUnique"		 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsKey"			 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsAutoIncrement" , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsAliased"		 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("IsExpression"	 , System.Type.GetType("System.Boolean"));
+            schema.Columns.Add("BaseSchemaName"	 , System.Type.GetType("System.String"));
+            schema.Columns.Add("BaseCatalogName" , System.Type.GetType("System.String"));
+            schema.Columns.Add("BaseTableName"	 , System.Type.GetType("System.String"));
+            schema.Columns.Add("BaseColumnName"	 , System.Type.GetType("System.String"));
             
             return schema;
         }
@@ -949,7 +951,7 @@ namespace PostgreSql.Data.PostgreSqlClient
             {
                 if (this.command.RecordsAffected != -1)
                 {
-                    this.recordsAffected = this.recordsAffected == -1 ? 0 : this.recordsAffected;
+                    this.recordsAffected  = this.recordsAffected == -1 ? 0 : this.recordsAffected;
                     this.recordsAffected += this.command.RecordsAffected;
                 }
             }
@@ -958,17 +960,6 @@ namespace PostgreSql.Data.PostgreSqlClient
         private bool IsCommandBehavior(CommandBehavior behavior)
         {
             return ((behavior & this.behavior) == behavior);
-        }
-
-        private bool CultureAwareCompare(string strA, string strB)
-        {
-            return CultureInfo.CurrentCulture.CompareInfo.Compare
-            (
-                strA, 
-                strB, 
-                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-                CompareOptions.IgnoreCase
-            ) == 0 ? true : false;
         }
 
         #endregion

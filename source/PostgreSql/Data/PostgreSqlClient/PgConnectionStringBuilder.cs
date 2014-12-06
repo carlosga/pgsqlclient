@@ -34,24 +34,24 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         static Dictionary<string, string> InitializeSynonyms()
         {
-            Dictionary<string, string> synonyms = new Dictionary<string, string>(new CaseInsensitiveEqualityComparer());
+            var synonyms = new Dictionary<string, string>(new CaseInsensitiveEqualityComparer());
 
-            synonyms.Add("data source"          , "data source");
-            synonyms.Add("server"               , "data source");
-            synonyms.Add("host"                 , "data source");
-            synonyms.Add("database"             , "initial catalog");
-            synonyms.Add("initial catalog"      , "initial catalog");
-            synonyms.Add("user id"              , "user id");
-            synonyms.Add("user name"            , "user id");
-            synonyms.Add("user"                 , "user id");
-            synonyms.Add("user password"        , "password");
-            synonyms.Add("password"             , "password");
-            synonyms.Add("port number"          , "port number");
-            synonyms.Add("port"                 , "port number");
-            synonyms.Add("packet size"          , "packet size");
-            synonyms.Add("connection timeout"   , "connection timeout");
-            synonyms.Add("pooling"              , "pooling");
-            synonyms.Add("connection lifetime"  , "connection lifetime");
+            synonyms.Add("data source"        , "data source");
+            synonyms.Add("server"             , "data source");
+            synonyms.Add("host"               , "data source");
+            synonyms.Add("database"           , "initial catalog");
+            synonyms.Add("initial catalog"    , "initial catalog");
+            synonyms.Add("user id"            , "user id");
+            synonyms.Add("user name"          , "user id");
+            synonyms.Add("user"               , "user id");
+            synonyms.Add("user password"      , "password");
+            synonyms.Add("password"           , "password");
+            synonyms.Add("port number"        , "port number");
+            synonyms.Add("port"               , "port number");
+            synonyms.Add("packet size"        , "packet size");
+            synonyms.Add("connection timeout" , "connection timeout");
+            synonyms.Add("pooling"            , "pooling");
+            synonyms.Add("connection lifetime", "connection lifetime");
             synonyms.Add("min pool size"        , "min pool size");
             synonyms.Add("max pool size"        , "max pool size");
             synonyms.Add("ssl"                  , "ssl");

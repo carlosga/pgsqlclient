@@ -28,14 +28,14 @@ namespace PostgreSql.Data.PostgreSqlClient
     {
         #region · Fields ·
 
-        private PgConnection		                owningConnection;
-        private PgDatabase                          database;
-        private PgConnectionOptions	                options;
-        private PgTransaction		                activeTransaction;
-        private SynchronizedCollection<PgCommand>   preparedCommands;
-        private long				                created;
-        private long                                lifetime;
-        private bool				                pooled;
+        private PgConnection		              owningConnection;
+        private PgDatabase                        database;
+        private PgConnectionOptions	              options;
+        private PgTransaction		              activeTransaction;
+        private SynchronizedCollection<PgCommand> preparedCommands;
+        private long				              created;
+        private long                              lifetime;
+        private bool				              pooled;
         
         #endregion
 
@@ -108,11 +108,11 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public PgConnectionInternal(string connectionString)
         {
-            this.options    = new PgConnectionOptions(connectionString);
-            this.database   = new PgDatabase(this.options);
-            this.created	= 0;
-            this.lifetime   = 0;
-            this.pooled		= true;
+            this.options  = new PgConnectionOptions(connectionString);
+            this.database = new PgDatabase(this.options);
+            this.created  = 0;
+            this.lifetime = 0;
+            this.pooled	  = true;
         }
 
         #endregion
@@ -143,14 +143,14 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
             finally
             {
-                this.owningConnection   = null;
-                this.database           = null;
-                this.options            = null;
-                this.activeTransaction  = null;
-                this.preparedCommands   = null;
-                this.created            = 0;
-                this.lifetime           = 0;
-                this.pooled             = false;
+                this.owningConnection  = null;
+                this.database          = null;
+                this.options           = null;
+                this.activeTransaction = null;
+                this.preparedCommands  = null;
+                this.created           = 0;
+                this.lifetime          = 0;
+                this.pooled            = false;
             }
         }
 
@@ -264,6 +264,7 @@ namespace PostgreSql.Data.PostgreSqlClient
                 if (this.owningConnection != null)
                 {
                     PgCommand command = new PgCommand(sql, this.owningConnection);
+
                     command.Parameters.Add("@typeName", PgDbType.VarChar);
 
                     // After the connection gets established we should update the Data Types collection oids

@@ -15,7 +15,6 @@
  *  All Rights Reserved.
  */
 
-
 using System.Data;
 using System.Data.Common;
 
@@ -24,20 +23,24 @@ namespace PostgreSql.Data.PostgreSqlClient
     public sealed class PgRowUpdatingEventArgs
         : RowUpdatingEventArgs
     {
-        #region · Constructors ·
-
-        public PgRowUpdatingEventArgs(DataRow row, IDbCommand command, StatementType statementType, DataTableMapping tableMapping) : base(row, command, statementType, tableMapping) 
-        {
-        }
-
-        #endregion
-
         #region · Properties ·
 
         public new PgCommand Command
         {
-            get  { return (PgCommand)base.Command; }
-            set  { base.Command = value; }
+            get { return (PgCommand)base.Command; }
+            set { base.Command = value; }
+        }
+
+        #endregion
+
+        #region · Constructors ·
+
+        public PgRowUpdatingEventArgs(DataRow          row
+                                    , IDbCommand       command
+                                    , StatementType    statementType
+                                    , DataTableMapping tableMapping) 
+            : base(row, command, statementType, tableMapping) 
+        {
         }
 
         #endregion

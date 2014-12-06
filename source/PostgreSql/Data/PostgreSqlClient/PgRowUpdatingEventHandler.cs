@@ -15,7 +15,6 @@
  *  All Rights Reserved.
  */
 
-
 namespace PostgreSql.Data.PostgreSqlClient
 {
 	public delegate void PgRowUpdatingEventHandler(object sender, PgRowUpdatingEventArgs e);

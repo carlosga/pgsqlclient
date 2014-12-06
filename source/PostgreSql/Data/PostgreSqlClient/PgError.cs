@@ -19,106 +19,91 @@ using System;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
-	[Serializable]
-	public sealed class PgError
-	{
-		#region · Fields ·
+    [Serializable]
+    public sealed class PgError
+    {
+        #region · Properties ·
 
-		private string	severity;
-		private string	code;
-		private string	message;			
-		private string	detail;
-		private string	hint;
-		private string	where;
-		private string	position;
-		private string	file;
-		private int		line;
-		private string	routine;
-		
-		#endregion
+        public string Severity
+        {
+            get;
+            set;
+        }
+        
+        public string Message
+        {
+            get;
+            set;
+        }
 
-		#region · Properties ·
+        public string Code
+        {
+            get;
+            set;
+        }
 
-		public string Severity
-		{
-			get { return this.severity; }
-			set { this.severity = value; }
-		}
-		
-		public string Message
-		{
-			get { return this.message; }
-			set { this.message = value; }
-		}
+        public string Detail
+        {
+            get;
+            set;
+        }
 
-		public string Code
-		{
-			get { return this.code; }
-			set { this.code = value; }
-		}
+        public string Hint
+        {
+            get;
+            set;
+        }
 
-		public string Detail
-		{
-			get { return this.detail; }
-			set { this.detail = value; }
-		}
+        public string Where
+        {
+            get;
+            set;
+        }
 
-		public string Hint
-		{
-			get { return this.hint; }
-			set { this.hint = value; }
-		}
+        public string Position
+        {
+            get;
+            set;
+        }
 
-		public string Where
-		{
-			get { return this.where; }
-			set { this.where = value; }
-		}
+        public string File
+        {
+            get;
+            set;
+        }
 
-		public string Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+        public int Line
+        {
+            get;
+            set;
+        }
 
-		public string File
-		{
-			get { return this.file; }
-			set { this.file = value; }
-		}
+        public string Routine
+        {
+            get;
+            set;
+        }
 
-		public int Line
-		{
-			get { return this.line; }
-			set { this.line = value; }
-		}
+        #endregion
 
-		public string Routine
-		{
-			get { return this.routine; }
-			set { this.routine = value; }
-		}
+        #region · Constructors ·
+        
+        internal PgError()
+        {
+        }
 
-		#endregion
+        internal PgError(string message)
+        {						
+            this.Message = message;
+        }
 
-		#region · Constructors ·
-		
-		internal PgError()
-		{
-		}
+        internal PgError(string severity, string code, string message)
+        {
+            this.Severity = severity;
+            this.Code	  = code;
+            this.Message  = message;			
+        }
 
-		internal PgError(string message)
-		{						
-			this.message	= message;
-		}
-
-		internal PgError(string severity, string code, string message)
-		{
-			this.severity	= severity;
-			this.code		= code;
-			this.message	= message;			
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }

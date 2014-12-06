@@ -30,19 +30,19 @@ namespace PostgreSql.Data.PostgreSqlClient
     {				
         #region · Fields ·
         
-        private PgConnection			connection;
-        private PgTransaction			transaction;				
-        private PgParameterCollection	parameters;
-        private UpdateRowSource			updatedRowSource;
-        private PgStatement             statement;
-        private PgDataReader            activeDataReader;
-        private CommandBehavior         commandBehavior;
-        private CommandType             commandType;
-        private List<string>            namedParameters;
-        private bool                    disposed;
-        private string					commandText;
-        private int                     commandTimeout;
-        private bool					designTimeVisible;
+        private PgConnection		  connection;
+        private PgTransaction		  transaction;				
+        private PgParameterCollection parameters;
+        private UpdateRowSource		  updatedRowSource;
+        private PgStatement           statement;
+        private PgDataReader          activeDataReader;
+        private CommandBehavior       commandBehavior;
+        private CommandType           commandType;
+        private List<string>          namedParameters;
+        private bool                  disposed;
+        private string				  commandText;
+        private int                   commandTimeout;
+        private bool				  designTimeVisible;
         
         #endregion
 
@@ -74,8 +74,7 @@ namespace PostgreSql.Data.PostgreSqlClient
             get { return this.commandText; }
             set 
             {
-                if (this.statement != null && this.commandText != value && 
-                    !String.IsNullOrEmpty(this.CommandText))
+                if (this.statement != null && this.commandText != value && !String.IsNullOrEmpty(this.CommandText))
                 {
                     this.InternalClose();
                 }
@@ -228,12 +227,12 @@ namespace PostgreSql.Data.PostgreSqlClient
         public PgCommand() 
             : base()
         {
-            this.commandText		= String.Empty;
-            this.commandType		= CommandType.Text;
-            this.commandTimeout		= 30;
-            this.updatedRowSource	= UpdateRowSource.Both;
-            this.commandBehavior	= CommandBehavior.Default;
-            this.designTimeVisible	= true;
+            this.commandText	   = String.Empty;
+            this.commandType	   = CommandType.Text;
+            this.commandTimeout	   = 30;
+            this.updatedRowSource  = UpdateRowSource.Both;
+            this.commandBehavior   = CommandBehavior.Default;
+            this.designTimeVisible = true;
         }
 
         public PgCommand(string cmdText) 
@@ -268,8 +267,7 @@ namespace PostgreSql.Data.PostgreSqlClient
                     {
                         // release any managed resources
 
-                        if (this.connection != null &&
-                            this.connection.InternalConnection != null)
+                        if (this.connection != null && this.connection.InternalConnection != null)
                         {
                             this.connection.InternalConnection.RemovePreparedCommand(this);
                         }
@@ -303,11 +301,11 @@ namespace PostgreSql.Data.PostgreSqlClient
         {
             PgCommand command = new PgCommand();
             
-            command.CommandText			= this.commandText;
-            command.Connection			= this.connection;
-            command.Transaction			= this.transaction;
-            command.CommandType			= this.CommandType;
-            command.UpdatedRowSource	= this.UpdatedRowSource;
+            command.CommandText		 = this.commandText;
+            command.Connection		 = this.connection;
+            command.Transaction		 = this.transaction;
+            command.CommandType		 = this.CommandType;
+            command.UpdatedRowSource = this.UpdatedRowSource;
             
             for (int i = 0; i < this.Parameters.Count; i++)
             {
@@ -370,11 +368,11 @@ namespace PostgreSql.Data.PostgreSqlClient
 
             this.InternalPrepare();
 
-            if ((commandBehavior & System.Data.CommandBehavior.SequentialAccess) == System.Data.CommandBehavior.SequentialAccess ||
-                (commandBehavior & System.Data.CommandBehavior.SingleResult) == System.Data.CommandBehavior.SingleResult ||
-                (commandBehavior & System.Data.CommandBehavior.SingleRow) == System.Data.CommandBehavior.SingleRow ||
-                (commandBehavior & System.Data.CommandBehavior.CloseConnection) == System.Data.CommandBehavior.CloseConnection ||
-                commandBehavior == System.Data.CommandBehavior.Default)				
+            if ((commandBehavior & CommandBehavior.SequentialAccess) == CommandBehavior.SequentialAccess 
+             || (commandBehavior & CommandBehavior.SingleResult)     == CommandBehavior.SingleResult 
+             || (commandBehavior & CommandBehavior.SingleRow)        == CommandBehavior.SingleRow 
+             || (commandBehavior & CommandBehavior.CloseConnection)  == CommandBehavior.CloseConnection 
+             || commandBehavior == System.Data.CommandBehavior.Default)				
             {
                 this.InternalExecute();
             }
@@ -422,18 +420,18 @@ namespace PostgreSql.Data.PostgreSqlClient
             {
                 string sql = this.commandText;
 
-                if (this.statement == null || 
-                    this.statement.Status == PgStatementStatus.Initial || 
-                    this.statement.Status == PgStatementStatus.Error)
+                if (this.statement        == null 
+                 || this.statement.Status == PgStatementStatus.Initial 
+                 || this.statement.Status == PgStatementStatus.Error)
                 {
                     if (this.commandType == CommandType.StoredProcedure)
                     {
                         sql = this.BuildStoredProcedureSql(sql);
                     }
 
-                    string statementName    = this.GetStmtName();
-                    string prepareName      = String.Format("PS{0}", statementName);
-                    string portalName       = String.Format("PR{0}", statementName);
+                    string statementName = this.GetStmtName();
+                    string prepareName   = String.Format("PS{0}", statementName);
+                    string portalName    = String.Format("PR{0}", statementName);
 
                     this.statement = conn.Database.CreateStatement(prepareName, portalName, this.ParseNamedParameters(sql));
 
@@ -505,15 +503,16 @@ namespace PostgreSql.Data.PostgreSqlClient
                 if (this.statement.Rows != null && this.statement.Rows.Length > 0)
                 {
                     object[] values = (object[])this.statement.Rows[0];
+
                     if (values != null && values.Length > 0)
                     {
                         while (paramEnumerator.MoveNext())
                         {
                             PgParameter parameter = ((PgParameter)paramEnumerator.Current);
 
-                            if (parameter.Direction == ParameterDirection.Output ||
-                                parameter.Direction == ParameterDirection.InputOutput ||
-                                parameter.Direction == ParameterDirection.ReturnValue)
+                            if (parameter.Direction == ParameterDirection.Output 
+                             || parameter.Direction == ParameterDirection.InputOutput 
+                             || parameter.Direction == ParameterDirection.ReturnValue)
                             {
                                 parameter.Value = values[i];
                                 i++;
@@ -545,13 +544,12 @@ namespace PostgreSql.Data.PostgreSqlClient
                 throw new InvalidOperationException("There is already an open DataReader associated with this Command which must be closed first.");
             }
 
-            if (this.connection.InternalConnection.HasActiveTransaction &&
-                this.Transaction == null)
+            if (this.Transaction == null && this.connection.InternalConnection.HasActiveTransaction)
             {
                 throw new InvalidOperationException("Execute requires the Command object to have a Transaction object when the Connection object assigned to the command is in a pending local transaction.  The Transaction property of the Command has not been initialized.");
             }
 
-            if (this.transaction != null && !this.connection.Equals(Transaction.Connection))
+            if (this.Transaction != null && !this.connection.Equals(Transaction.Connection))
             {
                 throw new InvalidOperationException("Command Connection is not equal to Transaction Connection");
             }
@@ -574,8 +572,8 @@ namespace PostgreSql.Data.PostgreSqlClient
 
                 for (int i = 0; i < this.Parameters.Count; i++)
                 {
-                    if (this.Parameters[i].Direction == ParameterDirection.Input ||
-                        this.Parameters[i].Direction == ParameterDirection.InputOutput)
+                    if (this.Parameters[i].Direction == ParameterDirection.Input 
+                     || this.Parameters[i].Direction == ParameterDirection.InputOutput)
                     {
                         // Append parameter name to parameter list
                         paramsText.Append(this.Parameters[i].ParameterName);
@@ -603,11 +601,11 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         private string ParseNamedParameters(string sql)
         {
-            StringBuilder   builder         = new StringBuilder();
-            StringBuilder   paramBuilder    = new StringBuilder();
-            bool            inCommas        = false;
-            bool            inParam         = false;
-            int             paramIndex      = 0;
+            StringBuilder builder      = new StringBuilder();
+            StringBuilder paramBuilder = new StringBuilder();
+            bool          inCommas     = false;
+            bool          inParam      = false;
+            int           paramIndex   = 0;
 
             this.NamedParameters.Clear();
 
@@ -674,8 +672,8 @@ namespace PostgreSql.Data.PostgreSqlClient
                         index = this.Parameters.IndexOf(this.NamedParameters[i]);
                     }
 
-                    if (this.Parameters[index].Direction == ParameterDirection.Input ||
-                        this.Parameters[index].Direction == ParameterDirection.InputOutput)
+                    if (this.Parameters[index].Direction == ParameterDirection.Input 
+                     || this.Parameters[index].Direction == ParameterDirection.InputOutput)
                     {
                         if (this.Parameters[index].Value == System.DBNull.Value)
                         {

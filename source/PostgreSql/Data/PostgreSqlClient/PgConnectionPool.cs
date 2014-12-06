@@ -91,19 +91,19 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public PgConnectionPool(string connectionString)
         {
-            this.connectionString	= connectionString;
-            this.options			= new PgConnectionOptions(connectionString);
-            this.lifeTime			= this.options.ConnectionLifeTime * TimeSpan.TicksPerSecond;
+            this.connectionString = connectionString;
+            this.options		  = new PgConnectionOptions(connectionString);
+            this.lifeTime		  = this.options.ConnectionLifeTime * TimeSpan.TicksPerSecond;
 
             if (this.options.MaxPoolSize == 0)
             {
-                this.locked     = ArrayList.Synchronized(new ArrayList());
-                this.unlocked   = ArrayList.Synchronized(new ArrayList());
+                this.locked   = ArrayList.Synchronized(new ArrayList());
+                this.unlocked = ArrayList.Synchronized(new ArrayList());
             }
             else
             {
-                this.locked     = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
-                this.unlocked   = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
+                this.locked   = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
+                this.unlocked = ArrayList.Synchronized(new ArrayList(this.options.MaxPoolSize));
             }
 
             // If a	minimun	number of connections is requested initialize the pool
@@ -208,11 +208,11 @@ namespace PostgreSql.Data.PostgreSqlClient
                 }
 
                 // Reset fields
-                this.unlocked			= null;
-                this.locked				= null;
-                this.connectionString	= null;
-                this.cleanUpThread		= null;
-                this.EmptyPool			= null;
+                this.unlocked		  = null;
+                this.locked			  = null;
+                this.connectionString = null;
+                this.cleanUpThread	  = null;
+                this.EmptyPool		  = null;
             }
         }
 
@@ -308,8 +308,8 @@ namespace PostgreSql.Data.PostgreSqlClient
         {
             if (this.options.MaxPoolSize > 0 && this.Count >= this.options.MaxPoolSize)
             {
-                long timeout    = this.options.ConnectionTimeout * TimeSpan.TicksPerSecond;
-                long start      = DateTime.Now.Ticks;
+                long timeout = this.options.ConnectionTimeout * TimeSpan.TicksPerSecond;
+                long start   = DateTime.Now.Ticks;
 
                 /* 
                  Loop brakes without errors in next situations:

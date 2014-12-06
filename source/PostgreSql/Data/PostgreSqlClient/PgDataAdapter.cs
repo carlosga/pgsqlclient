@@ -28,7 +28,7 @@ namespace PostgreSql.Data.PostgreSqlClient
     {
         #region · Events ·
 
-        private static readonly object EventRowUpdated = new object();
+        private static readonly object EventRowUpdated  = new object();
         private static readonly object EventRowUpdating = new object(); 
 
         public event PgRowUpdatedEventHandler RowUpdated
@@ -112,7 +112,10 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #region · Protected Methods ·
         
-        protected override RowUpdatedEventArgs CreateRowUpdatedEvent(DataRow dataRow, IDbCommand command, StatementType statementType, DataTableMapping tableMapping)
+        protected override RowUpdatedEventArgs CreateRowUpdatedEvent(DataRow          dataRow
+                                                                   , IDbCommand       command
+                                                                   , StatementType    statementType
+                                                                   , DataTableMapping tableMapping)
         {
             return new PgRowUpdatedEventArgs(dataRow, command, statementType, tableMapping);
         }
@@ -126,7 +129,10 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
         }
 
-        protected override RowUpdatingEventArgs CreateRowUpdatingEvent(DataRow dataRow, IDbCommand command, StatementType statementType, DataTableMapping tableMapping)
+        protected override RowUpdatingEventArgs CreateRowUpdatingEvent(DataRow          dataRow
+                                                                     , IDbCommand       command
+                                                                     , StatementType    statementType
+                                                                     , DataTableMapping tableMapping)
         {
             return new PgRowUpdatingEventArgs(dataRow, command, statementType, tableMapping);
         }
@@ -134,6 +140,7 @@ namespace PostgreSql.Data.PostgreSqlClient
         protected override void OnRowUpdating(RowUpdatingEventArgs value)
         {
             PgRowUpdatingEventHandler handler = (PgRowUpdatingEventHandler) Events[EventRowUpdating];
+
             if ((null != handler) && (value is PgRowUpdatingEventArgs)) 
             {
                 handler(this, (PgRowUpdatingEventArgs) value);

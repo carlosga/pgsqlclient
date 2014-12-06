@@ -27,10 +27,10 @@ namespace PostgreSql.Data.PostgreSqlClient
     {
         #region · Fields ·
 
-        private PgConnection		connection;
-        private IsolationLevel		isolationLevel;
-        private bool				disposed;
-        private bool				isUpdated;
+        private PgConnection   connection;
+        private IsolationLevel isolationLevel;
+        private bool		   disposed;
+        private bool		   isUpdated;
 
         #endregion
 
@@ -55,6 +55,7 @@ namespace PostgreSql.Data.PostgreSqlClient
                     this.connection.InternalConnection.ActiveTransaction = null;
                     this.connection	= null;
                 }
+
                 this.isUpdated = value; 
             }
         }
@@ -127,8 +128,8 @@ namespace PostgreSql.Data.PostgreSqlClient
                             this.connection.InternalConnection.ActiveTransaction = null;
                             this.connection	= null;
                         }
-                        this.disposed	= true;
-                        this.isUpdated	= true;
+                        this.disposed  = true;
+                        this.isUpdated = true;
                     }
                 }
             }			
@@ -174,7 +175,6 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         #region · SavePoint Methods ·
 
-        /// <include file='Doc/en_EN/FbTransaction.xml' path='doc/class[@name="FbTransaction"]/method[@name="Save(System.String)"]/*'/>
         public void Save(string savePointName)
         {
             lock (this)
@@ -197,12 +197,10 @@ namespace PostgreSql.Data.PostgreSqlClient
 
                 try
                 {
-                    PgCommand command = new PgCommand(
-                        "SAVEPOINT " + savePointName,
-                        this.connection,
-                        this);
-                    command.ExecuteNonQuery();
-                    command.Dispose();
+                    using (PgCommand command = new PgCommand("SAVEPOINT " + savePointName, this.connection, this))
+                    {
+                        command.ExecuteNonQuery();
+                    }
                 }
                 catch (PgClientException ex)
                 {
@@ -211,7 +209,6 @@ namespace PostgreSql.Data.PostgreSqlClient
             }
         }
 
-        /// <include file='Doc/en_EN/FbTransaction.xml' path='doc/class[@name="FbTransaction"]/method[@name="Commit(System.String)"]/*'/>
         public void Commit(string savePointName)
         {
             lock (this)
@@ -234,12 +231,10 @@ namespace PostgreSql.Data.PostgreSqlClient
 
                 try
                 {
-                    PgCommand command = new PgCommand(
-                        "RELEASE SAVEPOINT " + savePointName,
-                        this.connection,
-                        this);
-                    command.ExecuteNonQuery();
-                    command.Dispose();
+                    using (PgCommand command = new PgCommand("RELEASE SAVEPOINT " + savePointName, this.connection, this))
+                    {
+                        command.ExecuteNonQuery();
+                    }
                 }
                 catch (PgClientException ex)
                 {
@@ -271,12 +266,10 @@ namespace PostgreSql.Data.PostgreSqlClient
 
                 try
                 {
-                    PgCommand command = new PgCommand(
-                        "ROLLBACK WORK TO SAVEPOINT " + savePointName,
-                        this.connection,
-                        this);
-                    command.ExecuteNonQuery();
-                    command.Dispose();
+                    using (PgCommand command = new PgCommand("ROLLBACK WORK TO SAVEPOINT " + savePointName, this.connection,this))
+                    {
+                        command.ExecuteNonQuery();
+                    }
                 }
                 catch (PgClientException ex)
                 {

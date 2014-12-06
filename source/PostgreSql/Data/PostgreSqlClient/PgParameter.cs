@@ -29,18 +29,18 @@ namespace PostgreSql.Data.PostgreSqlClient
     {
         #region · Fields ·
                 
-        private ParameterDirection	direction;
-        private DataRowVersion		sourceVersion;
-        private bool				isNullable;
-        private bool                sourceColumnNullMapping;
-        private string				parameterName;
-        private string				sourceColumn;
-        private object				value;
-        private byte				precision;
-        private byte				scale;
-        private int					size;
-        private PgDbType			providerType;
-        private bool                isTypeSet;
+        private ParameterDirection	  direction;
+        private DataRowVersion		  sourceVersion;
+        private bool				  isNullable;
+        private bool                  sourceColumnNullMapping;
+        private string				  parameterName;
+        private string				  sourceColumn;
+        private object				  value;
+        private byte				  precision;
+        private byte				  scale;
+        private int					  size;
+        private PgDbType			  providerType;
+        private bool                  isTypeSet;
         private PgParameterCollection parent;
 
         #endregion
@@ -179,66 +179,65 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         public PgParameter()
         {
-            this.direction		= ParameterDirection.Input;
-            this.sourceVersion	= DataRowVersion.Current;
-            this.isNullable		= false;
-            this.providerType	= PgDbType.VarChar;
+            this.direction	   = ParameterDirection.Input;
+            this.sourceVersion = DataRowVersion.Current;
+            this.isNullable	   = false;
+            this.providerType  = PgDbType.VarChar;
         }
 
         public PgParameter(string parameterName, object value)  : this()
         {
-            this.parameterName	= parameterName;
-            this.value			= value;
+            this.parameterName = parameterName;
+            this.value		   = value;
         }
 
         public PgParameter(string parameterName, PgDbType dbType) : this()
         {
-            this.parameterName	= parameterName;
-            this.providerType	= dbType;
+            this.parameterName = parameterName;
+            this.providerType  = dbType;
         }
 
         public PgParameter(string parameterName, PgDbType dbType, int size) : this()
         {
-            this.parameterName	= parameterName;
-            this.PgDbType       = dbType;
-            this.size			= size;
+            this.parameterName = parameterName;
+            this.PgDbType      = dbType;
+            this.size		   = size;
         }
 
-        public PgParameter(
-            string		parameterName, 
-            PgDbType	dbType, 
-            int			size, 
-            string		sourceColumn) : this()
+        public PgParameter(string	parameterName
+                         , PgDbType	dbType
+                         , int		size
+                         , string	sourceColumn) 
+            : this()
         {
-            this.parameterName	= parameterName;
-            this.PgDbType       = dbType;
-            this.size			= size;
-            this.sourceColumn	= sourceColumn;
+            this.parameterName = parameterName;
+            this.PgDbType      = dbType;
+            this.size		   = size;
+            this.sourceColumn  = sourceColumn;
         }
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public PgParameter(
-            string		parameterName,
-            PgDbType	dbType,
-            int			size,
-            ParameterDirection direction,
-            bool		isNullable,
-            byte		precision,
-            byte		scale,
-            string		sourceColumn,
-            DataRowVersion sourceVersion,
-            object		value)
+        public PgParameter(string		      parameterName
+                         , PgDbType	          dbType
+                         , int			      size
+                         , ParameterDirection direction
+                         , bool		          isNullable
+                         , byte		          precision
+                         , byte		          scale
+                         , string		      sourceColumn
+                         , DataRowVersion     sourceVersion
+                         , object		      value)
         {
-            this.parameterName	= parameterName;
-            this.PgDbType       = dbType;
-            this.size			= size;
-            this.direction		= direction;
-            this.isNullable		= isNullable;
-            this.precision		= precision;
-            this.scale			= scale;
-            this.sourceColumn	= sourceColumn;
-            this.sourceVersion	= sourceVersion;
-            this.value			= value;
+            this.parameterName = parameterName;
+            this.PgDbType      = dbType;
+            this.size		   = size;
+            this.direction	   = direction;
+            this.isNullable	   = isNullable;
+            this.precision	   = precision;
+            this.scale		   = scale;
+            this.sourceColumn  = sourceColumn;
+            this.sourceVersion = sourceVersion;
+            this.value		   = value;
         }
 
         #endregion
@@ -265,8 +264,8 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         internal string ConvertToPgString()
         {
-            bool	addQuotes	= true;
-            string	returnValue = String.Empty;
+            bool   addQuotes   = true;
+            string returnValue = String.Empty;
 
             switch (this.providerType)
             {
