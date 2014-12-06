@@ -15,13 +15,13 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.Protocol;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Text;
-using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {

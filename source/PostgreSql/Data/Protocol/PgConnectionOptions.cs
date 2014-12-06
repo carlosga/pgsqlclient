@@ -129,24 +129,24 @@ namespace PostgreSql.Data.Protocol
 
         private void SetDefaultValues()
         {
-            this.dataSource				= "localhost";			
-            this.userID					= "postgres";
-            this.password				= null;
-            this.portNumber				= 5432;
-            this.packetSize				= 8192;
-            this.pooling				= true;
-            this.connectionTimeout		= 15;
-            this.connectionLifetime		= 0;
-            this.minPoolSize			= 0;
-            this.maxPoolSize			= 100;
-            this.ssl                    = false;
-            this.useDatabaseOids        = false;
+            this.dataSource			= "localhost";			
+            this.userID				= "postgres";
+            this.password			= null;
+            this.portNumber			= 5432;
+            this.packetSize			= 8192;
+            this.pooling			= true;
+            this.connectionTimeout	= 15;
+            this.connectionLifetime = 0;
+            this.minPoolSize		= 0;
+            this.maxPoolSize		= 100;
+            this.ssl                = false;
+            this.useDatabaseOids    = false;
         }
 
         private void ParseConnectionString(string connectionString)
         {
-            Regex			search		= new Regex(@"([\w\s\d]*)\s*=\s*([^;]*)");
-            MatchCollection	elements	= search.Matches(connectionString);
+            Regex			search	 = new Regex(@"([\w\s\d]*)\s*=\s*([^;]*)");
+            MatchCollection	elements = search.Matches(connectionString);
 
             foreach (Match element in elements)
             {

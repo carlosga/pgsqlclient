@@ -15,12 +15,12 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.PgTypes;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
-using PostgreSql.Data.PgTypes;
 
 namespace PostgreSql.Data.Protocol
 {
@@ -28,11 +28,11 @@ namespace PostgreSql.Data.Protocol
     {
         #region · Fields ·
 
-        private char			    message;
-        private Stream			    stream;
-        private BinaryReader	    packet;
-        private Encoding		    encoding;
-        private PgTypeCollection    dataTypes;
+        private char			 message;
+        private Stream			 stream;
+        private BinaryReader	 packet;
+        private Encoding		 encoding;
+        private PgTypeCollection dataTypes;
 
         #endregion
 
@@ -56,17 +56,7 @@ namespace PostgreSql.Data.Protocol
 
         public bool EOF
         {
-            get
-            {
-                if (this.Position < this.Length)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
+            get { return (this.Position >= this.Length); }
         }
 
         public bool IsReadyForQuery
@@ -105,11 +95,11 @@ namespace PostgreSql.Data.Protocol
 
         public PgResponsePacket(PgTypeCollection dataTypes, char message, Encoding encoding, byte[] contents) 
         {
-            this.dataTypes  = dataTypes;
-            this.stream     = new MemoryStream(contents);
-            this.packet     = new BinaryReader(this.stream);
-            this.encoding   = encoding;
-            this.message    = message;
+            this.dataTypes = dataTypes;
+            this.stream    = new MemoryStream(contents);
+            this.packet    = new BinaryReader(this.stream);
+            this.encoding  = encoding;
+            this.message   = message;
         }
 
         #endregion
@@ -159,7 +149,7 @@ namespace PostgreSql.Data.Protocol
 
         public string ReadString()
         {
-            int length = this.ReadInt32();
+            int    length = this.ReadInt32();
             byte[] buffer = new byte[length];
                         
             this.packet.Read(buffer, 0, length);
@@ -228,8 +218,8 @@ namespace PostgreSql.Data.Protocol
 
         public TimeSpan ReadInterval()
         {
-            double	intervalTime	= this.ReadDouble();
-            int		intervalMonth	= this.ReadInt32();
+            double intervalTime	 = this.ReadDouble();
+            int	   intervalMonth = this.ReadInt32();
 
             TimeSpan interval = TimeSpan.FromSeconds(intervalTime);
             
@@ -272,8 +262,8 @@ namespace PostgreSql.Data.Protocol
                 int dimensions	= this.ReadInt32();
 
                 // Create arrays for the lengths and lower bounds
-                int[] lengths		= new int[dimensions];
-                int[] lowerBounds	= new int[dimensions];
+                int[] lengths	  = new int[dimensions];
+                int[] lowerBounds = new int[dimensions];
                 
                 // Read flags value
                 int flags = this.ReadInt32();
@@ -288,8 +278,8 @@ namespace PostgreSql.Data.Protocol
                 // Read array lengths and lower bounds
                 for (int i = 0; i < dimensions; i++)
                 {
-                    lengths[i]		= this.ReadInt32();
-                    lowerBounds[i]	= this.ReadInt32();
+                    lengths[i]	   = this.ReadInt32();
+                    lowerBounds[i] = this.ReadInt32();
                 }
 
                 // Read Array data
@@ -306,8 +296,8 @@ namespace PostgreSql.Data.Protocol
 
         public Array ReadVector(PgType type, int length)
         {
-            PgType  elementType = this.dataTypes[type.ElementType];
-            Array	data		= null;
+            PgType elementType = this.dataTypes[type.ElementType];
+            Array  data		= null;
             
             data = Array.CreateInstance(elementType.SystemType, (length / elementType.Size));
 
@@ -345,8 +335,8 @@ namespace PostgreSql.Data.Protocol
 
         public PgBox ReadBox()
         {
-            PgPoint upperRight	= this.ReadPoint();
-            PgPoint lowerLeft	= this.ReadPoint();
+            PgPoint upperRight = this.ReadPoint();
+            PgPoint lowerLeft  = this.ReadPoint();
 
             return new PgBox(lowerLeft, upperRight);
         }
@@ -365,8 +355,8 @@ namespace PostgreSql.Data.Protocol
 
         public PgPath ReadPath()
         {
-            bool		isClosedPath	= this.ReadBoolean();
-            PgPoint[]	points			= new PgPoint[this.ReadInt32()];
+            bool	  isClosedPath = this.ReadBoolean();
+            PgPoint[] points	   = new PgPoint[this.ReadInt32()];
 
             for (int i = 0; i < points.Length; i++)
             {
@@ -575,8 +565,12 @@ namespace PostgreSql.Data.Protocol
 
         #region · Array Handling Methods ·
 
-        private Array ReadPrimitiveArray(PgType elementType, int length, 
-            int dimensions, int flags, int[] lengths, int[] lowerBounds)
+        private Array ReadPrimitiveArray(PgType elementType
+                                       , int    length
+                                       , int    dimensions
+                                       , int    flags
+                                       , int[]  lengths
+                                       , int[]  lowerBounds)
         {
             Array data = Array.CreateInstance(elementType.SystemType, lengths, lowerBounds);
 
@@ -588,8 +582,12 @@ namespace PostgreSql.Data.Protocol
             return data;
         }
 
-        private Array ReadNonPrimitiveArray(PgType elementType, int length, 
-            int dimensions, int flags, int[] lengths, int[] lowerBounds)
+        private Array ReadNonPrimitiveArray(PgType elementType
+                                          , int    length
+                                          , int    dimensions
+                                          , int    flags
+                                          , int[]  lengths
+                                          , int[]  lowerBounds)
         {
             Array data = Array.CreateInstance(elementType.SystemType, lengths, lowerBounds);
 
@@ -604,8 +602,8 @@ namespace PostgreSql.Data.Protocol
 
         private Array ReadStringArray(PgType type, int length)
         {
-            PgType  elementType = this.dataTypes[type.ElementType];
-            Array	data		= null;
+            PgType elementType = this.dataTypes[type.ElementType];
+            Array  data		= null;
 
             string contents = this.ReadString(length);
             contents = contents.Substring(1, contents.Length - 2);
@@ -624,14 +622,14 @@ namespace PostgreSql.Data.Protocol
 
         private byte[] DecodeArrayData(PgType type, int elementCount, int length)
         {
-            byte[] data = new byte[length];
+            byte[] data    = new byte[length];
+            int    element = 0;
+            int    index   = 0;
 
-            int element = 0;
-            int index	= 0;
             while (element < elementCount)
             {
                 byte[] elementData = null;
-                int elementLen = this.ReadInt32();
+                int    elementLen  = this.ReadInt32();
 
                 switch (type.DataType)
                 {

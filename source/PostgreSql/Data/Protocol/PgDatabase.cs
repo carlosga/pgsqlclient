@@ -46,66 +46,66 @@ namespace PostgreSql.Data.Protocol
         {
             PgTypeCollection dataTypes = new PgTypeCollection();
 
-            dataTypes.Add(16	, "bool"		, PgDataType.Boolean	, 0, PgTypeFormat.Binary, 1);
-            dataTypes.Add(17	, "bytea"		, PgDataType.Binary		, 0, PgTypeFormat.Binary, Int32.MaxValue);
-            dataTypes.Add(18	, "char"		, PgDataType.Char		, 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(19	, "name"		, PgDataType.VarChar	, 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(20	, "int8"		, PgDataType.Int8		, 0, PgTypeFormat.Binary, 8);
-            dataTypes.Add(21	, "int2"		, PgDataType.Int2		, 0, PgTypeFormat.Binary, 2);
-            dataTypes.Add(22	, "int2vector"	, PgDataType.Vector		, 21, PgTypeFormat.Binary, 2);
-            dataTypes.Add(23	, "int4"		, PgDataType.Int4		, 0, PgTypeFormat.Binary, 4);
-            dataTypes.Add(24	, "regproc"		, PgDataType.VarChar	, 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(25    , "text"        , PgDataType.Text       , 0, PgTypeFormat.Text, Int32.MaxValue);
-            dataTypes.Add(26	, "oid"			, PgDataType.Int4		, 0, PgTypeFormat.Binary, 4);
-            dataTypes.Add(30	, "oidvector"	, PgDataType.Vector		, 26, PgTypeFormat.Binary, 4);			
-            dataTypes.Add(600	, "point"		, PgDataType.Point		, 701, PgTypeFormat.Binary, 16, ",");
-            dataTypes.Add(601	, "lseg"		, PgDataType.LSeg		, 600, PgTypeFormat.Binary, 32, ",");
-            dataTypes.Add(602	, "path"		, PgDataType.Path		, 0, PgTypeFormat.Binary, 16, ",");
-            dataTypes.Add(603	, "box"			, PgDataType.Box		, 600, PgTypeFormat.Binary, 32, ";");
-            dataTypes.Add(604	, "polygon"		, PgDataType.Polygon	, 0, PgTypeFormat.Binary, 16, ",");
-            dataTypes.Add(628	, "line"		, PgDataType.Line		, 701, PgTypeFormat.Binary, 32, ",");
-            dataTypes.Add(629	, "_line"		, PgDataType.Array		, 628, PgTypeFormat.Binary, 32);
-            dataTypes.Add(718	, "circle"		, PgDataType.Circle		, 0, PgTypeFormat.Binary, 24, ",");
-            dataTypes.Add(719	, "_circle"		, PgDataType.Array		, 718, PgTypeFormat.Binary, 24);
-            dataTypes.Add(700   , "float4"      , PgDataType.Float      , 0, PgTypeFormat.Text, 4);
-            dataTypes.Add(701	, "float8"		, PgDataType.Double		, 0, PgTypeFormat.Binary, 8);
-            dataTypes.Add(705	, "unknown"		, PgDataType.Text		, 0, PgTypeFormat.Binary, 0);
-            dataTypes.Add(790	, "money"		, PgDataType.Currency	, 0, PgTypeFormat.Binary, 4);
-            dataTypes.Add(829	, "macaddr"		, PgDataType.VarChar	, 0, PgTypeFormat.Text, 6);
-            dataTypes.Add(869	, "inet"		, PgDataType.VarChar	, 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(1000	, "_bool"		, PgDataType.Array		, 16, PgTypeFormat.Binary, 1);
-            dataTypes.Add(1002  , "_char"       , PgDataType.Array      , 18, PgTypeFormat.Binary, 0);
-            dataTypes.Add(1005	, "_int2"		, PgDataType.Array		, 21, PgTypeFormat.Binary, 2);
-            dataTypes.Add(1007	, "_int4"		, PgDataType.Array		, 23, PgTypeFormat.Binary, 4);
-            dataTypes.Add(1009	, "_text"		, PgDataType.Array		, 25, PgTypeFormat.Binary, 0);
-            dataTypes.Add(1016	, "_int8"		, PgDataType.Array		, 20, PgTypeFormat.Binary, 8);
-            dataTypes.Add(1017	, "_point"		, PgDataType.Array		, 600, PgTypeFormat.Binary, 16);
-            dataTypes.Add(1018	, "_lseg"		, PgDataType.Array		, 601, PgTypeFormat.Binary, 32);
-            dataTypes.Add(1019	, "_path"		, PgDataType.Array		, 602, PgTypeFormat.Binary, -1);
-            dataTypes.Add(1020	, "_box"		, PgDataType.Array		, 603, PgTypeFormat.Binary, 32);
-            dataTypes.Add(1021	, "_float4"		, PgDataType.Array		, 700, PgTypeFormat.Binary, 4);
-            dataTypes.Add(1027	, "_polygon"	, PgDataType.Array		, 604, PgTypeFormat.Binary, 16);
-            dataTypes.Add(1028  , "_oid"        , PgDataType.Array      , 26, PgTypeFormat.Binary, 4);
-            dataTypes.Add(1033	, "aclitem"		, PgDataType.VarChar	, 0, PgTypeFormat.Text, 12);
-            dataTypes.Add(1034	, "_aclitem"	, PgDataType.Array		, 1033, PgTypeFormat.Text, 0);
-            dataTypes.Add(1042	, "bpchar"		, PgDataType.Char	    , 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(1043	, "varchar"		, PgDataType.VarChar	, 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(1082	, "date"		, PgDataType.Date		, 0, PgTypeFormat.Binary, 4);
-            dataTypes.Add(1083	, "time"		, PgDataType.Time		, 0, PgTypeFormat.Text, 8);
-            dataTypes.Add(1114	, "timestamp"	, PgDataType.Timestamp	, 0, PgTypeFormat.Text, 8);
-            dataTypes.Add(1184	, "timestamptz"	, PgDataType.TimestampWithTZ, 0, PgTypeFormat.Binary, 8);
-            dataTypes.Add(1186	, "interval"	, PgDataType.Interval	, 0, PgTypeFormat.Binary, 12);
-            dataTypes.Add(1266	, "timetz"		, PgDataType.TimeWithTZ	, 0, PgTypeFormat.Binary, 12);
-            dataTypes.Add(1560	, "bit"			, PgDataType.Byte		, 0, PgTypeFormat.Text, 1);
-            dataTypes.Add(1562	, "varbit"		, PgDataType.Byte		, 0, PgTypeFormat.Binary, 0);
-            dataTypes.Add(1700	, "numeric"		, PgDataType.Decimal	, 0, PgTypeFormat.Text, 8);
-            dataTypes.Add(1790  , "refcursor"   , PgDataType.Refcursor  , 0, PgTypeFormat.Text, 0);
-            dataTypes.Add(2205  , "regclass"    , PgDataType.VarChar    , 0, PgTypeFormat.Text, 0);
+            dataTypes.Add(16	, "bool"		, PgDataType.Boolean	    , 0   , PgTypeFormat.Binary , 1);
+            dataTypes.Add(17	, "bytea"		, PgDataType.Binary		    , 0   , PgTypeFormat.Binary , Int32.MaxValue);
+            dataTypes.Add(18	, "char"		, PgDataType.Char		    , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(19	, "name"		, PgDataType.VarChar	    , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(20	, "int8"		, PgDataType.Int8		    , 0   , PgTypeFormat.Binary , 8);
+            dataTypes.Add(21	, "int2"		, PgDataType.Int2		    , 0   , PgTypeFormat.Binary , 2);
+            dataTypes.Add(22	, "int2vector"	, PgDataType.Vector		    , 21  , PgTypeFormat.Binary , 2);
+            dataTypes.Add(23	, "int4"		, PgDataType.Int4		    , 0   , PgTypeFormat.Binary , 4);
+            dataTypes.Add(24	, "regproc"		, PgDataType.VarChar	    , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(25    , "text"        , PgDataType.Text           , 0   , PgTypeFormat.Text   , Int32.MaxValue);
+            dataTypes.Add(26	, "oid"			, PgDataType.Int4		    , 0   , PgTypeFormat.Binary , 4);
+            dataTypes.Add(30	, "oidvector"	, PgDataType.Vector		    , 26  , PgTypeFormat.Binary , 4);			
+            dataTypes.Add(600	, "point"		, PgDataType.Point		    , 701 , PgTypeFormat.Binary , 16, ",");
+            dataTypes.Add(601	, "lseg"		, PgDataType.LSeg		    , 600 , PgTypeFormat.Binary , 32, ",");
+            dataTypes.Add(602	, "path"		, PgDataType.Path		    , 0   , PgTypeFormat.Binary , 16, ",");
+            dataTypes.Add(603	, "box"			, PgDataType.Box		    , 600 , PgTypeFormat.Binary , 32, ";");
+            dataTypes.Add(604	, "polygon"		, PgDataType.Polygon	    , 0   , PgTypeFormat.Binary , 16, ",");
+            dataTypes.Add(628	, "line"		, PgDataType.Line		    , 701 , PgTypeFormat.Binary , 32, ",");
+            dataTypes.Add(629	, "_line"		, PgDataType.Array		    , 628 , PgTypeFormat.Binary , 32);
+            dataTypes.Add(718	, "circle"		, PgDataType.Circle		    , 0   , PgTypeFormat.Binary , 24, ",");
+            dataTypes.Add(719	, "_circle"		, PgDataType.Array		    , 718 , PgTypeFormat.Binary , 24);
+            dataTypes.Add(700   , "float4"      , PgDataType.Float          , 0   , PgTypeFormat.Text   , 4);
+            dataTypes.Add(701	, "float8"		, PgDataType.Double		    , 0   , PgTypeFormat.Binary , 8);
+            dataTypes.Add(705	, "unknown"		, PgDataType.Text		    , 0   , PgTypeFormat.Binary , 0);
+            dataTypes.Add(790	, "money"		, PgDataType.Currency	    , 0   , PgTypeFormat.Binary , 4);
+            dataTypes.Add(829	, "macaddr"		, PgDataType.VarChar	    , 0   , PgTypeFormat.Text   , 6);
+            dataTypes.Add(869	, "inet"		, PgDataType.VarChar	    , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(1000	, "_bool"		, PgDataType.Array		    , 16  , PgTypeFormat.Binary , 1);
+            dataTypes.Add(1002  , "_char"       , PgDataType.Array          , 18  , PgTypeFormat.Binary , 0);
+            dataTypes.Add(1005	, "_int2"		, PgDataType.Array		    , 21  , PgTypeFormat.Binary , 2);
+            dataTypes.Add(1007	, "_int4"		, PgDataType.Array		    , 23  , PgTypeFormat.Binary , 4);
+            dataTypes.Add(1009	, "_text"		, PgDataType.Array		    , 25  , PgTypeFormat.Binary , 0);
+            dataTypes.Add(1016	, "_int8"		, PgDataType.Array		    , 20  , PgTypeFormat.Binary , 8);
+            dataTypes.Add(1017	, "_point"		, PgDataType.Array		    , 600 , PgTypeFormat.Binary , 16);
+            dataTypes.Add(1018	, "_lseg"		, PgDataType.Array		    , 601 , PgTypeFormat.Binary , 32);
+            dataTypes.Add(1019	, "_path"		, PgDataType.Array		    , 602 , PgTypeFormat.Binary , -1);
+            dataTypes.Add(1020	, "_box"		, PgDataType.Array		    , 603 , PgTypeFormat.Binary , 32);
+            dataTypes.Add(1021	, "_float4"		, PgDataType.Array		    , 700 , PgTypeFormat.Binary , 4);
+            dataTypes.Add(1027	, "_polygon"	, PgDataType.Array		    , 604 , PgTypeFormat.Binary , 16);
+            dataTypes.Add(1028  , "_oid"        , PgDataType.Array          , 26  , PgTypeFormat.Binary , 4);
+            dataTypes.Add(1033	, "aclitem"		, PgDataType.VarChar	    , 0   , PgTypeFormat.Text   , 12);
+            dataTypes.Add(1034	, "_aclitem"	, PgDataType.Array		    , 1033, PgTypeFormat.Text   , 0);
+            dataTypes.Add(1042	, "bpchar"		, PgDataType.Char	        , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(1043	, "varchar"		, PgDataType.VarChar	    , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(1082	, "date"		, PgDataType.Date		    , 0   , PgTypeFormat.Binary , 4);
+            dataTypes.Add(1083	, "time"		, PgDataType.Time		    , 0   , PgTypeFormat.Text   , 8);
+            dataTypes.Add(1114	, "timestamp"	, PgDataType.Timestamp	    , 0   , PgTypeFormat.Text   , 8);
+            dataTypes.Add(1184	, "timestamptz"	, PgDataType.TimestampWithTZ, 0   , PgTypeFormat.Binary , 8);
+            dataTypes.Add(1186	, "interval"	, PgDataType.Interval	    , 0   , PgTypeFormat.Binary , 12);
+            dataTypes.Add(1266	, "timetz"		, PgDataType.TimeWithTZ	    , 0   , PgTypeFormat.Binary , 12);
+            dataTypes.Add(1560	, "bit"			, PgDataType.Byte		    , 0   , PgTypeFormat.Text   , 1);
+            dataTypes.Add(1562	, "varbit"		, PgDataType.Byte		    , 0   , PgTypeFormat.Binary , 0);
+            dataTypes.Add(1700	, "numeric"		, PgDataType.Decimal	    , 0   , PgTypeFormat.Text   , 8);
+            dataTypes.Add(1790  , "refcursor"   , PgDataType.Refcursor      , 0   , PgTypeFormat.Text   , 0);
+            dataTypes.Add(2205  , "regclass"    , PgDataType.VarChar        , 0   , PgTypeFormat.Text   , 0);
             //dataTypes.Add(2277	, "anyarray"	, PgDataType.Array		, 0, PgTypeFormat.Binary, 8);
 
             // PostGIS datatypes
-            dataTypes.Add(17321 , "box3d"       , PgDataType.Box3D      , 0, PgTypeFormat.Text, 48, ",", "BOX3D");
-            dataTypes.Add(17335 , "box2d"       , PgDataType.Box2D      , 0, PgTypeFormat.Text, 16, ",", "BOX");
+            dataTypes.Add(17321 , "box3d"       , PgDataType.Box3D          , 0   , PgTypeFormat.Text   , 48, ",", "BOX3D");
+            dataTypes.Add(17335 , "box2d"       , PgDataType.Box2D          , 0   , PgTypeFormat.Text   , 16, ",", "BOX");
             // dataTypes.Add(-1    , "polygon2d"   , PgDataType.Box2D      , 0, PgTypeFormat.Text, 16, ",", "POLYGON");
 
             return dataTypes;
@@ -118,33 +118,23 @@ namespace PostgreSql.Data.Protocol
                 return;
             }
 
-            Charactersets.Add("SQL_ASCII"	, "ascii");			// ASCII
-            Charactersets.Add("EUC_JP"		, "euc-jp");		// Japanese EUC
-            Charactersets.Add("EUC_CN"		, "euc-cn");		// Chinese EUC
-            Charactersets.Add("UNICODE"		, "UTF-8");			// Unicode (UTF-8)			
-            Charactersets.Add("UTF8"        , "UTF-8");			// UTF-8
-            Charactersets.Add("LATIN1"		, "iso-8859-1");	// ISO 8859-1/ECMA 94 (Latin alphabet no.1)			
-            Charactersets.Add("LATIN2"		, "iso-8859-2");	// ISO 8859-2/ECMA 94 (Latin alphabet no.2)			
-            Charactersets.Add("LATIN4"		, 1257);			// ISO 8859-4/ECMA 94 (Latin alphabet no.4)
-            Charactersets.Add("ISO_8859_7"	, 1253);			// ISO 8859-7/ECMA 118 (Latin/Greek)			
-            Charactersets.Add("LATIN9"		, "iso-8859-15");	// ISO 8859-15 (Latin alphabet no.9)
-            Charactersets.Add("KOI8"		, "koi8-r");		// KOI8-R(U)
-            Charactersets.Add("WIN"			, "windows-1251");	// Windows CP1251
-            Charactersets.Add("WIN1251"     , "windows-1251");// Windows CP1251
-            Charactersets.Add("WIN1256"		, "windows-1256");	// Windows CP1256 (Arabic)			
-            Charactersets.Add("WIN1258"		, "windows-1258");	// TCVN-5712/Windows CP1258 (Vietnamese)
-            Charactersets.Add("WIN1256"		, "windows-874");	// Windows CP874 (Thai)
+            Charactersets.Add("SQL_ASCII" , "ascii");			// ASCII
+            Charactersets.Add("EUC_JP"	  , "euc-jp");		    // Japanese EUC
+            Charactersets.Add("EUC_CN"	  , "euc-cn");		    // Chinese EUC
+            Charactersets.Add("UNICODE"	  , "UTF-8");			// Unicode (UTF-8)			
+            Charactersets.Add("UTF8"      , "UTF-8");			// UTF-8
+            Charactersets.Add("LATIN1"	  , "iso-8859-1");	    // ISO 8859-1/ECMA 94 (Latin alphabet no.1)			
+            Charactersets.Add("LATIN2"	  , "iso-8859-2");	    // ISO 8859-2/ECMA 94 (Latin alphabet no.2)			
+            Charactersets.Add("LATIN4"	  , 1257);			    // ISO 8859-4/ECMA 94 (Latin alphabet no.4)
+            Charactersets.Add("ISO_8859_7", 1253);			    // ISO 8859-7/ECMA 118 (Latin/Greek)			
+            Charactersets.Add("LATIN9"	  , "iso-8859-15");	    // ISO 8859-15 (Latin alphabet no.9)
+            Charactersets.Add("KOI8"	  , "koi8-r");		    // KOI8-R(U)
+            Charactersets.Add("WIN"		  , "windows-1251");	// Windows CP1251
+            Charactersets.Add("WIN1251"   , "windows-1251");    // Windows CP1251
+            Charactersets.Add("WIN1256"   , "windows-1256");	// Windows CP1256 (Arabic)			
+            Charactersets.Add("WIN1258"	  , "windows-1258");	// TCVN-5712/Windows CP1258 (Vietnamese)
+            Charactersets.Add("WIN1256"	  , "windows-874");	    // Windows CP874 (Thai)
         }
-
-        #endregion
-
-        #region · Callback Fields ·
-
-        private NotificationCallback notification;
-        private InfoMessageCallback infoMessage;
-
-        private RemoteCertificateValidationCallback userCertificateValidationCallback;
-        private LocalCertificateSelectionCallback userCertificateSelectionCallback;
 
         #endregion
 
@@ -152,44 +142,44 @@ namespace PostgreSql.Data.Protocol
 
         public NotificationCallback Notification
         {
-            get { return this.notification; }
-            set { this.notification = value; }
+            get;
+            set;
         }
 
         public InfoMessageCallback InfoMessage
         {
-            get { return this.infoMessage; }
-            set { this.infoMessage = value; }
+            get;
+            set;
         }
 
         public RemoteCertificateValidationCallback UserCertificateValidationCallback
         {
-            get { return this.userCertificateValidationCallback; }
-            set { this.userCertificateValidationCallback = value; }
+            get;
+            set;
         }
 
         public LocalCertificateSelectionCallback UserCertificateSelectionCallback
         {
-            get { return this.userCertificateSelectionCallback; }
-            set { this.userCertificateSelectionCallback = value; }
+            get;
+            set;
         }
 
         #endregion
 
         #region · Fields ·
 
-        private ConcurrentDictionary<string, string>    parameterStatus;
-        private Encoding                                encoding;
-        private Socket                                  socket;
-        private NetworkStream		                    networkStream;
-        private	SslStream			                    secureStream;
-        private BinaryReader		                    receive;
-        private BinaryWriter		                    send;		
-        private PgConnectionOptions	                    options;
-        private int                                     handle;
-        private int                                     secretKey;
-        private char                                    transactionStatus;
-        private PgTypeCollection                        dataTypes;
+        private ConcurrentDictionary<string, string> parameterStatus;
+        private Encoding                             encoding;
+        private Socket                               socket;
+        private NetworkStream		                 networkStream;
+        private	SslStream			                 secureStream;
+        private BinaryReader		                 receive;
+        private BinaryWriter		                 send;		
+        private PgConnectionOptions	                 options;
+        private int                                  handle;
+        private int                                  secretKey;
+        private char                                 transactionStatus;
+        private PgTypeCollection                     dataTypes;
 
         #endregion
 
@@ -271,8 +261,8 @@ namespace PostgreSql.Data.Protocol
 
         public PgDatabase(PgConnectionOptions options)
         {
-            this.options	= options;
-            this.encoding	= Encoding.Default;
+            this.options  = options;
+            this.encoding = Encoding.Default;
 
             GC.SuppressFinalize(this);
         }
@@ -296,16 +286,15 @@ namespace PostgreSql.Data.Protocol
                         // Send SSL request message
                         if (this.SslRequest())
                         {
-                            this.secureStream = new SslStream(
-                                this.networkStream, 
-                                false, 
-                                this.UserCertificateValidationCallback,
-                                this.UserCertificateSelectionCallback);
+                            this.secureStream = new SslStream(this.networkStream
+                                                            , false
+                                                            , this.UserCertificateValidationCallback
+                                                            , this.UserCertificateSelectionCallback);
 
                             this.SecureStream.AuthenticateAsClient(this.options.DataSource);
 
-                            this.receive	= new BinaryReader(this.SecureStream);
-                            this.send		= new BinaryWriter(this.SecureStream);
+                            this.receive = new BinaryReader(this.SecureStream);
+                            this.send	 = new BinaryWriter(this.SecureStream);
                         }
                     }
 
@@ -358,18 +347,13 @@ namespace PostgreSql.Data.Protocol
             try
             {			
                 // Send packet to the server
-                PgOutputPacket packet = new PgOutputPacket(this.DataTypes);				
-                this.SendPacket(packet, PgFrontEndCodes.TERMINATE);
+                this.SendPacket(new PgOutputPacket(this.DataTypes), PgFrontEndCodes.TERMINATE);
 
                 this.Detach();
             }
             catch (IOException ex)
             {
                 throw new PgClientException(ex.Message);
-            }
-            catch (PgClientException)
-            {
-                throw;
             }
         }
 
@@ -394,15 +378,8 @@ namespace PostgreSql.Data.Protocol
 
         private void Write(byte[] buffer, int index, int count)
         {
-            try
-            {
-                this.send.Write(buffer, index, count);
-                this.send.Flush();
-            }
-            catch (IOException)
-            {
-                throw;
-            }
+            this.send.Write(buffer, index, count);
+            this.send.Flush();
         }
 
         #endregion
@@ -445,30 +422,17 @@ namespace PostgreSql.Data.Protocol
 
         private PgResponsePacket ReceiveStandardPacket()
         {
-            PgResponsePacket responsePacket = null;
+            char   type	    = this.receive.ReadChar();			
+            int	   length	= IPAddress.HostToNetworkOrder(this.receive.ReadInt32()) - 4;
+            byte[] buffer	= new byte[length];
+            int	   received = 0;
 
-            try
+            while (received < length)
             {
-                char	type	= this.receive.ReadChar();			
-                int		length	= IPAddress.HostToNetworkOrder(this.receive.ReadInt32()) - 4;
-
-                // Read the message data
-                byte[]	buffer		= new byte[length];
-                int		received	= 0;
-
-                while (received < length)
-                {
-                    received += this.receive.Read(buffer, received, length - received);
-                }
-
-                responsePacket = new PgResponsePacket(this.DataTypes, type, this.Encoding, buffer);				
-            }
-            catch (IOException)
-            {
-                throw;
+                received += this.receive.Read(buffer, received, length - received);
             }
 
-            return responsePacket;
+            return new PgResponsePacket(this.DataTypes, type, this.Encoding, buffer);				
         }
 
         private void ProcessResponsePacket(PgResponsePacket packet)
@@ -568,12 +532,13 @@ namespace PostgreSql.Data.Protocol
 
         private PgClientException ProcessErrorPacket(PgResponsePacket packet)
         {
-            char			type	= ' ';
-            PgClientError	error	= new PgClientError();
+            char		  type	= ' ';
+            PgClientError error	= new PgClientError();
 
             while (type != PgErrorCodes.END)
             {
                 type = packet.ReadChar();
+
                 switch (type)
                 {
                     case PgErrorCodes.SEVERITY:
@@ -627,9 +592,9 @@ namespace PostgreSql.Data.Protocol
 
         private void ProcessNotificationResponse(PgResponsePacket packet)
         {
-            int		processID	= packet.ReadInt32();
-            string	condition	= packet.ReadNullString();
-            string	additional	= packet.ReadNullString();
+            int	   processID  = packet.ReadInt32();
+            string condition  = packet.ReadNullString();
+            string additional = packet.ReadNullString();
 
             if (this.Notification != null)
             {
@@ -664,6 +629,7 @@ namespace PostgreSql.Data.Protocol
             }
 
             PgStatement stmt = CreateStatement(sql);
+
             stmt.Query();
 
             if (stmt.Tag != "START TRANSACTION")
@@ -677,6 +643,7 @@ namespace PostgreSql.Data.Protocol
         public void CommitTransaction()
         {
             PgStatement stmt = CreateStatement("COMMIT TRANSACTION");		
+
             stmt.Query();
 
             if (stmt.Tag != "COMMIT")
@@ -690,6 +657,7 @@ namespace PostgreSql.Data.Protocol
         public void RollbackTransction()
         {
             PgStatement stmt = CreateStatement("ROLLBACK TRANSACTION");
+            
             stmt.Query();
 
             if (stmt.Tag != "ROLLBACK")
@@ -708,17 +676,10 @@ namespace PostgreSql.Data.Protocol
         {
             lock (this)
             {
-                try
-                {
-                    PgOutputPacket packet = new PgOutputPacket(this.DataTypes, this.Encoding);
+                PgOutputPacket packet = new PgOutputPacket(this.DataTypes, this.Encoding);
 
-                    // Send packet to the server
-                    this.SendPacket(packet, PgFrontEndCodes.FLUSH);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                // Send packet to the server
+                this.SendPacket(packet, PgFrontEndCodes.FLUSH);
             }
         }
 
@@ -763,22 +724,15 @@ namespace PostgreSql.Data.Protocol
         {
             lock (this)
             {
-                try
-                {
-                    PgOutputPacket packet = new PgOutputPacket(this.DataTypes);
+                PgOutputPacket packet = new PgOutputPacket(this.DataTypes);
 
-                    packet.Write((int)16);
-                    packet.Write(PgCodes.CANCEL_REQUEST);
-                    packet.Write(this.Handle);
-                    packet.Write(this.SecretKey);
+                packet.Write((int)16);
+                packet.Write(PgCodes.CANCEL_REQUEST);
+                packet.Write(this.Handle);
+                packet.Write(this.SecretKey);
 
-                    // Send packet to the server
-                    this.SendSimplePacket(packet);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                // Send packet to the server
+                this.SendSimplePacket(packet);
             }
         }
 
@@ -788,30 +742,23 @@ namespace PostgreSql.Data.Protocol
 
             lock (this)
             {
-                try
+                PgOutputPacket packet = new PgOutputPacket(this.DataTypes);
+
+                packet.Write(PgCodes.SSL_REQUEST);
+
+                // Send packet to the server
+                this.SendSimplePacket(packet);
+
+                // Receive server response
+                switch (Convert.ToChar(this.networkStream.ReadByte()))
                 {
-                    PgOutputPacket packet = new PgOutputPacket(this.DataTypes);
+                    case 'S':
+                        sslAvailable = true;
+                        break;
 
-                    packet.Write(PgCodes.SSL_REQUEST);
-
-                    // Send packet to the server
-                    this.SendSimplePacket(packet);
-
-                    // Receive server response
-                    switch (Convert.ToChar(this.networkStream.ReadByte()))
-                    {
-                        case 'S':
-                            sslAvailable = true;
-                            break;
-
-                        default:
-                            sslAvailable = false;
-                            break;
-                    }
-                }
-                catch
-                {
-                    throw;
+                    default:
+                        sslAvailable = false;
+                        break;
                 }
             }
 

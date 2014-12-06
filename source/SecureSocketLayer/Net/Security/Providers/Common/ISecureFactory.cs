@@ -24,7 +24,6 @@
 
 #if NET_2_0
 
-using System;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 

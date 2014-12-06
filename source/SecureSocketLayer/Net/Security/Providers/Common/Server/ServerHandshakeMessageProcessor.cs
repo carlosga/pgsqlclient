@@ -22,12 +22,6 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using SecureSocketLayer.Net.Security.Providers.Cryptography;
-using Mono.Security;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common.Server
 {

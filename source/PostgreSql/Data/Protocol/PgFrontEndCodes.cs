@@ -15,26 +15,24 @@
  *  All Rights Reserved.
  */
 
-using System;
-
 namespace PostgreSql.Data.Protocol
 {
     internal static class PgFrontEndCodes
     {
         #region · Constants ·
 
-        public const char BIND				= 'B';
-        public const char CLOSE				= 'C';		
-        public const char COPY_FAIL			= 'f';
-        public const char DESCRIBE			= 'D';
-        public const char EXECUTE			= 'E';		
-        public const char FLUSH				= 'H';
-        public const char FUNCTION_CALL		= 'F';
-        public const char PARSE				= 'P';
-        public const char PASSWORD_MESSAGE  = 'p';
-        public const char QUERY				= 'Q';
-        public const char SYNC				= 'S';
-        public const char TERMINATE			= 'X';
+        public const char BIND			   = 'B';
+        public const char CLOSE			   = 'C';		
+        public const char COPY_FAIL		   = 'f';
+        public const char DESCRIBE		   = 'D';
+        public const char EXECUTE		   = 'E';		
+        public const char FLUSH			   = 'H';
+        public const char FUNCTION_CALL	   = 'F';
+        public const char PARSE			   = 'P';
+        public const char PASSWORD_MESSAGE = 'p';
+        public const char QUERY			   = 'Q';
+        public const char SYNC			   = 'S';
+        public const char TERMINATE		   = 'X';
 
         #endregion
     }

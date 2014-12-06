@@ -15,8 +15,6 @@
  *  All Rights Reserved.
  */
 
-using System;
-
 namespace PostgreSql.Data.Protocol
 {
     internal static class PgErrorCodes

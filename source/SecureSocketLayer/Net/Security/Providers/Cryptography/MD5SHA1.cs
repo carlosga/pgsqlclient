@@ -26,7 +26,6 @@
 
 using System;
 using System.Security.Cryptography;
-using SecureSocketLayer.Net.Security.Providers.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Cryptography
 {

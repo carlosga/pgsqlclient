@@ -24,9 +24,9 @@
 
 #if NET_2_0
 
+using SecureSocketLayer.Net.Security.Providers.Cryptography;
 using System;
 using System.Security.Cryptography;
-using SecureSocketLayer.Net.Security.Providers.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {

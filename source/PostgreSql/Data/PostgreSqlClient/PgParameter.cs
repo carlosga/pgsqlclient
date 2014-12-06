@@ -15,11 +15,11 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.PgTypes;
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
-using PostgreSql.Data.PgTypes;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {
@@ -56,7 +56,7 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         [Category("Data")]
         [DefaultValue((byte)0)]
-        public byte Precision
+        public override byte Precision
         {
             get { return this.precision; }
             set { this.precision = value; }
@@ -64,7 +64,7 @@ namespace PostgreSql.Data.PostgreSqlClient
 
         [Category("Data")]
         [DefaultValue((byte)0)]
-        public byte Scale
+        public override byte Scale
         {
             get { return this.scale; }
             set { this.scale = value; }

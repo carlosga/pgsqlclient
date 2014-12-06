@@ -24,11 +24,8 @@
 
 #if NET_2_0
 
-using System;
 using System.Collections;
-using System.Globalization;
 using System.Security.Authentication;
-using System.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {

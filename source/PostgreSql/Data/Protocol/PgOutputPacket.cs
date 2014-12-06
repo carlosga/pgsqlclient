@@ -15,12 +15,12 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.PgTypes;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
-using PostgreSql.Data.PgTypes;
 
 namespace PostgreSql.Data.Protocol
 {
@@ -28,10 +28,10 @@ namespace PostgreSql.Data.Protocol
     {
         #region · Fields ·
 
-        private MemoryStream	    stream;
-        private BinaryWriter	    packet;
-        private Encoding		    encoding;
-        private PgTypeCollection    dataTypes;
+        private MemoryStream	 stream;
+        private BinaryWriter	 packet;
+        private Encoding		 encoding;
+        private PgTypeCollection dataTypes;
 
         #endregion
 
@@ -58,9 +58,9 @@ namespace PostgreSql.Data.Protocol
 
         public PgOutputPacket(PgTypeCollection dataTypes, Encoding encoding) 
         {
-            this.stream		= new MemoryStream();
-            this.packet		= new BinaryWriter(this.stream);
-            this.encoding	= encoding;
+            this.stream	   = new MemoryStream();
+            this.packet	   = new BinaryWriter(this.stream);
+            this.encoding  = encoding;
             this.dataTypes = dataTypes;
 
             this.Write(new byte[0]);
@@ -167,8 +167,8 @@ namespace PostgreSql.Data.Protocol
 
         public void WriteInterval(TimeSpan interval)
         {
-            int months	= (interval.Days / 30);
-            int days	= (interval.Days % 30);
+            int months = (interval.Days / 30);
+            int days   = (interval.Days % 30);
 
             this.Write(interval.Subtract(TimeSpan.FromDays(months * 30)).TotalSeconds);
             this.Write(months);
@@ -264,8 +264,8 @@ namespace PostgreSql.Data.Protocol
             }
             else
             {
-                if (parameter.DataType.DataType == PgDataType.Array	||
-                    parameter.DataType.DataType == PgDataType.Vector)
+                if (parameter.DataType.DataType == PgDataType.Array	
+                 || parameter.DataType.DataType == PgDataType.Vector)
                 {
                     // Handle this type as Array values
                     System.Array array = (System.Array)parameter.Value;

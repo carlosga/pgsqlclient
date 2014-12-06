@@ -22,9 +22,7 @@ namespace PostgreSql.Data.Protocol
     {
         #region · Fields ·
 
-        private PgType	dataType;
-        private int     dataTypeOid;
-        private object	data;
+        private int dataTypeOid;
 
         #endregion
 
@@ -32,14 +30,14 @@ namespace PostgreSql.Data.Protocol
 
         public PgType DataType
         {
-            get { return this.dataType; }
-            set { this.dataType = value; }
+            get;
+            set;
         }
 
         public object Value
         {
-            get { return this.data; }
-            set { this.data = value; }
+            get;
+            set;
         }
 
         public int DataTypeOid
@@ -60,10 +58,10 @@ namespace PostgreSql.Data.Protocol
         {
         }
 
-        public PgParameter(int dataTypeOid, object data)
+        public PgParameter(int dataTypeOid, object value)
         {
-            this.dataTypeOid    = dataTypeOid;
-            this.data           = data;
+            this.dataTypeOid = dataTypeOid;
+            this.Value       = value;
         }
 
         #endregion

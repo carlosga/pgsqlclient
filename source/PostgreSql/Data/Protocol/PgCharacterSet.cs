@@ -23,8 +23,8 @@ namespace PostgreSql.Data.Protocol
 	{
 		#region · Fields ·
 
-		private string		name;
-		private Encoding	encoding;
+		private string	 name;
+		private Encoding encoding;
 
 		#endregion
 
@@ -50,14 +50,14 @@ namespace PostgreSql.Data.Protocol
 
 		public PgCharacterSet(string name, string systemCharSet)
 		{
-			this.name		= name;			
-			this.encoding	= Encoding.GetEncoding(systemCharSet);
+			this.name	  = name;			
+			this.encoding = Encoding.GetEncoding(systemCharSet);
 		}
 
 		public PgCharacterSet(string name, int cp)
 		{
-			this.name		= name;			
-			this.encoding	= Encoding.GetEncoding(cp);
+			this.name	  = name;			
+			this.encoding = Encoding.GetEncoding(cp);
 		}
 
 		#endregion

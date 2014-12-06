@@ -15,6 +15,7 @@
  *  All Rights Reserved.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -63,10 +64,11 @@ namespace PostgreSql.Data.Protocol
 
             foreach (PgType item in this)
             {
-                if (this.CultureAwareCompare(item.Name, name))
+                if (item.Name.CaseInsensitiveCompare(name))
                 {
                     return index;
                 }
+
                 index++;
             }
 
@@ -78,58 +80,42 @@ namespace PostgreSql.Data.Protocol
             this.RemoveAt(this.IndexOf(typeName));
         }
 
-        public PgType Add(
-            int             oid, 
-            string          name, 
-            PgDataType      dataType, 
-            int             elementType, 
-            PgTypeFormat    formatCode, 
-            int             size)
+        public PgType Add(int          oid
+                        , string       name
+                        , PgDataType   dataType
+                        , int          elementType
+                        , PgTypeFormat formatCode
+                        , int          size)
         {
             return this.Add(new PgType(oid, name, dataType, elementType, formatCode, size));
         }
 
-        public PgType Add(
-            int             oid, 
-            string          name, 
-            PgDataType      dataType, 
-            int             elementType, 
-            PgTypeFormat    formatCode, 
-            int             size, 
-            string          delimiter)
+        public PgType Add(int          oid
+                        , string       name
+                        , PgDataType   dataType
+                        , int          elementType
+                        , PgTypeFormat formatCode
+                        , int          size
+                        , string       delimiter)
         {
             return this.Add(new PgType(oid, name, dataType, elementType, formatCode, size, delimiter));
         }
 
-        public PgType Add(
-            int             oid,
-            string          name,
-            PgDataType      dataType,
-            int             elementType,
-            PgTypeFormat    formatCode,
-            int             size,
-            string          delimiter,
-            string          prefix)
+        public PgType Add(int          oid
+                        , string       name
+                        , PgDataType   dataType
+                        , int          elementType
+                        , PgTypeFormat formatCode
+                        , int          size
+                        , string       delimiter
+                        , string       prefix)
         {
             return this.Add(new PgType(oid, name, dataType, elementType, formatCode, size, delimiter, prefix));
         }
 
-        public PgType Add(PgType type)
+        public new PgType Add(PgType type)
         {
             return this.Add(type);
-        }
-
-        #endregion
-
-        #region · Private Methods ·
-
-        private bool CultureAwareCompare(string strA, string strB)
-        {
-            return CultureInfo.CurrentCulture.CompareInfo.Compare(
-                strA, 
-                strB, 
-                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-                CompareOptions.IgnoreCase) == 0 ? true : false;
         }
 
         #endregion

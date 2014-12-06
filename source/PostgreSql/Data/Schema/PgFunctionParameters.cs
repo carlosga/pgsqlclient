@@ -15,9 +15,9 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.PostgreSqlClient;
 using System;
 using System.Data;
-using PostgreSql.Data.PostgreSqlClient;
 
 namespace PostgreSql.Data.Schema
 {

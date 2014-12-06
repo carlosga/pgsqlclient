@@ -24,11 +24,10 @@
 
 #if NET_2_0
 
-using System;
-using System.Security.Cryptography;
 using SecureSocketLayer.Net.Security.Providers.Common;
 using SecureSocketLayer.Net.Security.Providers.Common.Client;
 using SecureSocketLayer.Net.Security.Providers.Cryptography;
+using System.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Tls.Client
 {

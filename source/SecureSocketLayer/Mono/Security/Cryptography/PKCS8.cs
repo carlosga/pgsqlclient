@@ -31,9 +31,7 @@
 using System;
 using System.Collections;
 using System.Security.Cryptography;
-using System.Text;
 
-using Mono.Security.X509;
 
 namespace Mono.Security.Cryptography {
 

@@ -15,6 +15,7 @@
  *  All Rights Reserved.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -46,7 +47,7 @@ namespace PostgreSql.Data.Protocol
 
             foreach(PgClientError item in this)
             {
-                if (this.CultureAwareCompare(item.Message, errorMessage))
+                if (item.Message.CaseInsensitiveCompare(errorMessage))
                 {
                     return index;
                 }
@@ -62,7 +63,7 @@ namespace PostgreSql.Data.Protocol
             this.RemoveAt(IndexOf(errorMessage));
         }
 
-        public PgClientError Add(PgClientError error)
+        public new PgClientError Add(PgClientError error)
         {
             base.Add(error);
 
@@ -71,22 +72,7 @@ namespace PostgreSql.Data.Protocol
 
         public PgClientError Add(string severity, string message, string code)
         {
-            PgClientError error = new PgClientError(severity, code, message);
-
-            return Add(error);
-        }
-
-        #endregion
-
-        #region · Private Methods ·
-
-        private bool CultureAwareCompare(string strA, string strB)
-        {
-            return CultureInfo.CurrentCulture.CompareInfo.Compare(
-                strA, 
-                strB, 
-                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-                CompareOptions.IgnoreCase) == 0 ? true : false;
+            return Add(new PgClientError(severity, code, message));
         }
 
         #endregion

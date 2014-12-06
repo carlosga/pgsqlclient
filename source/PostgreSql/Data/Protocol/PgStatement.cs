@@ -146,18 +146,18 @@ namespace PostgreSql.Data.Protocol
 
         public PgStatement(PgDatabase db, string parseName, string portalName, string stmtText)
         {
-            this.db					= db;
-            this.outParameter		= new PgParameter();
-            this.rows				= null;
-            this.rowIndex			= 0;
-            this.hasRows            = false;
-            this.allRowsFetched     = false;
-            this.parseName			= parseName;
-            this.portalName			= portalName;
-            this.recordsAffected	= -1;
-            this.status				= PgStatementStatus.Initial;
-            this.fetchSize			= 200;
-            this.stmtText			= stmtText;
+            this.db				 = db;
+            this.outParameter	 = new PgParameter();
+            this.rows			 = null;
+            this.rowIndex		 = 0;
+            this.hasRows         = false;
+            this.allRowsFetched  = false;
+            this.parseName		 = parseName;
+            this.portalName		 = portalName;
+            this.recordsAffected = -1;
+            this.status			 = PgStatementStatus.Initial;
+            this.fetchSize		 = 200;
+            this.stmtText		 = stmtText;
 
             GC.SuppressFinalize(this);
         }
@@ -241,6 +241,7 @@ namespace PostgreSql.Data.Protocol
 
                     // Receive Describe response
                     PgResponsePacket response = null;
+
                     do
                     {
                         response = this.db.ReceiveResponsePacket();
@@ -429,6 +430,7 @@ namespace PostgreSql.Data.Protocol
 
                     // Send parameters format code.
                     packet.Write((short)this.parameters.Length);
+
                     for (int i = 0; i < this.parameters.Length; i++)
                     {
                         packet.Write((short)this.parameters[i].DataType.FormatCode);
@@ -436,6 +438,7 @@ namespace PostgreSql.Data.Protocol
 
                     // Send parameter values
                     packet.Write((short)this.parameters.Length);
+
                     for (int i = 0; i < this.parameters.Length; i++)
                     {
                         packet.Write(this.parameters[i]);
@@ -449,6 +452,7 @@ namespace PostgreSql.Data.Protocol
                     
                     // Receive response
                     PgResponsePacket response = null;
+
                     do
                     {
                         response = this.db.ReceiveResponsePacket();
@@ -496,6 +500,7 @@ namespace PostgreSql.Data.Protocol
                     do
                     {
                         response = this.db.ReceiveResponsePacket();
+
                         this.ProcessSqlPacket(response);
 
                         if (this.hasRows && response.Message == PgBackendCodes.DATAROW)
@@ -540,9 +545,9 @@ namespace PostgreSql.Data.Protocol
         {
             object[] row = null;
 
-            if ((!this.allRowsFetched && this.rows == null) ||
-                (!this.allRowsFetched && this.rows.Length == 0) ||
-                (!this.allRowsFetched && this.rowIndex >= this.fetchSize))
+            if ((!this.allRowsFetched && this.rows == null) 
+             || (!this.allRowsFetched && this.rows.Length == 0) 
+             || (!this.allRowsFetched && this.rowIndex >= this.fetchSize))
             {
                 lock (this)
                 {
@@ -551,9 +556,7 @@ namespace PostgreSql.Data.Protocol
                 }
             }
 
-            if (this.rows != null &&
-                this.rows.Length > 0 &&
-                this.rows[this.rowIndex] != null)
+            if (this.rows != null && this.rows.Length > 0 && this.rows[this.rowIndex] != null)
             {
                 // Return always first row
                 row = (object[])this.rows[this.rowIndex++];
@@ -636,12 +639,14 @@ namespace PostgreSql.Data.Protocol
                 {
                     PgStatement getPlan = new PgStatement();
 
-                    getPlan.DbHandle	= this.db;
-                    getPlan.StmtText	= "EXPLAIN ANALYZE ";
+                    getPlan.DbHandle = this.db;
+                    getPlan.StmtText = "EXPLAIN ANALYZE ";
+
                     if (verbose)
                     {
                         getPlan.StmtText += "VERBOSE ";
                     }
+
                     getPlan.StmtText += stmtText;
 
                     getPlan.Query();
@@ -715,9 +720,9 @@ namespace PostgreSql.Data.Protocol
         {
             string[] elements = null;
 
-            tag = packet.ReadNullString();
-            
-            elements = tag.Split(' ');
+            this.tag = packet.ReadNullString();
+
+            elements = this.tag.Split(' ');
 
             switch (elements[0])
             {
@@ -740,9 +745,7 @@ namespace PostgreSql.Data.Protocol
 
         private void ProcessFunctionResult(PgResponsePacket packet)
         {
-            int length = packet.ReadInt32();
-
-            outParameter.Value = packet.ReadValue(outParameter.DataType, length);
+            outParameter.Value = packet.ReadValue(outParameter.DataType, packet.ReadInt32());
         }
 
         private void ProcessRowDescription(PgResponsePacket packet)
@@ -753,13 +756,13 @@ namespace PostgreSql.Data.Protocol
             {
                 this.rowDescriptor.Fields[i] = new PgFieldDescriptor();
 
-                this.rowDescriptor.Fields[i].FieldName		= packet.ReadNullString();
-                this.rowDescriptor.Fields[i].OidTable		= packet.ReadInt32();
-                this.rowDescriptor.Fields[i].OidNumber		= packet.ReadInt16();
-                this.rowDescriptor.Fields[i].DataType       = this.db.DataTypes[packet.ReadInt32()];
-                this.rowDescriptor.Fields[i].DataTypeSize	= packet.ReadInt16();
-                this.rowDescriptor.Fields[i].TypeModifier	= packet.ReadInt32();
-                this.rowDescriptor.Fields[i].FormatCode     = (PgTypeFormat)packet.ReadInt16();
+                this.rowDescriptor.Fields[i].FieldName	  = packet.ReadNullString();
+                this.rowDescriptor.Fields[i].OidTable	  = packet.ReadInt32();
+                this.rowDescriptor.Fields[i].OidNumber	  = packet.ReadInt16();
+                this.rowDescriptor.Fields[i].DataType     = this.db.DataTypes[packet.ReadInt32()];
+                this.rowDescriptor.Fields[i].DataTypeSize = packet.ReadInt16();
+                this.rowDescriptor.Fields[i].TypeModifier = packet.ReadInt32();
+                this.rowDescriptor.Fields[i].FormatCode   = (PgTypeFormat)packet.ReadInt16();
             }
         }
 
@@ -776,13 +779,13 @@ namespace PostgreSql.Data.Protocol
         
         private void ProcessDataRow(PgResponsePacket packet)
         {
-            int			fieldCount	= packet.ReadInt16();
-            object[]	values		= new object[fieldCount];
+            int		 fieldCount	= packet.ReadInt16();
+            object[] values		= new object[fieldCount];
 
             if (this.rows == null)
             {
-                this.rows		= new object[fetchSize];
-                this.rowIndex	= 0;
+                this.rows	  = new object[fetchSize];
+                this.rowIndex = 0;
             }
             
             for (int i = 0; i < values.Length; i++)

@@ -15,11 +15,11 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.Protocol;
 using System;
 using System.ComponentModel;
 using System.Data.Common;
 using System.Runtime.Serialization;
-using PostgreSql.Data.Protocol;
 
 namespace PostgreSql.Data.PostgreSqlClient
 {

@@ -29,8 +29,6 @@
 
 using System;
 using System.Security.Cryptography;
-using SSCX = System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace Mono.Security.X509 {
 

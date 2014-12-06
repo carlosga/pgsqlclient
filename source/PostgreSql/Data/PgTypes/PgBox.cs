@@ -16,6 +16,7 @@
  */
 
 using System;
+using System.Text;
 
 namespace PostgreSql.Data.PgTypes
 {
@@ -33,12 +34,12 @@ namespace PostgreSql.Data.PgTypes
 
 		public PgPoint UpperRight
 		{
-			get { return upperRight; }
+			get { return this.upperRight; }
 		}
 
 		public PgPoint LowerLeft
 		{
-			get { return lowerLeft; }
+            get { return this.lowerLeft; }
 		}
 
 		#endregion
@@ -63,28 +64,12 @@ namespace PostgreSql.Data.PgTypes
 
 		public static bool operator ==(PgBox left, PgBox right)
 		{
-			if (left.UpperRight == right.UpperRight &&
-				left.LowerLeft	== right.LowerLeft)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+            return (left.UpperRight == right.UpperRight && left.LowerLeft == right.LowerLeft);
 		}
 
 		public static bool operator !=(PgBox left, PgBox right)
 		{
-			if (left.UpperRight != right.UpperRight ||
-				left.LowerLeft	!= right.LowerLeft)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+            return (left.UpperRight != right.UpperRight || left.LowerLeft != right.LowerLeft);
 		}
 
 		#endregion
@@ -93,12 +78,11 @@ namespace PostgreSql.Data.PgTypes
 
 		public override string ToString()
 		{
-			System.Text.StringBuilder b = new System.Text.StringBuilder();
-			b.AppendFormat("(({0},{1}),({2},{3}))", 				
-				this.lowerLeft.X	, this.lowerLeft.Y,
-				this.upperRight.X	, this.upperRight.Y);
-
-			return b.ToString();
+			return String.Format("(({0},{1}),({2},{3}))"
+                               , this.lowerLeft.X
+                               , this.lowerLeft.Y
+                               , this.upperRight.X
+                               , this.upperRight.Y);
 		}
 
 		public override int GetHashCode()
@@ -112,10 +96,8 @@ namespace PostgreSql.Data.PgTypes
 			{
 				return ((PgBox)obj) == this;
 			}
-			else
-			{
-				return false;
-			}
+
+            return false;
 		}
 
 		#endregion

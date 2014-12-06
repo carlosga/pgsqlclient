@@ -22,12 +22,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using Mono.Security.Cryptography;
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Security.Authentication;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Mono.Security.Cryptography;
 using X509 = Mono.Security.X509;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common

@@ -35,10 +35,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using Mono.Math.Prime;
+using Mono.Math.Prime.Generator;
 using System;
 using System.Security.Cryptography;
-using Mono.Math.Prime.Generator;
-using Mono.Math.Prime;
 
 namespace Mono.Math {
 

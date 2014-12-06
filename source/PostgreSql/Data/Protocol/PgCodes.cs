@@ -22,43 +22,43 @@ namespace PostgreSql.Data.Protocol
 	internal static class PgCodes
 	{
 		// Protocol version 3.0
-		public const int PROTOCOL_VERSION2_MAYOR	= 2;
-		public const int PROTOCOL_VERSION2_MINOR	= 0;
-		public const int PROTOCOL_VERSION2			= (PROTOCOL_VERSION2_MAYOR << 16) | PROTOCOL_VERSION2_MINOR;
+		public const int PROTOCOL_VERSION2_MAYOR = 2;
+		public const int PROTOCOL_VERSION2_MINOR = 0;
+		public const int PROTOCOL_VERSION2		 = (PROTOCOL_VERSION2_MAYOR << 16) | PROTOCOL_VERSION2_MINOR;
 
 		// Protocol version 3.0
-		public const int PROTOCOL_VERSION3_MAYOR	= 3;
-		public const int PROTOCOL_VERSION3_MINOR	= 0;
-		public const int PROTOCOL_VERSION3			= (PROTOCOL_VERSION3_MAYOR << 16) | PROTOCOL_VERSION3_MINOR;
+		public const int PROTOCOL_VERSION3_MAYOR = 3;
+		public const int PROTOCOL_VERSION3_MINOR = 0;
+		public const int PROTOCOL_VERSION3		 = (PROTOCOL_VERSION3_MAYOR << 16) | PROTOCOL_VERSION3_MINOR;
 
 		// SSL Request code
-		public const int SSL_REQUEST_MOST			= 1234;
-		public const int SSL_REQUEST_LEAST			= 5679;
-		public const int SSL_REQUEST				= (SSL_REQUEST_MOST << 16) | SSL_REQUEST_LEAST;
+		public const int SSL_REQUEST_MOST		 = 1234;
+		public const int SSL_REQUEST_LEAST		 = 5679;
+		public const int SSL_REQUEST			 = (SSL_REQUEST_MOST << 16) | SSL_REQUEST_LEAST;
 
 		// Cancel request code
-		public const int CANCEL_REQUEST_MOST		= 1234;
-		public const int CANCEL_REQUEST_LEAST		= 5678;
-		public const int CANCEL_REQUEST				= (CANCEL_REQUEST_MOST << 16) | CANCEL_REQUEST_LEAST;
+		public const int CANCEL_REQUEST_MOST	 = 1234;
+		public const int CANCEL_REQUEST_LEAST	 = 5678;
+		public const int CANCEL_REQUEST			 = (CANCEL_REQUEST_MOST << 16) | CANCEL_REQUEST_LEAST;
 
 		// Backend & FrontEnd Message Formats
-		public const int COPY_DATA					= 'd';
-		public const int COPY_DONE					= 'c';		
+		public const int COPY_DATA				 = 'd';
+		public const int COPY_DONE				 = 'c';		
 
 		// Authentication values
-		public const int AUTH_OK					= 0;
-		public const int AUTH_KERBEROS_V4			= 1;
-		public const int AUTH_KERBEROS_V5			= 2;
-		public const int AUTH_CLEARTEXT_PASSWORD	= 3;
-		public const int AUTH_CRYPT_PASSWORD		= 4;
-		public const int AUTH_MD5_PASSWORD			= 5;
-		public const int AUTH_SCM_CREDENTIAL		= 6;
+		public const int AUTH_OK				 = 0;
+		public const int AUTH_KERBEROS_V4		 = 1;
+		public const int AUTH_KERBEROS_V5		 = 2;
+		public const int AUTH_CLEARTEXT_PASSWORD = 3;
+		public const int AUTH_CRYPT_PASSWORD	 = 4;
+		public const int AUTH_MD5_PASSWORD		 = 5;
+		public const int AUTH_SCM_CREDENTIAL	 = 6;
 			
 		// Max keys for vector data type
-		public const int INDEX_MAX_KEYS			= 32;
+		public const int INDEX_MAX_KEYS			 = 32;
 
 		//
-		public const char NULL_TERMINATOR		= '\0';
+		public const char NULL_TERMINATOR		 = '\0';
 
 		//
 		public static readonly DateTime BASE_DATE = new DateTime(2000, 1, 1);

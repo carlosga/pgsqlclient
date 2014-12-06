@@ -24,7 +24,6 @@
 
 #if NET_2_0
 
-using System;
 using SecureSocketLayer.Net.Security.Providers.Common;
 
 namespace SecureSocketLayer.Net.Security.Providers.Ssl.Client

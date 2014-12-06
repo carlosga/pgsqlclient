@@ -32,11 +32,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using Mono.Math;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-
-using Mono.Math;
 
 // Big chunks of code are coming from the original RSACryptoServiceProvider class.
 // The class was refactored to :

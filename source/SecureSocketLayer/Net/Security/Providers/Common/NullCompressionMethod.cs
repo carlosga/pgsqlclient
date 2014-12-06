@@ -24,10 +24,8 @@
 
 #if (NET_2_0)
 
-using System;
 using System.IO;
 using System.IO.Compression;
-using SecureSocketLayer.Net.Security.Providers.Common;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {

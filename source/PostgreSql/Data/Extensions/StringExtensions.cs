@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  *  PgSqlClient - ADO.NET Data Provider for PostgreSQL 7.4+
  * 
  *     The contents of this file are subject to the Initial 
@@ -15,31 +15,18 @@
  *  All Rights Reserved.
  */
 
-namespace PostgreSql.Data.Protocol
+using System.Globalization;
+
+namespace System
 {
-    internal sealed class PgRowDescriptor
+    public static class StringExtensions
     {
-        #region · Properties ·
-
-        public PgFieldDescriptor[] Fields
+        public static bool CaseInsensitiveCompare(this string strA, string strB)
         {
-            get;
-            private set;
+            var options  = CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | CompareOptions.IgnoreCase;
+            var comparer = CultureInfo.CurrentCulture.CompareInfo;
+
+            return (comparer.Compare(strA, strB, options) == 0 ? true : false);
         }
-
-        #endregion
-
-        #region · Constructors ·
-
-        public PgRowDescriptor()
-        {
-        }
-
-        public PgRowDescriptor(int count)
-        {
-            this.Fields = new PgFieldDescriptor[count];
-        }
-
-        #endregion
     }
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common.Server
 {

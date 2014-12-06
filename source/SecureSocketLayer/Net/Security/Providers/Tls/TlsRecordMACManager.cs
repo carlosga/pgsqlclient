@@ -22,11 +22,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Security.Authentication;
-using System.Security.Cryptography;
 using SecureSocketLayer.Net.Security.Providers.Common;
 using SecureSocketLayer.Net.Security.Providers.Cryptography;
+using System.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Tls
 {

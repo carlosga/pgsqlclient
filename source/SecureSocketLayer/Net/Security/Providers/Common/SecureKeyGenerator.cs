@@ -23,8 +23,6 @@
 //
 
 using System;
-using System.IO;
-using System.Security.Authentication;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {

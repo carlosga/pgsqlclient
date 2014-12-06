@@ -15,12 +15,12 @@
  *  All Rights Reserved.
  */
 
+using PostgreSql.Data.PostgreSqlClient;
 using System;
 using System.Data;
 using System.Data.Common;
 using System.IO;
 using System.Reflection;
-using PostgreSql.Data.PostgreSqlClient;
 
 namespace PostgreSql.Data.Schema
 {

@@ -15,6 +15,7 @@
  *  All Rights Reserved.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -46,7 +47,7 @@ namespace PostgreSql.Data.Protocol
             
             foreach (PgCharacterSet item in this)
             {
-                if (this.CultureAwareCompare(item.Name, characterset))
+                if (item.Name.CaseInsensitiveCompare(characterset))
                 {
                     return index;
                 }
@@ -78,21 +79,6 @@ namespace PostgreSql.Data.Protocol
             this.Add(cs);
 
             return cs;
-        }
-
-        #endregion
-
-        #region · Private Methods ·
-        
-        private bool CultureAwareCompare(string strA, string strB)
-        {
-            return CultureInfo.CurrentCulture.CompareInfo.Compare
-            (
-                strA, 
-                strB, 
-                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth | 
-                CompareOptions.IgnoreCase
-            ) == 0 ? true : false;
         }
 
         #endregion

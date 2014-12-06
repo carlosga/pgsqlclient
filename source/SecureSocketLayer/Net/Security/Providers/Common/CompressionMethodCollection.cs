@@ -24,7 +24,6 @@
 
 #if NET_2_0
 
-using System;
 using System.Collections;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common

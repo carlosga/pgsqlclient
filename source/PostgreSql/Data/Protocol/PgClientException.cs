@@ -45,9 +45,10 @@ namespace PostgreSql.Data.Protocol
 
         #region · Constructors ·
         
-        public PgClientException(string message) : base(message)
+        public PgClientException(string message)
+            : base(message)
         {
-            this.errors = new PgClientErrorCollection();
+            this.errors  = new PgClientErrorCollection();
             this.message = message;
         }
 

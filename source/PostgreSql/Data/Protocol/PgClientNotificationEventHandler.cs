@@ -15,9 +15,6 @@
  *  All Rights Reserved.
  */
 
-
-using System;
-
 namespace PostgreSql.Data.Protocol
 {
 	internal delegate void PgClientNotificationEventHandler(object sender, PgClientNotificationEventArgs e);

@@ -32,7 +32,6 @@
 using System;
 using System.Collections;
 
-using Mono.Security;
 
 namespace Mono.Security.X509 {
 	/*

@@ -15,21 +15,20 @@
  *  All Rights Reserved.
  */
 
-
 namespace PostgreSql.Data.Protocol
 {
     internal enum PgStatementStatus
     {
-        Initial     ,
-        Parsing     ,
-        Parsed      ,
-        Describing  ,
-        Described   ,
-        Binding     ,
-        Binded      ,
-        Executing   ,
-        Executed    ,
-        OnQuery     ,
-        Error
+        Initial
+      , Parsing
+      , Parsed
+      , Describing
+      , Described
+      , Binding
+      , Binded
+      , Executing
+      , Executed
+      , OnQuery
+      , Error
     }
 }

@@ -24,15 +24,15 @@ namespace PostgreSql.Data.Protocol
     {
         #region · Fields ·
 
-        private int				oid;
-        private string			name;
-        private PgDataType		dataType;
-        private Type			systemType;
-        private int				elementType;
-        private PgTypeFormat	formatCode;
-        private int				size;
-        private string          delimiter;
-        private string          prefix;
+        private int			 oid;
+        private string		 name;
+        private PgDataType	 dataType;
+        private Type		 systemType;
+        private int			 elementType;
+        private PgTypeFormat formatCode;
+        private int			 size;
+        private string       delimiter;
+        private string       prefix;
 
         #endregion
 
@@ -79,14 +79,14 @@ namespace PostgreSql.Data.Protocol
             {
                 bool returnValue = false;
 
-                if (this.dataType == PgDataType.Currency ||
-                    this.dataType == PgDataType.Int2 ||
-                    this.dataType == PgDataType.Int4 ||
-                    this.dataType == PgDataType.Int8 ||
-                    this.dataType == PgDataType.Float ||
-                    this.dataType == PgDataType.Double ||
-                    this.dataType == PgDataType.Decimal ||
-                    this.dataType == PgDataType.Byte)
+                if (this.dataType == PgDataType.Currency 
+                 || this.dataType == PgDataType.Int2 
+                 || this.dataType == PgDataType.Int4 
+                 || this.dataType == PgDataType.Int8 
+                 || this.dataType == PgDataType.Float 
+                 || this.dataType == PgDataType.Double 
+                 || this.dataType == PgDataType.Decimal 
+                 || this.dataType == PgDataType.Byte)
                 {
                     returnValue = true;
                 }
@@ -145,41 +145,39 @@ namespace PostgreSql.Data.Protocol
         #region · Constructors ·
 
         public PgType(int oid, string name, PgDataType dataType, int elementType, PgTypeFormat formatCode, int size)
-            : this(oid, name, dataType, elementType, formatCode, size, "")
+            : this(oid, name, dataType, elementType, formatCode, size, String.Empty)
         {
         }
 
-        public PgType(
-            int             oid, 
-            string          name, 
-            PgDataType      dataType, 
-            int             elementType, 
-            PgTypeFormat    formatCode, 
-            int             size, 
-            string          delimiter)
-            : this(oid, name, dataType, elementType, formatCode, size, delimiter, "")
+        public PgType(int          oid
+                    , string       name
+                    , PgDataType   dataType
+                    , int          elementType
+                    , PgTypeFormat formatCode
+                    , int          size
+                    , string       delimiter)
+            : this(oid, name, dataType, elementType, formatCode, size, delimiter, String.Empty)
         {
         }
 
-        public PgType(
-            int             oid,
-            string          name,
-            PgDataType      dataType,
-            int             elementType,
-            PgTypeFormat    formatCode,
-            int             size,
-            string          delimiter,
-            string          prefix)
+        public PgType(int          oid
+                    , string       name
+                    , PgDataType   dataType
+                    , int          elementType
+                    , PgTypeFormat formatCode
+                    , int          size
+                    , string       delimiter
+                    , string       prefix)
         {
-            this.oid            = oid;
-            this.name           = name;
-            this.dataType       = dataType;
-            this.elementType    = elementType;
-            this.formatCode     = formatCode;
-            this.size           = size;
-            this.systemType     = this.InferSystemType();
-            this.delimiter      = delimiter;
-            this.prefix         = prefix;
+            this.oid         = oid;
+            this.name        = name;
+            this.dataType    = dataType;
+            this.elementType = elementType;
+            this.formatCode  = formatCode;
+            this.size        = size;
+            this.systemType  = this.InferSystemType();
+            this.delimiter   = delimiter;
+            this.prefix      = prefix;
         }
 
         #endregion

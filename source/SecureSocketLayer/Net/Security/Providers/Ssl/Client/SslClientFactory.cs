@@ -24,11 +24,10 @@
 
 #if NET_2_0
 
-using System;
-using System.Security.Authentication;
-using System.Security.Cryptography.X509Certificates;
 using SecureSocketLayer.Net.Security.Providers.Common;
 using SecureSocketLayer.Net.Security.Providers.Common.Client;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SecureSocketLayer.Net.Security.Providers.Ssl.Client
 {

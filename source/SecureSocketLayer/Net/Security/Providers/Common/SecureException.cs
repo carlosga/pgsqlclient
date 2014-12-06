@@ -23,7 +23,6 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common

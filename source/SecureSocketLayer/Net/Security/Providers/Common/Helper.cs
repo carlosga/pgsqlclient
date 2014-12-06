@@ -24,12 +24,12 @@
 
 #if NET_2_0
 
+using SecureSocketLayer.Net.Security.Providers.Cryptography;
 using System;
+using System.Net;
 using System.Security.Authentication;
 using System.Security.Cryptography;
-using System.Net;
 using System.Text;
-using SecureSocketLayer.Net.Security.Providers.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {

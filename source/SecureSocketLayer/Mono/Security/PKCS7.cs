@@ -28,11 +28,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using Mono.Security.X509;
 using System;
 using System.Collections;
 using System.Security.Cryptography;
-
-using Mono.Security.X509;
 
 namespace Mono.Security {
 

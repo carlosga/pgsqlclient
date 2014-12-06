@@ -24,10 +24,10 @@
 
 #if NET_2_0
 
+using Mono.Security.Cryptography;
 using System;
 using System.Security.Authentication;
 using System.Security.Cryptography;
-using Mono.Security.Cryptography;
 
 namespace SecureSocketLayer.Net.Security.Providers.Common
 {

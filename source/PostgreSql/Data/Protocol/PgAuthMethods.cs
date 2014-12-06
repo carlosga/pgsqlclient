@@ -28,9 +28,9 @@ namespace PostgreSql.Data.Protocol
         {
             using (HashAlgorithm csp = MD5.Create())
             {
-                StringBuilder   md5     = new StringBuilder();
-                int             length  = Encoding.Default.GetByteCount(password);
-                byte[]          data    = new byte[salt.Length + length];
+                StringBuilder md5    = new StringBuilder();
+                int           length = Encoding.Default.GetByteCount(password);
+                byte[]        data   = new byte[salt.Length + length];
 
                 Encoding.Default.GetBytes(password, 0, length, data, 0);
 

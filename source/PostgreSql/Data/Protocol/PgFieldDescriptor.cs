@@ -15,66 +15,52 @@
  *  All Rights Reserved.
  */
 
-using System;
-
 namespace PostgreSql.Data.Protocol
 {
     internal sealed class PgFieldDescriptor
     {
-        #region · Fields ·
-
-        private string			fieldName;
-        private int				oidTable;
-        private short			oidNumber;		
-        private PgType			dataType;
-        private short			dataTypeSize;
-        private int				typeModifier;
-        private PgTypeFormat	formatCode;
-
-        #endregion
-
         #region · Properties ·
 
         public string FieldName
         {
-            get { return this.fieldName; }
-            set { this.fieldName = value; }
+            get;
+            set;
         }
 
         public int OidTable
         {
-            get { return this.oidTable; }
-            set { this.oidTable = value; }
+            get;
+            set;
         }
 
         public short OidNumber
         {
-            get { return this.oidNumber; }
-            set { this.oidNumber = value; }
+            get;
+            set;
         }
     
         public PgType DataType
         {
-            get { return this.dataType; }
-            set { this.dataType = value; }
+            get;
+            set;
         }
 
         public short DataTypeSize
         {
-            get { return this.dataTypeSize; }
-            set { this.dataTypeSize = value; }
+            get;
+            set;
         }
 
         public int TypeModifier
         {
-            get { return this.typeModifier; }
-            set { this.typeModifier = value; }
+            get;
+            set;
         }
 
         public PgTypeFormat FormatCode
         {
-            get { return this.formatCode; }
-            set { this.formatCode = value; }
+            get;
+            set;
         }
 
         #endregion

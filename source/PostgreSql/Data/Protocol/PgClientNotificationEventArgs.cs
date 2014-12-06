@@ -24,9 +24,9 @@ namespace PostgreSql.Data.Protocol
     {
         #region · Fields ·
 
-        private int		processID;
-        private string	condition;
-        private string	aditional;
+        private int	   processID;
+        private string condition;
+        private string aditional;
 
         #endregion
 
