@@ -87,9 +87,7 @@ namespace PostgreSql.Data.Schema
                 sql += " WHERE " + where;
             }
 
-            sql += " ORDER BY pg_namespace.nspname, pg_proc.proname";
-
-            return sql;
+            return sql + " ORDER BY pg_namespace.nspname, pg_proc.proname";
         }
 
         protected override DataTable ProcessResult(PgConnection connection, DataTable schema)
@@ -109,12 +107,12 @@ namespace PostgreSql.Data.Schema
                     DataRow functionParameter = functionParameters.NewRow();
 
                     // Create the new foreign key column info
-                    functionParameter["FUNCTION_CATALOG"]       = row["FUNCTION_CATALOG"];
-                    functionParameter["FUNCTION_SCHEMA"]        = row["FUNCTION_SCHEMA"];
-                    functionParameter["FUNCTION_NAME"]          = row["FUNCTION_NAME"];
-                    functionParameter["PARAMETER_NAME"]         = "result";
-                    functionParameter["DATA_TYPE"]              = "";
-                    functionParameter["PARAMETER_DIRECTION"]    = (Int32)ParameterDirection.Output;
+                    functionParameter["FUNCTION_CATALOG"]    = row["FUNCTION_CATALOG"];
+                    functionParameter["FUNCTION_SCHEMA"]     = row["FUNCTION_SCHEMA"];
+                    functionParameter["FUNCTION_NAME"]       = row["FUNCTION_NAME"];
+                    functionParameter["PARAMETER_NAME"]      = "result";
+                    functionParameter["DATA_TYPE"]           = "";
+                    functionParameter["PARAMETER_DIRECTION"] = (Int32)ParameterDirection.Output;
 
                     functionParameters.Rows.Add(functionParameter);
                 }
@@ -124,12 +122,12 @@ namespace PostgreSql.Data.Schema
                     DataRow functionParameter = functionParameters.NewRow();
 
                     // Create the new foreign key column info
-                    functionParameter["FUNCTION_CATALOG"]   = row["FUNCTION_CATALOG"];
-                    functionParameter["FUNCTION_SCHEMA"]    = row["FUNCTION_SCHEMA"];
-                    functionParameter["FUNCTION_NAME"]      = row["FUNCTION_NAME"];
-                    functionParameter["PARAMETER_NAME"]     = (string)argNames.GetValue(i + 1);
-                    functionParameter["DATA_TYPE"]          = "";
-                    functionParameter["PARAMETER_DIRECTION"]= (Int32)ParameterDirection.Input;
+                    functionParameter["FUNCTION_CATALOG"]    = row["FUNCTION_CATALOG"];
+                    functionParameter["FUNCTION_SCHEMA"]     = row["FUNCTION_SCHEMA"];
+                    functionParameter["FUNCTION_NAME"]       = row["FUNCTION_NAME"];
+                    functionParameter["PARAMETER_NAME"]      = (string)argNames.GetValue(i + 1);
+                    functionParameter["DATA_TYPE"]           = String.Empty;
+                    functionParameter["PARAMETER_DIRECTION"] = (Int32)ParameterDirection.Input;
 
                     functionParameters.Rows.Add(functionParameter);
                 }

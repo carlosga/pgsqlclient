@@ -44,9 +44,9 @@ namespace PostgreSql.Data.Schema
 
         public static DataTable GetSchema(PgConnection connection, string collectionName, string[] restrictions)
         {
-            string  filter      = String.Format("CollectionName = '{0}'", collectionName);
-            Stream  xmlStream   = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResName);            	
-            DataSet ds          = new DataSet();
+            string  filter    = String.Format("CollectionName = '{0}'", collectionName);
+            Stream  xmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResName);            	
+            DataSet ds        = new DataSet();
 
             ds.ReadXml(xmlStream);            
 
@@ -164,13 +164,13 @@ namespace PostgreSql.Data.Schema
                 restrictions = new string[0];
             }
 
-            DataTable		dataTable	= null;
-            PgDataAdapter	adapter		= null;
-            PgCommand		command = new PgCommand(String.Format(sql, restrictions), connection);
+            DataTable	  dataTable	= null;
+            PgDataAdapter adapter	= null;
+            PgCommand	  command   = new PgCommand(String.Format(sql, restrictions), connection);
             
             try
             {
-                adapter = new PgDataAdapter(command);
+                adapter   = new PgDataAdapter(command);
                 dataTable = new DataTable(collectionName);
 
                 adapter.Fill(dataTable);

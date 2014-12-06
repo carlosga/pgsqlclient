@@ -113,9 +113,7 @@ namespace PostgreSql.Data.Schema
                 }
             }
 
-            sql += " ORDER BY pg_namespace.nspname, pg_class.relname, pg_attribute.attnum";
-
-            return sql;
+            return sql + " ORDER BY pg_namespace.nspname, pg_class.relname, pg_attribute.attnum";
         }
 
         protected override DataTable ProcessResult(PgConnection connection, DataTable schema)

@@ -90,9 +90,7 @@ namespace PostgreSql.Data.Schema
                 }
             }
 
-            sql += "ORDER BY pg_namespace.nspname, constraint_table.relname, pg_constraint.conname";
-
-            return sql;
+            return sql + "ORDER BY pg_namespace.nspname, constraint_table.relname, pg_constraint.conname";
         }
 
         protected override DataTable ProcessResult(PgConnection connection, DataTable schema)
@@ -119,39 +117,39 @@ namespace PostgreSql.Data.Schema
 
             foreach (DataRow row in schema.Rows)
             {
-                Array tableColumns              = (Array)row["CONSTRAINT_TABLE_COLUMNS"];
-                Array referencedTableColumns    = (Array)row["REFERENCED_TABLE_COLUMNS"];
+                Array tableColumns           = (Array)row["CONSTRAINT_TABLE_COLUMNS"];
+                Array referencedTableColumns = (Array)row["REFERENCED_TABLE_COLUMNS"];
                 
                 for (int i = 0; i < tableColumns.Length; i++)
                 {
                     DataRow foreignKeyColumn = foreignKeyColumns.NewRow();
 
                     // Grab the table column name
-                    selectColumn.Parameters["@tableSchema"].Value   = row["TABLE_SCHEMA"];
-                    selectColumn.Parameters["@tableName"].Value     = row["TABLE_NAME"];
+                    selectColumn.Parameters["@tableSchema"].Value     = row["TABLE_SCHEMA"];
+                    selectColumn.Parameters["@tableName"].Value       = row["TABLE_NAME"];
                     selectColumn.Parameters["@ordinalPosition"].Value = Convert.ToInt16(tableColumns.GetValue(i + 1));
 
                     string tableColumn = (string)selectColumn.ExecuteScalar();
 
                     // Grab the referenced table column name
-                    selectColumn.Parameters["@tableSchema"].Value   = row["REFERENCED_TABLE_SCHEMA"];
-                    selectColumn.Parameters["@tableName"].Value     = row["REFERENCED_TABLE_NAME"];
+                    selectColumn.Parameters["@tableSchema"].Value     = row["REFERENCED_TABLE_SCHEMA"];
+                    selectColumn.Parameters["@tableName"].Value       = row["REFERENCED_TABLE_NAME"];
                     selectColumn.Parameters["@ordinalPosition"].Value = Convert.ToInt16(referencedTableColumns.GetValue(i + 1));
 
                     string referencedTableColumn = (string)selectColumn.ExecuteScalar();
 
                     // Create the new foreign key column info
-                    foreignKeyColumn["CONSTRAINT_CATALOG"]          = row["CONSTRAINT_CATALOG"];
-                    foreignKeyColumn["CONSTRAINT_SCHEMA"]           = row["CONSTRAINT_SCHEMA"];
-                    foreignKeyColumn["CONSTRAINT_NAME"]             = row["CONSTRAINT_NAME"];
-                    foreignKeyColumn["TABLE_CATALOG"]               = row["TABLE_CATALOG"];
-                    foreignKeyColumn["TABLE_SCHEMA"]                = row["TABLE_SCHEMA"];
-                    foreignKeyColumn["TABLE_NAME"]                  = row["TABLE_NAME"];
-                    foreignKeyColumn["COLUMN_NAME"]                 = tableColumn;
-                    foreignKeyColumn["REFERENCED_TABLE_CATALOG"]    = row["REFERENCED_TABLE_CATALOG"];
-                    foreignKeyColumn["REFERENCED_TABLE_SCHEMA"]     = row["REFERENCED_TABLE_SCHEMA"];
-                    foreignKeyColumn["REFERENCED_TABLE_NAME"]       = row["REFERENCED_TABLE_NAME"];
-                    foreignKeyColumn["REFERENCED_COLUMN_NAME"]      = referencedTableColumn;
+                    foreignKeyColumn["CONSTRAINT_CATALOG"]       = row["CONSTRAINT_CATALOG"];
+                    foreignKeyColumn["CONSTRAINT_SCHEMA"]        = row["CONSTRAINT_SCHEMA"];
+                    foreignKeyColumn["CONSTRAINT_NAME"]          = row["CONSTRAINT_NAME"];
+                    foreignKeyColumn["TABLE_CATALOG"]            = row["TABLE_CATALOG"];
+                    foreignKeyColumn["TABLE_SCHEMA"]             = row["TABLE_SCHEMA"];
+                    foreignKeyColumn["TABLE_NAME"]               = row["TABLE_NAME"];
+                    foreignKeyColumn["COLUMN_NAME"]              = tableColumn;
+                    foreignKeyColumn["REFERENCED_TABLE_CATALOG"] = row["REFERENCED_TABLE_CATALOG"];
+                    foreignKeyColumn["REFERENCED_TABLE_SCHEMA"]  = row["REFERENCED_TABLE_SCHEMA"];
+                    foreignKeyColumn["REFERENCED_TABLE_NAME"]    = row["REFERENCED_TABLE_NAME"];
+                    foreignKeyColumn["REFERENCED_COLUMN_NAME"]   = referencedTableColumn;
 
                     foreignKeyColumns.Rows.Add(foreignKeyColumn);
                 }

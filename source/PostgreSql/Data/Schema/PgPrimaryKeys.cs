@@ -73,9 +73,7 @@ namespace PostgreSql.Data.Schema
                 }
             }
 
-            sql += " ORDER BY pg_namespace.nspname, pg_class.relname, pg_constraint.conname";
-
-            return sql;
+            return sql + " ORDER BY pg_namespace.nspname, pg_class.relname, pg_constraint.conname";
         }
 
         protected override System.Data.DataTable ProcessResult(PostgreSql.Data.PostgreSqlClient.PgConnection connection, System.Data.DataTable schema)
@@ -111,18 +109,18 @@ namespace PostgreSql.Data.Schema
                         DataRow primaryKeyColumn = primaryKeyColumns.NewRow();
 
                         // Grab the table column name
-                        selectColumn.Parameters["@tableSchema"].Value   = row["TABLE_SCHEMA"];
-                        selectColumn.Parameters["@tableName"].Value     = row["TABLE_NAME"];
+                        selectColumn.Parameters["@tableSchema"].Value     = row["TABLE_SCHEMA"];
+                        selectColumn.Parameters["@tableName"].Value       = row["TABLE_NAME"];
                         selectColumn.Parameters["@ordinalPosition"].Value = Convert.ToInt16(pkColumns.GetValue(i + 1));
 
                         string pkColumnName = (string)selectColumn.ExecuteScalar();
 
                         // Create the new primary key column info
-                        primaryKeyColumn["TABLE_CATALOG"]   = row["TABLE_CATALOG"];
-                        primaryKeyColumn["TABLE_SCHEMA"]    = row["TABLE_SCHEMA"];
-                        primaryKeyColumn["TABLE_NAME"]      = row["TABLE_NAME"];
-                        primaryKeyColumn["COLUMN_NAME"]     = pkColumnName;
-                        primaryKeyColumn["DESCRIPTION"]     = row["DESCRIPTION"];
+                        primaryKeyColumn["TABLE_CATALOG"] = row["TABLE_CATALOG"];
+                        primaryKeyColumn["TABLE_SCHEMA"]  = row["TABLE_SCHEMA"];
+                        primaryKeyColumn["TABLE_NAME"]    = row["TABLE_NAME"];
+                        primaryKeyColumn["COLUMN_NAME"]   = pkColumnName;
+                        primaryKeyColumn["DESCRIPTION"]   = row["DESCRIPTION"];
 
                         primaryKeyColumns.Rows.Add(primaryKeyColumn);
                     }

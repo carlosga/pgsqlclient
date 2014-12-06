@@ -125,9 +125,7 @@ namespace PostgreSql.Data.Schema
                 sql += " WHERE " + where;
             }
 
-            sql += " ORDER BY pg_class.relkind, pg_namespace.nspname, pg_class.relname";
-
-            return sql;
+            return sql + " ORDER BY pg_class.relkind, pg_namespace.nspname, pg_class.relname";
         }
 
         protected override string[] ParseRestrictions(string[] restrictions)

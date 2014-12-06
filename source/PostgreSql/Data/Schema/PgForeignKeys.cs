@@ -75,35 +75,33 @@ namespace PostgreSql.Data.Schema
                 "WHERE " +
                     "pg_constraint.contype = 'f' ";
 
-                if (restrictions != null && restrictions.Length > 0)
+            if (restrictions != null && restrictions.Length > 0)
+            {
+                /* CONSTRAINT_CATALOG	*/
+                if (restrictions.Length > 0 && restrictions[0] != null)
                 {
-                    /* CONSTRAINT_CATALOG	*/
-                    if (restrictions.Length > 0 && restrictions[0] != null)
-                    {
-                    }
-
-                    /* CONSTRAINT_SCHEMA */
-                    if (restrictions.Length > 1 && restrictions[1] != null)
-                    {
-                        sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
-                    }
-
-                    /* TABLE_NAME */
-                    if (restrictions.Length >= 3 && restrictions[2] != null)
-                    {
-                        sql += String.Format(" and constraint_table.relname = '{0}'", restrictions[2]);
-                    }
-
-                    /* CONSTRAINT_NAME */
-                    if (restrictions.Length >= 4 && restrictions[3] != null)
-                    {
-                        sql += String.Format(" and pg_constraint.conname = '{0}'", restrictions[3]);
-                    }
                 }
 
-                sql += "ORDER BY pg_namespace.nspname, constraint_table.relname, pg_constraint.conname";
+                /* CONSTRAINT_SCHEMA */
+                if (restrictions.Length > 1 && restrictions[1] != null)
+                {
+                    sql += String.Format(" and pg_namespace.nspname = '{0}'", restrictions[1]);
+                }
 
-            return sql;
+                /* TABLE_NAME */
+                if (restrictions.Length >= 3 && restrictions[2] != null)
+                {
+                    sql += String.Format(" and constraint_table.relname = '{0}'", restrictions[2]);
+                }
+
+                /* CONSTRAINT_NAME */
+                if (restrictions.Length >= 4 && restrictions[3] != null)
+                {
+                    sql += String.Format(" and pg_constraint.conname = '{0}'", restrictions[3]);
+                }
+            }
+
+            return sql + "ORDER BY pg_namespace.nspname, constraint_table.relname, pg_constraint.conname";
         }
 
         #endregion

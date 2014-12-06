@@ -85,9 +85,7 @@ namespace PostgreSql.Data.Schema
                 }
             }
 
-            sql += "ORDER BY pg_namespace.nspname, pg_class.relname, pg_classidx.relname";
-
-            return sql;
+            return sql + "ORDER BY pg_namespace.nspname, pg_class.relname, pg_classidx.relname";
         }
 
         #endregion

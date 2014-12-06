@@ -94,9 +94,7 @@ namespace PostgreSql.Data.Schema
                 sql += " WHERE " + where;
             }
 
-            sql += " ORDER BY pg_namespace.nspname, pg_proc.proname";
-
-            return sql;
+            return sql + " ORDER BY pg_namespace.nspname, pg_proc.proname";
         }
 
         #endregion

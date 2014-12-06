@@ -57,9 +57,9 @@ namespace PostgreSql.Data.Schema
 
         public DataTable GetSchema(string collectionName, string[] restrictions)
         {
-            DataTable		dataTable = null;
-            PgDataAdapter	adapter = null;
-            PgCommand		command = new PgCommand();
+            DataTable	  dataTable = null;
+            PgDataAdapter adapter   = null;
+            PgCommand	  command   = new PgCommand();
             
             try
             {
